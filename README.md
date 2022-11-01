@@ -1,24 +1,3 @@
 # telegram
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+https://www.figma.com/file/flq97MMItS4tOFLyji8Ipf/%D0%A2%D0%9E%D0%A4%D0%98%2F%D0%A2%D0%A0%D0%9F%D0%9E
