@@ -1,7 +1,7 @@
 <template>
   <div class="header-block">
     <span class="logo-text">TELEGRAM</span>
-    <div class="main-sections-block">
+    <div class="main-sections-block" v-show="isLoginPage">
       <span v-for="lnk in links" v-bind:key="lnk" class="link-item">{{ lnk }}</span>
       <img class="avatar" src="../assets/profile.jpg"/>
     </div>
@@ -11,6 +11,9 @@
 <script>
 export default {
   name: "headerComp",
+  props:[
+      'isLoginPage',
+  ],
   data() {
     return {
       links: [
@@ -60,7 +63,7 @@ export default {
   width: 100%;
   height: 42px;
   background: #D7E0E9;
-  padding: 10px 40px;
+  padding: 0 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
