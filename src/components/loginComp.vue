@@ -1,0 +1,45 @@
+<template>
+  <div class="content-block">
+    <span class="title-block">ВХОД</span>
+    <div class="container">
+      <div class="input-item">
+      <span class="text-style">
+        TELEGRAM
+      </span>
+        <input class="input-style">
+      </div>
+
+      <div class="input-item">
+      <span class="text-style">
+        ПАРОЛЬ
+      </span>
+        <input type="password" class="input-style">
+      </div>
+
+      <button class="btn-style" @click="onShow">
+        ВОЙТИ
+      </button>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "loginComp",
+  props: ['onShowLogin'],
+  data() {
+    return {
+      isShow: false,
+    }
+  },
+  methods: {
+    onShow() {
+      this.onShowLogin({
+        isShow: this.isShow,
+      })
+    }
+  }
+}
+</script>
+<style scoped>
+</style>
