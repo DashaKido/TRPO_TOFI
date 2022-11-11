@@ -7,7 +7,7 @@
         <login-comp v-show="isShowLogin" :onShowLogin='onShowLogin'/>
         <registration-comp v-show="isShowRegistration" :onShowRegistration="onShowRegistration"/>
         <main-comp v-show="isShowMain"/>
-
+        <edit-profile-comp v-show="isShowEditProfile"/>
       </div>
     </div>
     <footer-comp/>
@@ -21,10 +21,12 @@ import TokenComp from "@/components/tokenComp";
 import LoginComp from "@/components/loginComp";
 import RegistrationComp from "@/components/registrationComp";
 import MainComp from "@/components/mainComp";
+import EditProfileComp from "@/components/editProfileComp";
 
 export default {
   name: 'App',
   components: {
+    EditProfileComp,
     MainComp,
     RegistrationComp,
     LoginComp,
@@ -34,12 +36,12 @@ export default {
   },
   data() {
     return {
-      isLoginPage: false,
+      isLoginPage: true,
       isShowToken: false,
       isShowLogin: false,
       isShowRegistration: false,
-      isShowMain: true,
-      title: "ВВОД ТОКЕНА",
+      isShowMain: false,
+      isShowEditProfile: true
     }
   },
   methods: {
@@ -73,6 +75,7 @@ export default {
   border-radius: 6px;
   color: #FFFFFF;
   border: none;
+  margin-top: 7px;
 }
 
 .btn-style:hover {
@@ -80,8 +83,21 @@ export default {
 }
 
 .btn-style:focus, .btn-style:active {
-  background: #6e6869;
-  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.4));
+  box-shadow: 0 0 5px 0.25rem #ACACAD;
+  background: #5B5657;
+}
+
+.btn-grey {
+  background: #8F898C;
+}
+
+.btn-grey:hover {
+  background: #9f999c;
+}
+
+.btn-grey:focus, .btn-grey:active {
+  background: #8F898C;
+  box-shadow: 0 0 5px 0.25rem #ACACAD;
 }
 
 .container-block {
@@ -96,19 +112,21 @@ export default {
 }
 
 .input-style {
-  margin: 10px 0 20px;
-  background: #405159;
-  border-radius: 6px;
+  margin: 5px 0 15px;
+  background: #405159 !important;
+  border-radius: 6px !important;
   outline: 0;
-  color: #FFFFFF;
+  color: #FFFFFF !important;
   height: 28px;
-  width: 240px;
+  width: 240px !important;
   font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 24px;
-  padding: 7px;
-  border: none;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  border: none !important;
+}
+
+.input-style:focus {
+  box-shadow: 0 0 5px 0.25rem #8fb1c1 !important;
 }
 
 .content-block {

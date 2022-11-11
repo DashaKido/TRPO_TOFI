@@ -10,16 +10,16 @@
       </div>
 
       <div class="input-item">
-        <span class="text-style">
+        <label class="text-style">
           ПАРОЛЬ
-        </span>
+        </label>
         <input type="password" class="input-style">
       </div>
 
       <div class="input-item">
-        <span class="text-style">
+        <label class="text-style">
           ПОВТОРИТЕ ПАРОЛЬ
-        </span>
+        </label>
         <input type="password" class="input-style">
       </div>
 

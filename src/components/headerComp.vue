@@ -3,7 +3,7 @@
     <span class="logo-text">TELEGRAM</span>
     <div class="main-sections-block" v-show="isLoginPage">
       <span v-for="lnk in links" v-bind:key="lnk" class="link-item">{{ lnk }}</span>
-      <img class="avatar" src="../assets/profile.jpg"/>
+      <img class="avatar" src="../assets/anon.jpg"/>
     </div>
   </div>
 </template>

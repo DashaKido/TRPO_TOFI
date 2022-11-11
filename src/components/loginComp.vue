@@ -3,16 +3,16 @@
     <span class="title-block">ВХОД</span>
     <div class="container-block">
       <div class="input-item">
-      <span class="text-style">
-        TELEGRAM
-      </span>
+        <label class="text-style">
+          TELEGRAM
+        </label>
         <input class="input-style">
       </div>
 
       <div class="input-item">
-      <span class="text-style">
-        ПАРОЛЬ
-      </span>
+        <label class="text-style">
+          ПАРОЛЬ
+        </label>
         <input type="password" class="input-style">
       </div>
 
