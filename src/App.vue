@@ -1,11 +1,14 @@
 <template>
   <div class="main-block">
-    <header-comp :is-login-page="isLoginPage"/>
     <div>
-      <token-comp v-show="isShowToken" :onShowToken='onShowToken'/>
-      <login-comp v-show="isShowLogin" :onShowLogin='onShowLogin'/>
-      <registration-comp v-show="isShowRegistration" :onShowRegistration="onShowRegistration"/>
-      <main-comp v-show="isShowMain"/>
+      <header-comp :is-login-page="isLoginPage"/>
+      <div>
+        <token-comp v-show="isShowToken" :onShowToken='onShowToken'/>
+        <login-comp v-show="isShowLogin" :onShowLogin='onShowLogin'/>
+        <registration-comp v-show="isShowRegistration" :onShowRegistration="onShowRegistration"/>
+        <main-comp v-show="isShowMain"/>
+
+      </div>
     </div>
     <footer-comp/>
   </div>
@@ -35,7 +38,7 @@ export default {
       isShowToken: false,
       isShowLogin: false,
       isShowRegistration: false,
-      isShowMain:true,
+      isShowMain: true,
       title: "ВВОД ТОКЕНА",
     }
   },
@@ -59,6 +62,8 @@ export default {
 }
 </script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
 .btn-style {
   height: 28px;
   width: 106px;
@@ -79,7 +84,7 @@ export default {
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.4));
 }
 
-.container {
+.container-block {
   width: 100%;
   border-radius: 20px;
   background: #D7E0E9;
@@ -107,9 +112,8 @@ export default {
 }
 
 .content-block {
-  height: calc(100vh - 72px);
   width: 100%;
-  padding: 23px 88px;
+  padding: 23px 5%;
 }
 
 .title-block {
@@ -130,19 +134,10 @@ export default {
   display: flex;
   flex-direction: column;
 }
-</style>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 body {
   width: 100%;
   height: 100vh;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 }
 
 #app {

@@ -1,7 +1,7 @@
 <template>
   <div class="content-block">
     <span class="title-block">ПЕРВОНАЧАЛЬНЫЙ ВХОД</span>
-    <div class="container">
+    <div class="container-block">
       <div class="input-item">
         <span class="text-style">
           ИМЯ

@@ -16,6 +16,7 @@ export default {
 .footer-block{
   background: #405159;
   height: 30px;
+  min-height: 30px;
   width: 100%;
   color:#D7E0E9;
   font-size: 10px;
