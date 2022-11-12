@@ -8,6 +8,7 @@
         <registration-comp v-show="isShowRegistration" :onShowRegistration="onShowRegistration"/>
         <main-comp v-show="isShowMain"/>
         <edit-profile-comp v-show="isShowEditProfile"/>
+        <add-event-comp v-show="isShowAddEvent"/>
       </div>
     </div>
     <footer-comp/>
@@ -22,10 +23,12 @@ import LoginComp from "@/components/loginComp";
 import RegistrationComp from "@/components/registrationComp";
 import MainComp from "@/components/mainComp";
 import EditProfileComp from "@/components/editProfileComp";
+import AddEventComp from "@/components/addEventComp";
 
 export default {
   name: 'App',
   components: {
+    AddEventComp,
     EditProfileComp,
     MainComp,
     RegistrationComp,
@@ -41,7 +44,8 @@ export default {
       isShowLogin: false,
       isShowRegistration: false,
       isShowMain: false,
-      isShowEditProfile: true
+      isShowEditProfile: false,
+      isShowAddEvent: true,
     }
   },
   methods: {
@@ -65,7 +69,6 @@ export default {
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
-
 .btn-style {
   height: 28px;
   width: 106px;
@@ -100,6 +103,31 @@ export default {
   box-shadow: 0 0 5px 0.25rem #ACACAD;
 }
 
+.load-photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 30px;
+  width: 25%;
+}
+
+.photo-style {
+  max-width: 100%;
+  max-height: 100%;
+  border: 1px solid #405159;
+  border-radius: 20px;
+}
+
+.btns-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-label {
+  margin-top: 22px;
+  text-decoration-line: underline;
+}
+
 .container-block {
   width: 100%;
   border-radius: 20px;
@@ -123,12 +151,15 @@ export default {
   font-weight: 500 !important;
   font-size: 12px !important;
   border: none !important;
+  padding: 0.375rem 0.75rem;
 }
 
 .input-style:focus {
   box-shadow: 0 0 5px 0.25rem #8fb1c1 !important;
 }
-
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
 .content-block {
   width: 100%;
   padding: 23px 5%;

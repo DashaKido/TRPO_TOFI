@@ -39,9 +39,9 @@
           <label class="text-style">
             ДАТА РОЖДЕНИЯ
           </label>
-          <b-form-input class="input-style"></b-form-input>
+          <input type="date" class="input-style">
         </div>
-        <div class="btns-edit">
+        <div class="btns-group">
           <button class="btn-style btn-grey">
             ОТМЕНА
           </button>
@@ -57,34 +57,15 @@
 <script>
 export default {
   name: "editProfileComp",
+  data(){
+    return{
+      dateBirthday:null
+    }
+  }
 }
 </script>
 
 <style scoped>
-.btns-edit {
-  display: flex;
-  justify-content: space-between;
-}
-
-.input-label {
-  margin-top: 22px;
-  text-decoration-line: underline;
-}
-
-.photo-style {
-  max-width: 100%;
-  border: 1px solid #405159;
-  border-radius: 20px;
-}
-
-
-.load-photo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 30px;
-  width: 25%;
-}
 
 .edit-profile {
   flex-direction: row;
