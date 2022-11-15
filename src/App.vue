@@ -6,6 +6,7 @@
         <token-comp v-show="isShowToken" :onShowToken='onShowToken'/>
         <login-comp v-show="isShowLogin" :onShowLogin='onShowLogin'/>
         <registration-comp v-show="isShowRegistration" :onShowRegistration="onShowRegistration"/>
+
         <main-comp v-show="isShowMain"/>
         <edit-profile-comp v-show="isShowEditProfile"/>
         <add-event-comp v-show="isShowAddEvent"/>
@@ -49,10 +50,11 @@ export default {
       isShowToken: false,
       isShowLogin: false,
       isShowRegistration: false,
+
       isShowMain: false,
-      isShowEditProfile: false,
-      isShowAddEvent: false,
-      isShowAddPerson: false,
+      isShowEditProfile: true,
+      isShowAddEvent: true,
+      isShowAddPerson: true,
       isShowSettings: true
     }
   },
@@ -133,7 +135,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 30px;
+  margin-right: 5%;
   width: 25%;
 }
 
@@ -144,9 +146,16 @@ export default {
   border-radius: 20px;
 }
 
+.btns-all-width {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .btns-group {
   display: flex;
   justify-content: space-between;
+  width: 20%;
 }
 
 .input-label {
@@ -199,7 +208,12 @@ export default {
   justify-content: space-between;
   font-size: 28px;
 }
-
+.suptext-style{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 19px;
+}
 .text-style {
   font-style: normal;
   font-weight: 500;

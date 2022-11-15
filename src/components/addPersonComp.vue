@@ -3,60 +3,115 @@
     <div class="title-block">
       <span>ДОБАВЛЕНИЕ ДРУГА</span>
     </div>
-    <div class="container-block add-person">
-      <div class="load-photo">
-        <div>
-          <img class="photo-style" :src="require('../assets/boyfriend.jpg')">
+    <div class="container-block" style="align-items: flex-start;">
+      <div class="add-person">
+        <div class="load-photo">
+          <div>
+            <img class="photo-style" :src="require('../assets/boyfriend.jpg')">
+          </div>
+          <div>
+            <label class="input-label">ЗАГРУЗИТЬ ФОТО</label>
+          </div>
         </div>
+
+        <div style="margin-right: 5%;">
+          <div class="input-item">
+            <label class="text-style">
+              ВЫБОР ДРУГА
+            </label>
+            <b-form-select v-model="selectedCategory" :options="allCategory" class="select-style">
+            </b-form-select>
+          </div>
+
+          <div class="input-item">
+            <label class="text-style">
+              ФАМИЛИЯ
+            </label>
+            <b-form-input class="input-style"></b-form-input>
+          </div>
+
+          <div class="input-item">
+            <label class="text-style">
+              ИМЯ
+            </label>
+            <input class="input-style">
+          </div>
+
+          <div class="input-item">
+            <label class="text-style">
+              ТЕЛЕГРАМ
+            </label>
+            <input class="input-style">
+          </div>
+
+          <div class="input-item">
+            <label class="text-style">
+              ДАТА РОЖДЕНИЯ
+            </label>
+            <input type="date" class="input-style">
+          </div>
+
+          <div class="input-item">
+            <label class="text-style">
+              ВРЕМЯ
+            </label>
+            <input type="time" class="input-style">
+          </div>
+        </div>
+
         <div>
-          <label class="input-label">ЗАГРУЗИТЬ ФОТО</label>
+          <div>
+            <label class="suptext-style">
+              ДОБАВИТЬ ИНФОРМАЦИЮ
+            </label>
+
+            <div style="margin-top: 5px;" class="input-item">
+              <label class="text-style">
+                НАЗВАНИЕ
+              </label>
+
+              <div class="btns-group-small">
+                <input style="width: 100% !important; margin-bottom: 0px;" v-model="name" class="input-style">
+                <button class="btn-add" @click="addNewInfo"></button>
+              </div>
+
+              <label v-show="errorName" style="color: red; margin-top: 5px;" class="subtext-style">
+                ОБЯЗАТЕЛЬНОЕ ПОЛЕ ДЛЯ ЗАПОЛНЕНИЯ
+              </label>
+            </div>
+          </div>
+
+          <div style="margin-top: 10px; " class="input-item">
+            <label class="text-style">
+              ИНФОРМАЦИЯ
+            </label>
+
+            <b-form-textarea v-model="info" style="margin-bottom: 0px; width: 100% !important;"
+                             class="input-style"></b-form-textarea>
+            <label v-show="errorInfo" style="color: red; margin-top: 5px;" class="subtext-style">
+              ОБЯЗАТЕЛЬНОЕ ПОЛЕ ДЛЯ ЗАПОЛНЕНИЯ
+            </label>
+          </div>
+
+          <div style="margin-top: 10px;">
+            <label class="suptext-style">
+              ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ
+            </label>
+
+            <div class="btns-group-small">
+              <b-form-select @change="changeSelect" v-model="selectedName" :options="allInfo" class="select-style">
+              </b-form-select>
+              <button @click="deleteInfo" class="btn-add btn-delete"></button>
+            </div>
+            <b-form-textarea v-model="selectedInfo" style="height: 150px!important; width: 100% !important;"
+                             class="input-style">
+
+            </b-form-textarea>
+          </div>
         </div>
       </div>
 
-      <div style="margin-right: 30px;">
-        <div class="input-item">
-          <label class="text-style">
-            ВЫБОР ДРУГА
-          </label>
-          <b-form-select v-model="selectedCategory" :options="allCategory" class="select-style">
-          </b-form-select>
-        </div>
-
-        <div class="input-item">
-          <label class="text-style">
-            ФАМИЛИЯ
-          </label>
-          <b-form-input class="input-style"></b-form-input>
-        </div>
-
-        <div class="input-item">
-          <label class="text-style">
-            ИМЯ
-          </label>
-          <input class="input-style">
-        </div>
-
-        <div class="input-item">
-          <label class="text-style">
-            ТЕЛЕГРАМ
-          </label>
-          <input class="input-style">
-        </div>
-
-        <div class="input-item">
-          <label class="text-style">
-            ДАТА РОЖДЕНИЯ
-          </label>
-          <input type="date" class="input-style">
-        </div>
-
-        <div class="input-item">
-          <label class="text-style">
-            ВРЕМЯ
-          </label>
-          <input type="time" class="input-style">
-        </div>
-
+      <div class="btns-all-width">
         <div class="btns-group">
           <button class="btn-style btn-grey">
             ОТМЕНА
@@ -64,54 +119,6 @@
           <button class="btn-style">
             СОХРАНИТЬ
           </button>
-        </div>
-      </div>
-
-      <div>
-        <div>
-          <label class="text-style">
-            ДОБАВИТЬ ИНФОРМАЦИЮ
-          </label>
-
-          <div style="margin-top: 5px;" class="input-item">
-            <label class="subtext-style">
-              НАЗВАНИЕ
-            </label>
-
-            <div class="btns-group">
-              <input style="width: 100% !important; margin-bottom: 0px;" v-model="name" class="input-style">
-              <button class="btn-add" @click="addNewInfo"></button>
-            </div>
-
-            <label v-show="errorName" style="color: red; margin-top: 5px;" class="subtext-style">
-              ОБЯЗАТЕЛЬНОЕ ПОЛЕ ДЛЯ ЗАПОЛНЕНИЯ
-            </label>
-          </div>
-        </div>
-
-        <div style="margin-top: 10px; " class="input-item">
-          <label class="subtext-style">
-            ИНФОРМАЦИЯ
-          </label>
-
-          <b-form-textarea v-model="info" style="margin-bottom: 0px;" class="input-style"></b-form-textarea>
-          <label v-show="errorInfo" style="color: red; margin-top: 5px;" class="subtext-style">
-            ОБЯЗАТЕЛЬНОЕ ПОЛЕ ДЛЯ ЗАПОЛНЕНИЯ
-          </label>
-        </div>
-
-        <div style="margin-top: 10px;">
-          <label class="text-style">
-            ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ
-          </label>
-
-          <div class="btns-group">
-            <b-form-select @change="changeSelect" v-model="selectedName" :options="allInfo" class="select-style">
-            </b-form-select>
-            <button @click="deleteInfo" class="btn-add btn-delete"></button>
-          </div>
-          <b-form-textarea v-model="selectedInfo" style="height: 150px!important;"
-                           class="input-style"></b-form-textarea>
         </div>
       </div>
     </div>
@@ -213,6 +220,11 @@ export default {
 </script>
 
 <style scoped>
+.btns-group-small {
+  display: flex;
+  justify-content: space-between;
+}
+
 .btn-add {
   margin: 10px 0 0 10px;
   padding: 0;
@@ -237,6 +249,7 @@ export default {
 }
 
 .add-person {
+  display: flex;
   flex-direction: row;
   align-items: flex-start;
 }

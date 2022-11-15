@@ -219,7 +219,7 @@ export default {
 
 .news-block {
   width: 100%;
-  margin-left: 22px;
+  margin-left: 4%;
 }
 
 .news1 {

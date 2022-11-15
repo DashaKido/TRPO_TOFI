@@ -3,50 +3,53 @@
     <div class="title-block">
       <span>ДОБАВЛЕНИЕ СОБЫТИЯ</span>
     </div>
-    <div class="container-block add-event">
-      <div class="load-photo">
+    <div class="container-block" style="align-items: flex-start;">
+      <div class="add-event">
+        <div class="load-photo">
+          <div>
+            <img class="photo-style" :src="require('../assets/friend.jpg')">
+          </div>
+        </div>
+
         <div>
-          <img class="photo-style" :src="require('../assets/friend.jpg')">
+          <div class="input-item">
+            <label class="text-style">
+              ВЫБОР ДРУГА
+            </label>
+            <b-form-select v-model="selectedFriend" :options="allFriends" class="select-style">
+            </b-form-select>
+          </div>
+
+          <div class="input-item">
+            <label class="text-style">
+              НАЗВАНИЕ
+            </label>
+            <b-form-input class="input-style"></b-form-input>
+          </div>
+
+          <div class="input-item">
+            <label class="text-style">
+              ВАЖНОСТЬ
+            </label>
+            <input class="input-style">
+          </div>
+
+          <div class="input-item">
+            <label class="text-style">
+              ДАТА СОБЫТИЯ
+            </label>
+            <input type="date" class="input-style">
+          </div>
+
+          <div class="input-item">
+            <label class="text-style">
+              ВРЕМЯ
+            </label>
+            <input type="time" class="input-style">
+          </div>
         </div>
       </div>
-
-      <div>
-        <div class="input-item">
-          <label class="text-style">
-            ВЫБОР ДРУГА
-          </label>
-          <b-form-select v-model="selectedFriend" :options="allFriends" class="select-style">
-          </b-form-select>
-        </div>
-
-        <div class="input-item">
-          <label class="text-style">
-            НАЗВАНИЕ
-          </label>
-          <b-form-input class="input-style"></b-form-input>
-        </div>
-
-        <div class="input-item">
-          <label class="text-style">
-            ВАЖНОСТЬ
-          </label>
-          <input class="input-style">
-        </div>
-
-        <div class="input-item">
-          <label class="text-style">
-            ДАТА СОБЫТИЯ
-          </label>
-          <input type="date" class="input-style">
-        </div>
-
-        <div class="input-item">
-          <label class="text-style">
-            ВРЕМЯ
-          </label>
-          <input type="time" class="input-style">
-        </div>
-
+      <div class="btns-all-width">
         <div class="btns-group">
           <button class="btn-style btn-grey">
             ОТМЕНА
@@ -96,6 +99,7 @@ export default {
 <style scoped>
 
 .add-event {
+  display: flex;
   flex-direction: row;
   align-items: flex-start;
 }

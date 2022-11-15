@@ -4,7 +4,7 @@
       <span>НАСТРОЙКИ ЧАТА</span>
     </div>
     <div class="container-block" style="align-items: flex-start;">
-      <span class="text-style" style="font-size: 14px;">ВЫБЕРИТЕ ПУНКТЫ, КОТОРЫЕ ХОТИТЕ, ЧТОБЫ ТЕЛЕГРАМ БОТ ВАМ ОТПРАВЛЯЛ:</span>
+      <span class="suptext-style">ВЫБЕРИТЕ ПУНКТЫ, КОТОРЫЕ ХОТИТЕ, ЧТОБЫ ТЕЛЕГРАМ БОТ ВАМ ОТПРАВЛЯЛ:</span>
 
       <div class="check-item">
         <div style="display: flex; align-items: center;">
@@ -54,7 +54,7 @@
       </b-form-textarea>
 
       <div class="btns-all-width">
-        <div class="btns-group" style="width: 20%;">
+        <div class="btns-group">
           <button class="btn-style btn-grey">
             ОТМЕНА
           </button>
@@ -74,12 +74,6 @@ export default {
 </script>
 
 <style scoped>
-.btns-all-width {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
-
 .textarea-style {
   width: 50% !important;
   margin-top: 15px;
