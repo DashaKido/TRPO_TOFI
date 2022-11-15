@@ -2,7 +2,10 @@
   <div class="header-block">
     <span class="logo-text">TELEGRAM</span>
     <div class="main-sections-block" v-show="isLoginPage">
-      <span v-for="lnk in links" v-bind:key="lnk" class="link-item">{{ lnk }}</span>
+      <span class="link-item" :class="`${isShowMain?'active':''}`">ГЛАВНАЯ</span>
+      <span class="link-item" :class="`${isShowCalendar?'active':''}`">КАЛЕНДАРЬ</span>
+      <span class="link-item" :class="`${isShowSetting?'active':''}`">НАСТРОЙКИ ЧАТА</span>
+      <span class="link-item" :class="`${isShowAllPerson?'active':''}`">ДРУЗЬЯ</span>
       <img class="avatar" src="../assets/anon.jpg"/>
     </div>
   </div>
@@ -11,23 +14,21 @@
 <script>
 export default {
   name: "headerComp",
-  props:[
-      'isLoginPage',
+  props: [
+    'isLoginPage',
+    'isShowMain',
+    'isShowSetting',
+    'isShowCalendar',
+    'isShowAllPerson'
   ],
-  data() {
-    return {
-      links: [
-        "ГЛАВНАЯ",
-        "КАЛЕНДАРЬ",
-        "НАСТРОЙКИ ЧАТА",
-        "ДРУЗЬЯ",
-      ]
-    }
-  }
 }
 </script>
 
 <style scoped>
+.active {
+  text-decoration: underline;
+}
+
 .avatar {
   width: 30px;
   height: 30px;
@@ -38,14 +39,10 @@ export default {
 .link-item {
   display: flex;
   align-items: center;
-  margin-right: 39px;
+  margin-right: 4%;
   font-weight: 500;
   color: #405159;
   line-height: 19px;
-}
-
-.link-item:last-child {
-  margin-right: 0;
 }
 
 .logo-text {
@@ -57,6 +54,8 @@ export default {
 
 .main-sections-block {
   display: flex;
+  width: 100%;
+  justify-content: flex-end;
 }
 
 .header-block {
@@ -67,6 +66,6 @@ export default {
   padding: 0 40px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="main-block">
     <div>
-      <header-comp :is-login-page="isLoginPage"/>
+      <header-comp :is-show-main="isShowMain" :is-show-setting="isShowSettings" :is-login-page="isLoginPage"/>
       <div>
         <token-comp v-show="isShowToken" :onShowToken='onShowToken'/>
         <login-comp v-show="isShowLogin" :onShowLogin='onShowLogin'/>
@@ -52,9 +52,9 @@ export default {
       isShowRegistration: false,
 
       isShowMain: false,
-      isShowEditProfile: true,
-      isShowAddEvent: true,
-      isShowAddPerson: true,
+      isShowEditProfile: false,
+      isShowAddEvent: false,
+      isShowAddPerson: false,
       isShowSettings: true
     }
   },
@@ -208,12 +208,14 @@ export default {
   justify-content: space-between;
   font-size: 28px;
 }
-.suptext-style{
+
+.suptext-style {
   font-style: normal;
   font-weight: 500;
   font-size: 15px;
   line-height: 19px;
 }
+
 .text-style {
   font-style: normal;
   font-weight: 500;
