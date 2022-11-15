@@ -9,6 +9,7 @@
         <main-comp v-show="isShowMain"/>
         <edit-profile-comp v-show="isShowEditProfile"/>
         <add-event-comp v-show="isShowAddEvent"/>
+        <add-person-comp v-show="isShowAddPerson"/>
       </div>
     </div>
     <footer-comp/>
@@ -24,10 +25,12 @@ import RegistrationComp from "@/components/registrationComp";
 import MainComp from "@/components/mainComp";
 import EditProfileComp from "@/components/editProfileComp";
 import AddEventComp from "@/components/addEventComp";
+import AddPersonComp from "@/components/addPersonComp";
 
 export default {
   name: 'App',
   components: {
+    AddPersonComp,
     AddEventComp,
     EditProfileComp,
     MainComp,
@@ -45,7 +48,8 @@ export default {
       isShowRegistration: false,
       isShowMain: false,
       isShowEditProfile: false,
-      isShowAddEvent: true,
+      isShowAddEvent: false,
+      isShowAddPerson: true
     }
   },
   methods: {
@@ -69,6 +73,24 @@ export default {
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px
+}
+
+::-webkit-scrollbar-track {
+  background: #CBCBCC;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8F898C;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6b6566;
+}
+
 .btn-style {
   height: 28px;
   width: 106px;
@@ -157,9 +179,11 @@ export default {
 .input-style:focus {
   box-shadow: 0 0 5px 0.25rem #8fb1c1 !important;
 }
+
 ::-webkit-calendar-picker-indicator {
-    filter: invert(1);
+  filter: invert(1);
 }
+
 .content-block {
   width: 100%;
   padding: 23px 5%;

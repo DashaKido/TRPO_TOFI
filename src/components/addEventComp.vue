@@ -8,9 +8,6 @@
         <div>
           <img class="photo-style" :src="require('../assets/friend.jpg')">
         </div>
-        <div>
-          <label class="input-label">ЗАГРУЗИТЬ ФОТО</label>
-        </div>
       </div>
 
       <div>
@@ -91,7 +88,6 @@ export default {
           text: 'Friend 4 (@tg4)'
         },
       ],
-      importance: 1
     }
   }
 }
