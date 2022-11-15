@@ -10,6 +10,7 @@
         <edit-profile-comp v-show="isShowEditProfile"/>
         <add-event-comp v-show="isShowAddEvent"/>
         <add-person-comp v-show="isShowAddPerson"/>
+        <settings-comp v-show="isShowSettings"/>
       </div>
     </div>
     <footer-comp/>
@@ -26,10 +27,12 @@ import MainComp from "@/components/mainComp";
 import EditProfileComp from "@/components/editProfileComp";
 import AddEventComp from "@/components/addEventComp";
 import AddPersonComp from "@/components/addPersonComp";
+import SettingsComp from '@/components/settingsComp'
 
 export default {
   name: 'App',
   components: {
+    SettingsComp,
     AddPersonComp,
     AddEventComp,
     EditProfileComp,
@@ -49,7 +52,8 @@ export default {
       isShowMain: false,
       isShowEditProfile: false,
       isShowAddEvent: false,
-      isShowAddPerson: true
+      isShowAddPerson: false,
+      isShowSettings: true
     }
   },
   methods: {
@@ -154,7 +158,7 @@ export default {
   width: 100%;
   border-radius: 20px;
   background: #D7E0E9;
-  padding: 26px;
+  padding: 26px 5%;
   margin-top: 22px;
   display: flex;
   flex-direction: column;

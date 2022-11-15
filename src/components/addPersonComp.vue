@@ -241,19 +241,6 @@ export default {
   align-items: flex-start;
 }
 
-.info-text {
-  background-color: #405159;
-  border: none;
-  color: #FFFFFF;
-  width: 240px;
-  height: 200px;
-  border-radius: 6px;
-  font-style: normal;
-  font-weight: 500;
-  outline: 0;
-  font-size: 12px;
-}
-
 .select-style {
   margin: 5px 0 15px;
   background-color: #405159;
