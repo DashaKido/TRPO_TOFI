@@ -6,7 +6,16 @@
       <span class="link-item" :class="`${isShowCalendar?'active':''}`">КАЛЕНДАРЬ</span>
       <span class="link-item" :class="`${isShowSetting?'active':''}`">НАСТРОЙКИ ЧАТА</span>
       <span class="link-item" :class="`${isShowAllPerson?'active':''}`">ДРУЗЬЯ</span>
-      <img class="avatar" src="../assets/anon.jpg"/>
+      <b-dropdown no-caret variant="link">
+        <template #button-content>
+          <div class="dropdown-btn"></div>
+        </template>
+        <b-dropdown-item class="text-style">РЕДАКТИРОВАТЬ ПРОФИЛЬ</b-dropdown-item>
+        <b-dropdown-item class="text-style">PRO ВЕРСИЯ</b-dropdown-item>
+        <b-dropdown-item class="text-style">ДОСУГ</b-dropdown-item>
+        <b-dropdown-divider></b-dropdown-divider>
+        <b-dropdown-item class="text-style">ВЫХОД</b-dropdown-item>
+      </b-dropdown>
     </div>
   </div>
 </template>
@@ -25,16 +34,21 @@ export default {
 </script>
 
 <style scoped>
-.active {
-  text-decoration: underline;
-}
-
-.avatar {
+.dropdown-btn {
+  margin-top: 5px;
+  background-image: url("../assets/anon.jpg");
+  background-repeat: no-repeat;
+  background-color: transparent;
   width: 30px;
   height: 30px;
   border: 1px solid #405159;
   border-radius: 50px;
 }
+
+.active {
+  text-decoration: underline;
+}
+
 
 .link-item {
   display: flex;
