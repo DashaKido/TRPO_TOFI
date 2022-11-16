@@ -11,7 +11,7 @@
           <div class="dropdown-btn"></div>
         </template>
         <b-dropdown-item class="text-style">РЕДАКТИРОВАТЬ ПРОФИЛЬ</b-dropdown-item>
-        <b-dropdown-item class="text-style">PRO ВЕРСИЯ</b-dropdown-item>
+        <b-dropdown-item class="text-style">ТАРИФЫ</b-dropdown-item>
         <b-dropdown-item class="text-style">ДОСУГ</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item class="text-style">ВЫХОД</b-dropdown-item>

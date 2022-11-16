@@ -12,6 +12,7 @@
         <add-event-comp v-show="isShowAddEvent"/>
         <add-person-comp v-show="isShowAddPerson"/>
         <settings-comp v-show="isShowSettings"/>
+        <pro-version-comp v-show="isShowProVersionPage"/>
       </div>
     </div>
     <footer-comp/>
@@ -29,10 +30,12 @@ import EditProfileComp from "@/components/editProfileComp";
 import AddEventComp from "@/components/addEventComp";
 import AddPersonComp from "@/components/addPersonComp";
 import SettingsComp from '@/components/settingsComp'
+import ProVersionComp from "@/components/proVersionComp";
 
 export default {
   name: 'App',
   components: {
+    ProVersionComp,
     SettingsComp,
     AddPersonComp,
     AddEventComp,
@@ -55,7 +58,8 @@ export default {
       isShowEditProfile: false,
       isShowAddEvent: false,
       isShowAddPerson: false,
-      isShowSettings: true
+      isShowSettings: false,
+      isShowProVersionPage:true
     }
   },
   methods: {
