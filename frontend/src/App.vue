@@ -20,17 +20,17 @@
 </template>
 
 <script>
-import headerComp from "@/components/headerComp";
-import footerComp from "@/components/footerComp";
-import TokenComp from "@/components/tokenComp";
-import LoginComp from "@/components/loginComp";
-import RegistrationComp from "@/components/registrationComp";
-import MainComp from "@/components/mainComp";
-import EditProfileComp from "@/components/editProfileComp";
-import AddEventComp from "@/components/addEventComp";
-import AddPersonComp from "@/components/addPersonComp";
-import SettingsComp from '@/components/settingsComp'
-import ProVersionComp from "@/components/proVersionComp";
+import headerComp from "./components/headerComp";
+import footerComp from "./components/footerComp";
+import TokenComp from "./components/tokenComp";
+import LoginComp from "./components/loginComp";
+import RegistrationComp from "./components/registrationComp";
+import MainComp from "./components/mainComp";
+import EditProfileComp from "./components/editProfileComp";
+import AddEventComp from "./components/addEventComp";
+import AddPersonComp from "./components/addPersonComp";
+import SettingsComp from './components/settingsComp'
+import ProVersionComp from "./components/proVersionComp";
 
 export default {
   name: 'App',
