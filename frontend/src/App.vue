@@ -1,18 +1,19 @@
 <template>
   <div class="main-block">
     <div>
-      <header-comp :is-show-main="isShowMain" :is-show-setting="isShowSettings" :is-login-page="isLoginPage"/>
+      <header-comp :is-show-main="isShowMainPage" :is-show-calendar="isShowCalendarPage" :is-show-setting="isShowSettingsPage" :is-login-page="isLoginPage"/>
       <div>
-        <token-comp v-show="isShowToken" :onShowToken='onShowToken'/>
-        <login-comp v-show="isShowLogin" :onShowLogin='onShowLogin'/>
-        <registration-comp v-show="isShowRegistration" :onShowRegistration="onShowRegistration"/>
+        <token-comp v-show="isShowTokenPage" :onShowToken='onShowToken'/>
+        <login-comp v-show="isShowLoginPage" :onShowLogin='onShowLogin'/>
+        <registration-comp v-show="isShowRegistrationPage" :onShowRegistration="onShowRegistration"/>
 
-        <main-comp v-show="isShowMain"/>
-        <edit-profile-comp v-show="isShowEditProfile"/>
-        <add-event-comp v-show="isShowAddEvent"/>
-        <add-person-comp v-show="isShowAddPerson"/>
-        <settings-comp v-show="isShowSettings"/>
+        <main-comp v-show="isShowMainPage"/>
+        <edit-profile-comp v-show="isShowEditProfilePage"/>
+        <add-event-comp v-show="isShowAddEventPage"/>
+        <add-person-comp v-show="isShowAddPersonPage"/>
+        <settings-comp v-show="isShowSettingsPage"/>
         <pro-version-comp v-show="isShowProVersionPage"/>
+        <calendar-comp v-show="isShowCalendarPage"/>
       </div>
     </div>
     <footer-comp/>
@@ -31,10 +32,12 @@ import AddEventComp from "./components/addEventComp";
 import AddPersonComp from "./components/addPersonComp";
 import SettingsComp from './components/settingsComp'
 import ProVersionComp from "./components/proVersionComp";
+import CalendarComp from "@/components/calendarComp";
 
 export default {
   name: 'App',
   components: {
+    CalendarComp,
     ProVersionComp,
     SettingsComp,
     AddPersonComp,
@@ -50,33 +53,34 @@ export default {
   data() {
     return {
       isLoginPage: true,
-      isShowToken: false,
-      isShowLogin: false,
-      isShowRegistration: false,
+      isShowTokenPage: false,
+      isShowLoginPage: false,
+      isShowRegistrationPage: false,
 
-      isShowMain: false,
-      isShowEditProfile: false,
-      isShowAddEvent: false,
-      isShowAddPerson: false,
-      isShowSettings: false,
-      isShowProVersionPage:true
+      isShowMainPage: false,
+      isShowEditProfilePage: false,
+      isShowAddEventPage: false,
+      isShowAddPersonPage: false,
+      isShowSettingsPage: false,
+      isShowProVersionPage: false,
+      isShowCalendarPage:true
     }
   },
   methods: {
     onShowToken() {
-      this.isShowLogin = false;
-      this.isShowToken = false;
-      this.isShowRegistration = true;
+      this.isShowLoginPage = false;
+      this.isShowTokenPage = false;
+      this.isShowRegistrationPage = true;
     },
     onShowLogin() {
-      this.isShowLogin = false;
-      this.isShowToken = true;
-      this.isShowRegistration = false;
+      this.isShowLoginPage = false;
+      this.isShowTokenPage = true;
+      this.isShowRegistrationPage = false;
     },
     onShowRegistration() {
-      this.isShowLogin = true;
-      this.isShowToken = false;
-      this.isShowRegistration = false;
+      this.isShowLoginPage = true;
+      this.isShowTokenPage = false;
+      this.isShowRegistrationPage = false;
     }
   }
 }
