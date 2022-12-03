@@ -16,7 +16,7 @@
       <div class="style-comp">
         <calendar-view :show-date="showDate" :starting-day-of-week="1" :enable-date-selection="false"
                        :locale="locale" :month-name-format="monthNameFormat" :current-period-label="currentPeriodLabel"
-                       :show-times="true"
+                       :show-times="true" :items="items"
                        class="theme-default holiday-us-traditional holiday-us-official">
           <template #header="{headerProps}">
             <calendar-view-header :header-props="headerProps" :month-names="monthNames"
@@ -42,6 +42,80 @@ export default {
       locale: 'ru-RU',
       monthNameFormat: 'long',
       currentPeriodLabel: 'СЕГОДНЯ',
+      items: [
+        {
+          id: 1,
+          startDate: new Date(2022, (12 - 1), 24, 12, 0),
+          title: 'самое лучшее событие1',
+          tooltip: '@самое лучшее событие1'
+        },
+        {
+          id: 2,
+          startDate: new Date(2022, (12 - 1), 24, 12, 0),
+          title: 'самое лучшее событие2',
+          tooltip: '@самое лучшее событие2'
+        },
+        {
+          id: 3,
+          startDate: new Date(2022, (12 - 1), 1, 12, 0),
+          title: 'самое лучшее событие3',
+          tooltip: '@самое лучшее событие3'
+        },
+        {
+          id: 4,
+          startDate: new Date(2022, (12 - 1), 12, 12, 0),
+          title: 'самое лучшее событие4',
+          tooltip: '@самое лучшее событие4'
+        },
+        {
+          id: 5,
+          startDate: new Date(2022, (12 - 1), 13, 12, 0),
+          title: 'самое лучшее событие5',
+          tooltip: '@самое лучшее событие5'
+        },
+        {
+          id: 6,
+          startDate: new Date(2022, (11 - 1), 28, 12, 0),
+          title: 'самое лучшее событие2',
+          tooltip: '@самое лучшее событие2'
+        },
+        {
+          id: 7,
+          startDate: new Date(2022, (12 - 1), 28, 12, 0),
+          title: 'самое лучшее событие3',
+          tooltip: '@самое лучшее событие3'
+        },
+        {
+          id: 8,
+          startDate: new Date(2023, (1 - 1), 1, 12, 0),
+          title: 'самое лучшее событие4',
+          tooltip: '@самое лучшее событие4'
+        },
+        {
+          id: 9,
+          startDate: new Date(2022, (12 - 1), 10, 12, 0),
+          title: 'самое лучшее событие5',
+          tooltip: '@самое лучшее событие5'
+        },
+        {
+          id: 10,
+          startDate: new Date(2023, (1 - 1), 28, 12, 0),
+          title: 'самое лучшее событие3',
+          tooltip: '@самое лучшее событие3'
+        },
+        {
+          id: 8,
+          startDate: new Date(2023, (2 - 1), 1, 12, 0),
+          title: 'самое лучшее событие4',
+          tooltip: '@самое лучшее событие4'
+        },
+        {
+          id: 9,
+          startDate: new Date(2023, (1 - 1), 10, 12, 0),
+          title: 'самое лучшее событие5',
+          tooltip: '@самое лучшее событие5'
+        },
+      ]
     }
   },
   methods: {
@@ -78,6 +152,15 @@ export default {
   background-color: #cce4ef;
 }
 
+.theme-default .cv-item {
+  background-color: #405159;
+  color: white;
+}
+
+.theme-default .cv-item .startTime, .theme-default .cv-item .endTime {
+  color: white;
+}
+
 .cv-header-day, .cv-header-days {
   border-color: #4C7C8B !important;
 }
@@ -109,7 +192,8 @@ export default {
 .previousYear {
   border-radius: 6px 0 0 6px;
 }
-.cv-day-number{
+
+.cv-day-number {
   font-weight: bold;
 }
 </style>
