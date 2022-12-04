@@ -11,6 +11,10 @@
                    :goToCalendarPage="goToHeaderPage"
                    :goToSettingPage="goToHeaderPage"
                    :goToAllPersonPage="goToHeaderPage"
+
+                   :goToEditProfilePage="goToHeaderPage"
+                   :goToProVersionPage="goToHeaderPage"
+                   :goToLeisurePage="goToHeaderPage"
       />
       <div>
         <token-comp v-show="isShowTokenPage" :onShowToken='onShowToken'/>
@@ -106,6 +110,10 @@ export default {
       this.isShowCalendarPage = data.showCalendarPage;
       this.isShowSettingsPage = data.showSettingPage;
       this.isShowAllPersonsPage = data.showAllPersonPage;
+
+      this.isShowEditProfilePage = data.showEditProfilePage;
+      this.isShowProVersionPage = data.showProVersionPage;
+      this.isShowLeisurePage = data.showLeisurePage;
     },
   }
 }

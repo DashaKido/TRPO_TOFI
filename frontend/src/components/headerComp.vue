@@ -10,9 +10,9 @@
         <template #button-content>
           <div class="dropdown-btn"></div>
         </template>
-        <b-dropdown-item class="text-style">РЕДАКТИРОВАТЬ ПРОФИЛЬ</b-dropdown-item>
-        <b-dropdown-item class="text-style">ТАРИФЫ</b-dropdown-item>
-        <b-dropdown-item class="text-style">ДОСУГ</b-dropdown-item>
+        <b-dropdown-item class="text-style" @click="goToEditProfile">РЕДАКТИРОВАТЬ ПРОФИЛЬ</b-dropdown-item>
+        <b-dropdown-item class="text-style" @click="goToProVersion">ТАРИФЫ</b-dropdown-item>
+        <b-dropdown-item class="text-style" @click="goToLeisure">ДОСУГ</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item class="text-style">ВЫХОД</b-dropdown-item>
       </b-dropdown>
@@ -34,6 +34,10 @@ export default {
     'goToCalendarPage': Function,
     'goToSettingPage': Function,
     'goToAllPersonPage': Function,
+
+    'goToEditProfilePage': Function,
+    'goToProVersionPage': Function,
+    'goToLeisurePage': Function,
   },
   data() {
     return {
@@ -41,6 +45,10 @@ export default {
       showCalendarPage: false,
       showSettingPage: false,
       showAllPersonPage: false,
+
+      showEditProfilePage: false,
+      showProVersionPage: false,
+      showLeisurePage: false,
     }
   },
   methods: {
@@ -95,7 +103,71 @@ export default {
         showSettingPage: this.showSettingPage,
         showAllPersonPage: this.showAllPersonPage,
       })
-    }
+    },
+
+    goToEditProfile() {
+      this.showMainPage = false;
+      this.showCalendarPage = false;
+      this.showSettingPage = false;
+      this.showAllPersonPage = false;
+
+      this.showEditProfilePage = true;
+      this.showProVersionPage = false;
+      this.showLeisurePage = false;
+
+      this.goToEditProfilePage({
+        showMainPage: this.showMainPage,
+        showCalendarPage: this.showCalendarPage,
+        showSettingPage: this.showSettingPage,
+        showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+      })
+    },
+    goToProVersion() {
+      this.showMainPage = false;
+      this.showCalendarPage = false;
+      this.showSettingPage = false;
+      this.showAllPersonPage = false;
+
+      this.showEditProfilePage = false;
+      this.showProVersionPage = true;
+      this.showLeisurePage = false;
+
+      this.goToProVersionPage({
+        showMainPage: this.showMainPage,
+        showCalendarPage: this.showCalendarPage,
+        showSettingPage: this.showSettingPage,
+        showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+      })
+    },
+    goToLeisure() {
+      this.showMainPage = false;
+      this.showCalendarPage = false;
+      this.showSettingPage = false;
+      this.showAllPersonPage = false;
+
+      this.showEditProfilePage = false;
+      this.showProVersionPage = false;
+      this.showLeisurePage = true;
+
+      this.goToLeisurePage({
+        showMainPage: this.showMainPage,
+        showCalendarPage: this.showCalendarPage,
+        showSettingPage: this.showSettingPage,
+        showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+      })
+    },
   }
 }
 </script>
