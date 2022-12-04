@@ -7,7 +7,7 @@
       <div class="main-comp">
         <div class="one-person-block" v-for="person in persons" :key="person">
           <div class="load-photo" style="margin-bottom: 5%;">
-            <img class="photo-style" :src="require('@/assets/boyfriend.jpg')">
+            <img class="photo-style" :src="require('@/assets/friend.jpg')">
           </div>
 
           <div style="margin-right: 5%;">
@@ -38,12 +38,6 @@
           <button class="btn-add-person"></button>
         </div>
       </div>
-
-      <!--      <div class="btns-carousel">-->
-      <!--        <button class="btn-carousel" :class="`${isNews1?'btn-carousel-active':' '}`" @click="showNews1"></button>-->
-      <!--        <button class="btn-carousel" :class="`${isNews2?'btn-carousel-active':' '}`" @click="showNews2"></button>-->
-      <!--        <button class="btn-carousel" :class="`${isNews3?'btn-carousel-active':' '}`" @click="showNews3"></button>-->
-      <!--      </div>-->
     </div>
   </div>
 </template>
@@ -111,6 +105,7 @@ export default {
   width: 50%;
   display: flex;
   max-height: 100%;
+  height:28vh;
 }
 
 .btns-carousel {

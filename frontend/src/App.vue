@@ -1,7 +1,17 @@
 <template>
   <div class="main-block">
     <div>
-      <header-comp :is-show-main="isShowMainPage" :is-show-all-person="isShowAllPersonsPage" :is-show-calendar="isShowCalendarPage" :is-show-setting="isShowSettingsPage" :is-login-page="isLoginPage"/>
+      <header-comp :is-show-main="isShowMainPage"
+                   :is-show-all-person="isShowAllPersonsPage"
+                   :is-show-calendar="isShowCalendarPage"
+                   :is-show-setting="isShowSettingsPage"
+                   :is-login-page="isLoginPage"
+
+                   :goToMainPage="goToHeaderPage"
+                   :goToCalendarPage="goToHeaderPage"
+                   :goToSettingPage="goToHeaderPage"
+                   :goToAllPersonPage="goToHeaderPage"
+      />
       <div>
         <token-comp v-show="isShowTokenPage" :onShowToken='onShowToken'/>
         <login-comp v-show="isShowLoginPage" :onShowLogin='onShowLogin'/>
@@ -15,6 +25,7 @@
         <pro-version-comp v-show="isShowProVersionPage"/>
         <calendar-comp v-show="isShowCalendarPage"/>
         <all-persons v-show="isShowAllPersonsPage"/>
+        <leisure-page v-show="isShowLeisurePage"/>
       </div>
     </div>
     <footer-comp/>
@@ -35,10 +46,12 @@ import SettingsComp from '@/components/header/settingsComp'
 import ProVersionComp from "@/components/dropdown/proVersionComp";
 import CalendarComp from "@/components/header/calendarComp";
 import AllPersons from "@/components/header/allPersonsComp";
+import LeisurePage from "@/components/dropdown/leisurePage";
 
 export default {
   name: 'App',
   components: {
+    LeisurePage,
     AllPersons,
     CalendarComp,
     ProVersionComp,
@@ -60,32 +73,40 @@ export default {
       isShowLoginPage: false,
       isShowRegistrationPage: false,
 
-      isShowMainPage: false,
+      isShowMainPage: true,
       isShowEditProfilePage: false,
       isShowAddEventPage: false,
       isShowAddPersonPage: false,
       isShowSettingsPage: false,
       isShowProVersionPage: false,
-      isShowCalendarPage:false,
-      isShowAllPersonsPage:true
+      isShowCalendarPage: false,
+      isShowAllPersonsPage: false,
+      isShowLeisurePage: false,
     }
   },
   methods: {
     onShowToken() {
-      this.isShowLoginPage = false;
-      this.isShowTokenPage = false;
-      this.isShowRegistrationPage = true;
+      // this.isShowLoginPage = false;
+      // this.isShowTokenPage = false;
+      // this.isShowRegistrationPage = true;
     },
     onShowLogin() {
-      this.isShowLoginPage = false;
-      this.isShowTokenPage = true;
-      this.isShowRegistrationPage = false;
+      // this.isShowLoginPage = false;
+      // this.isShowTokenPage = true;
+      // this.isShowRegistrationPage = false;
     },
     onShowRegistration() {
-      this.isShowLoginPage = true;
-      this.isShowTokenPage = false;
-      this.isShowRegistrationPage = false;
-    }
+      // this.isShowLoginPage = true;
+      // this.isShowTokenPage = false;
+      // this.isShowRegistrationPage = false;
+    },
+
+    goToHeaderPage(data) {
+      this.isShowMainPage = data.showMainPage;
+      this.isShowCalendarPage = data.showCalendarPage;
+      this.isShowSettingsPage = data.showSettingPage;
+      this.isShowAllPersonsPage = data.showAllPersonPage;
+    },
   }
 }
 </script>
