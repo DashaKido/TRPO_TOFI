@@ -7,7 +7,8 @@
       <div class="btns-all-width">
         <div class="btns-group">
           <div></div>
-          <button class="btn-style" style="width:166px; margin-top: 0px; margin-bottom: 22px;">
+          <button class="btn-style" style="width:166px; margin-top: 0px; margin-bottom: 22px;"
+                  @click="goToAddEvent">
             ДОБАВИТЬ СОБЫТИЕ
           </button>
         </div>
@@ -19,8 +20,7 @@
                        :show-times="true" :items="items"
                        class="theme-default holiday-us-traditional holiday-us-official">
           <template #header="{headerProps}">
-            <calendar-view-header :header-props="headerProps" :month-names="monthNames"
-                                  @input="setShowDate"/>
+            <calendar-view-header :header-props="headerProps" @input="setShowDate"/>
           </template>
         </calendar-view>
       </div>
@@ -36,6 +36,9 @@ import '../../../node_modules/vue-simple-calendar/dist/css/holidays-us.css'
 export default {
   name: "calendarComp",
   components: {CalendarViewHeader, CalendarView},
+  props: {
+    'goToAddEventPage': Function,
+  },
   data() {
     return {
       showDate: new Date(),
@@ -115,12 +118,50 @@ export default {
           title: 'самое лучшее событие5',
           tooltip: '@самое лучшее событие5'
         },
-      ]
+      ],
+
+      showMainPage: false,
+      showCalendarPage: false,
+      showSettingPage: false,
+      showAllPersonPage: false,
+
+      showEditProfilePage: false,
+      showProVersionPage: false,
+      showLeisurePage: false,
+
+      showAddEventPage: false,
+      showAddPersonPage: false,
     }
   },
   methods: {
     setShowDate(d) {
       this.showDate = d;
+    },
+    goToAddEvent() {
+      this.showMainPage = false;
+      this.showCalendarPage = false;
+      this.showSettingPage = false;
+      this.showAllPersonPage = false;
+
+      this.showEditProfilePage = false;
+      this.showProVersionPage = false;
+      this.showLeisurePage = false;
+
+      this.showAddEventPage = true;
+      this.showAddPersonPage = false;
+      this.goToAddEventPage({
+        showMainPage: this.showMainPage,
+        showCalendarPage: this.showCalendarPage,
+        showSettingPage: this.showSettingPage,
+        showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
+      })
     }
   }
 }

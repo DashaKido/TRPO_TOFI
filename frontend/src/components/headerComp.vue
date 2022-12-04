@@ -49,6 +49,9 @@ export default {
       showEditProfilePage: false,
       showProVersionPage: false,
       showLeisurePage: false,
+
+      showAddEventPage: false,
+      showAddPersonPage: false,
     }
   },
   methods: {
@@ -58,11 +61,24 @@ export default {
       this.showSettingPage = false;
       this.showAllPersonPage = false;
 
+      this.showEditProfilePage = false;
+      this.showProVersionPage = false;
+      this.showLeisurePage = false;
+
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
       this.goToMainPage({
         showMainPage: this.showMainPage,
         showCalendarPage: this.showCalendarPage,
         showSettingPage: this.showSettingPage,
         showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
       })
     },
     goToCalendar() {
@@ -71,11 +87,24 @@ export default {
       this.showSettingPage = false;
       this.showAllPersonPage = false;
 
+      this.showEditProfilePage = false;
+      this.showProVersionPage = false;
+      this.showLeisurePage = false;
+
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
       this.goToCalendarPage({
         showMainPage: this.showMainPage,
         showCalendarPage: this.showCalendarPage,
         showSettingPage: this.showSettingPage,
         showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
       })
     },
     goToSetting() {
@@ -84,11 +113,24 @@ export default {
       this.showSettingPage = true;
       this.showAllPersonPage = false;
 
+      this.showEditProfilePage = false;
+      this.showProVersionPage = false;
+      this.showLeisurePage = false;
+
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
       this.goToSettingPage({
         showMainPage: this.showMainPage,
         showCalendarPage: this.showCalendarPage,
         showSettingPage: this.showSettingPage,
         showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
       })
     },
     goToAllPerson() {
@@ -97,11 +139,24 @@ export default {
       this.showSettingPage = false;
       this.showAllPersonPage = true;
 
+      this.showEditProfilePage = false;
+      this.showProVersionPage = false;
+      this.showLeisurePage = false;
+
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
       this.goToAllPersonPage({
         showMainPage: this.showMainPage,
         showCalendarPage: this.showCalendarPage,
         showSettingPage: this.showSettingPage,
         showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
       })
     },
 
@@ -115,6 +170,8 @@ export default {
       this.showProVersionPage = false;
       this.showLeisurePage = false;
 
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
       this.goToEditProfilePage({
         showMainPage: this.showMainPage,
         showCalendarPage: this.showCalendarPage,
@@ -124,6 +181,9 @@ export default {
         showEditProfilePage: this.showEditProfilePage,
         showProVersionPage: this.showProVersionPage,
         showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
       })
     },
     goToProVersion() {
@@ -136,6 +196,8 @@ export default {
       this.showProVersionPage = true;
       this.showLeisurePage = false;
 
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
       this.goToProVersionPage({
         showMainPage: this.showMainPage,
         showCalendarPage: this.showCalendarPage,
@@ -145,6 +207,9 @@ export default {
         showEditProfilePage: this.showEditProfilePage,
         showProVersionPage: this.showProVersionPage,
         showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
       })
     },
     goToLeisure() {
@@ -157,6 +222,8 @@ export default {
       this.showProVersionPage = false;
       this.showLeisurePage = true;
 
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
       this.goToLeisurePage({
         showMainPage: this.showMainPage,
         showCalendarPage: this.showCalendarPage,
@@ -166,6 +233,9 @@ export default {
         showEditProfilePage: this.showEditProfilePage,
         showProVersionPage: this.showProVersionPage,
         showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
       })
     },
   }

@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="one-person-block">
-          <button class="btn-add-person"></button>
+          <button class="btn-add-person" @click="goToAddPerson"></button>
         </div>
       </div>
     </div>
@@ -45,6 +45,9 @@
 <script>
 export default {
   name: "allFriends",
+  props: {
+    'goToAddPersonPage': Function,
+  },
   data() {
     return {
       persons: [
@@ -69,6 +72,45 @@ export default {
         //   telegram: '@shef.in',
         // },
       ],
+      showMainPage: false,
+      showCalendarPage: false,
+      showSettingPage: false,
+      showAllPersonPage: false,
+
+      showEditProfilePage: false,
+      showProVersionPage: false,
+      showLeisurePage: false,
+
+      showAddEventPage: false,
+      showAddPersonPage: false,
+    }
+  },
+  methods: {
+    goToAddPerson() {
+      this.showMainPage = false;
+      this.showCalendarPage = false;
+      this.showSettingPage = false;
+      this.showAllPersonPage = false;
+
+      this.showEditProfilePage = false;
+      this.showProVersionPage = false;
+      this.showLeisurePage = false;
+
+      this.showAddEventPage = false;
+      this.showAddPersonPage = true;
+      this.goToAddPersonPage({
+        showMainPage: this.showMainPage,
+        showCalendarPage: this.showCalendarPage,
+        showSettingPage: this.showSettingPage,
+        showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
+      })
     }
   }
 }
@@ -105,7 +147,7 @@ export default {
   width: 50%;
   display: flex;
   max-height: 100%;
-  height:28vh;
+  height: 28vh;
 }
 
 .btns-carousel {

@@ -113,10 +113,10 @@
 
       <div class="btns-all-width">
         <div class="btns-group">
-          <button class="btn-style btn-grey">
+          <button class="btn-style btn-grey" @click="goToAllPerson">
             ОТМЕНА
           </button>
-          <button class="btn-style">
+          <button class="btn-style" @click="goToAllPerson">
             СОХРАНИТЬ
           </button>
         </div>
@@ -128,6 +128,9 @@
 <script>
 export default {
   name: "addPersonComp",
+  props: {
+    'goToAllPersonPage': Function,
+  },
   data() {
     return {
       selectedCategory: null,
@@ -182,6 +185,18 @@ export default {
       info: '',
       errorName: false,
       errorInfo: false,
+
+      showMainPage: false,
+      showCalendarPage: false,
+      showSettingPage: false,
+      showAllPersonPage: false,
+
+      showEditProfilePage: false,
+      showProVersionPage: false,
+      showLeisurePage: false,
+
+      showAddEventPage: false,
+      showAddPersonPage: false,
     }
   },
   methods: {
@@ -214,7 +229,33 @@ export default {
       let index = this.allInfo.findIndex(item => item.main == this.selectedInfo);
       this.allInfo.splice(index, 1);
       this.selectedInfo = '';
-    }
+    },
+    goToAllPerson() {
+      this.showMainPage = false;
+      this.showCalendarPage = false;
+      this.showSettingPage = false;
+      this.showAllPersonPage = true;
+
+      this.showEditProfilePage = false;
+      this.showProVersionPage = false;
+      this.showLeisurePage = false;
+
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
+      this.goToAllPersonPage({
+        showMainPage: this.showMainPage,
+        showCalendarPage: this.showCalendarPage,
+        showSettingPage: this.showSettingPage,
+        showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
+      })
+    },
   }
 }
 </script>

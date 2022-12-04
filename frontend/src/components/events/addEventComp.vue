@@ -51,10 +51,10 @@
       </div>
       <div class="btns-all-width">
         <div class="btns-group">
-          <button class="btn-style btn-grey">
+          <button class="btn-style btn-grey" @click="goToCalendar">
             ОТМЕНА
           </button>
-          <button class="btn-style">
+          <button class="btn-style" @click="goToCalendar">
             СОХРАНИТЬ
           </button>
         </div>
@@ -66,6 +66,9 @@
 <script>
 export default {
   name: "addEventComp",
+  props: {
+    'goToCalendarPage': Function,
+  },
   data() {
     return {
       selectedFriend: null,
@@ -91,7 +94,47 @@ export default {
           text: 'Friend 4 (@tg4)'
         },
       ],
+
+      showMainPage: false,
+      showCalendarPage: false,
+      showSettingPage: false,
+      showAllPersonPage: false,
+
+      showEditProfilePage: false,
+      showProVersionPage: false,
+      showLeisurePage: false,
+
+      showAddEventPage: false,
+      showAddPersonPage: false,
     }
+  },
+  methods: {
+    goToCalendar() {
+      this.showMainPage = false;
+      this.showCalendarPage = true;
+      this.showSettingPage = false;
+      this.showAllPersonPage = false;
+
+      this.showEditProfilePage = false;
+      this.showProVersionPage = false;
+      this.showLeisurePage = false;
+
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
+      this.goToCalendarPage({
+        showMainPage: this.showMainPage,
+        showCalendarPage: this.showCalendarPage,
+        showSettingPage: this.showSettingPage,
+        showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
+      })
+    },
   }
 }
 </script>

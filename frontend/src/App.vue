@@ -7,14 +7,14 @@
                    :is-show-setting="isShowSettingsPage"
                    :is-login-page="isLoginPage"
 
-                   :goToMainPage="goToHeaderPage"
-                   :goToCalendarPage="goToHeaderPage"
-                   :goToSettingPage="goToHeaderPage"
-                   :goToAllPersonPage="goToHeaderPage"
+                   :goToMainPage="goToPage"
+                   :goToCalendarPage="goToPage"
+                   :goToSettingPage="goToPage"
+                   :goToAllPersonPage="goToPage"
 
-                   :goToEditProfilePage="goToHeaderPage"
-                   :goToProVersionPage="goToHeaderPage"
-                   :goToLeisurePage="goToHeaderPage"
+                   :goToEditProfilePage="goToPage"
+                   :goToProVersionPage="goToPage"
+                   :goToLeisurePage="goToPage"
       />
       <div>
         <token-comp v-show="isShowTokenPage" :onShowToken='onShowToken'/>
@@ -23,12 +23,20 @@
 
         <main-comp v-show="isShowMainPage"/>
         <edit-profile-comp v-show="isShowEditProfilePage"/>
-        <add-event-comp v-show="isShowAddEventPage"/>
-        <add-person-comp v-show="isShowAddPersonPage"/>
+
+        <add-event-comp v-show="isShowAddEventPage"
+                        :goToCalendarPage="goToPage"/>
+
+        <add-person-comp v-show="isShowAddPersonPage"
+                         :goToAllPersonPage="goToPage"/>
         <settings-comp v-show="isShowSettingsPage"/>
         <pro-version-comp v-show="isShowProVersionPage"/>
-        <calendar-comp v-show="isShowCalendarPage"/>
-        <all-persons v-show="isShowAllPersonsPage"/>
+
+        <calendar-comp v-show="isShowCalendarPage"
+                       :goToAddEventPage="goToPage"/>
+
+        <all-persons v-show="isShowAllPersonsPage"
+                     :goToAddPersonPage="goToPage"/>
         <leisure-page v-show="isShowLeisurePage"/>
       </div>
     </div>
@@ -105,7 +113,7 @@ export default {
       // this.isShowRegistrationPage = false;
     },
 
-    goToHeaderPage(data) {
+    goToPage(data) {
       this.isShowMainPage = data.showMainPage;
       this.isShowCalendarPage = data.showCalendarPage;
       this.isShowSettingsPage = data.showSettingPage;
@@ -114,6 +122,9 @@ export default {
       this.isShowEditProfilePage = data.showEditProfilePage;
       this.isShowProVersionPage = data.showProVersionPage;
       this.isShowLeisurePage = data.showLeisurePage;
+
+      this.isShowAddEventPage = data.showAddEventPage;
+      this.isShowAddPersonPage = data.showAddPersonPage;
     },
   }
 }
