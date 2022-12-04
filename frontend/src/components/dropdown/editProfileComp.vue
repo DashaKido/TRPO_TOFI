@@ -7,7 +7,7 @@
       <div class="edit-profile">
         <div class="load-photo">
           <div>
-            <img class="photo-style" :src="require('../assets/anon.jpg')">
+            <img class="photo-style" :src="require('@/assets/anon.jpg')">
           </div>
           <div>
             <label class="input-label">ЗАГРУЗИТЬ ФОТО</label>

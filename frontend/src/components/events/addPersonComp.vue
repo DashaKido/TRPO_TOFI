@@ -7,7 +7,7 @@
       <div class="add-person">
         <div class="load-photo">
           <div>
-            <img class="photo-style" :src="require('../assets/boyfriend.jpg')">
+            <img class="photo-style" :src="require('@/assets/boyfriend.jpg')">
           </div>
           <div>
             <label class="input-label">ЗАГРУЗИТЬ ФОТО</label>

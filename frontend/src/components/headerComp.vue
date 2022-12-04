@@ -36,7 +36,7 @@ export default {
 <style scoped>
 .dropdown-btn {
   margin-top: 5px;
-  background-image: url("../assets/anon.jpg");
+  background-image: url("@/assets/anon.jpg");
   background-repeat: no-repeat;
   background-color: transparent;
   width: 30px;

@@ -23,16 +23,16 @@
 <script>
 import headerComp from "./components/headerComp";
 import footerComp from "./components/footerComp";
-import TokenComp from "./components/tokenComp";
-import LoginComp from "./components/loginComp";
-import RegistrationComp from "./components/registrationComp";
-import MainComp from "./components/mainComp";
-import EditProfileComp from "./components/editProfileComp";
-import AddEventComp from "./components/addEventComp";
-import AddPersonComp from "./components/addPersonComp";
-import SettingsComp from './components/settingsComp'
-import ProVersionComp from "./components/proVersionComp";
-import CalendarComp from "@/components/calendarComp";
+import TokenComp from "@/components/login/tokenComp";
+import LoginComp from "@/components/login/loginComp";
+import RegistrationComp from "@/components/login/registrationComp";
+import MainComp from "@/components/header/mainComp";
+import EditProfileComp from "@/components/dropdown/editProfileComp";
+import AddEventComp from "@/components/events/addEventComp";
+import AddPersonComp from "@/components/events/addPersonComp";
+import SettingsComp from '@/components/header/settingsComp'
+import ProVersionComp from "@/components/dropdown/proVersionComp";
+import CalendarComp from "@/components/header/calendarComp";
 
 export default {
   name: 'App',
@@ -53,16 +53,16 @@ export default {
   data() {
     return {
       isLoginPage: true,
-      isShowTokenPage: false,
-      isShowLoginPage: false,
-      isShowRegistrationPage: false,
+      isShowTokenPage: true,
+      isShowLoginPage: true,
+      isShowRegistrationPage: true,
 
-      isShowMainPage: false,
-      isShowEditProfilePage: false,
-      isShowAddEventPage: false,
-      isShowAddPersonPage: false,
-      isShowSettingsPage: false,
-      isShowProVersionPage: false,
+      isShowMainPage: true,
+      isShowEditProfilePage: true,
+      isShowAddEventPage: true,
+      isShowAddPersonPage: true,
+      isShowSettingsPage: true,
+      isShowProVersionPage: true,
       isShowCalendarPage:true
     }
   },

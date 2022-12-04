@@ -7,7 +7,7 @@
       <div class="add-event">
         <div class="load-photo">
           <div>
-            <img class="photo-style" :src="require('../assets/friend.jpg')">
+            <img class="photo-style" :src="require('@/assets/friend.jpg')">
           </div>
         </div>
 
