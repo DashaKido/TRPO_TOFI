@@ -1,7 +1,7 @@
 <template>
   <div class="main-block">
     <div>
-      <header-comp :is-show-main="isShowMainPage" :is-show-calendar="isShowCalendarPage" :is-show-setting="isShowSettingsPage" :is-login-page="isLoginPage"/>
+      <header-comp :is-show-main="isShowMainPage" :is-show-all-person="isShowAllPersonsPage" :is-show-calendar="isShowCalendarPage" :is-show-setting="isShowSettingsPage" :is-login-page="isLoginPage"/>
       <div>
         <token-comp v-show="isShowTokenPage" :onShowToken='onShowToken'/>
         <login-comp v-show="isShowLoginPage" :onShowLogin='onShowLogin'/>
@@ -14,6 +14,7 @@
         <settings-comp v-show="isShowSettingsPage"/>
         <pro-version-comp v-show="isShowProVersionPage"/>
         <calendar-comp v-show="isShowCalendarPage"/>
+        <all-persons v-show="isShowAllPersonsPage"/>
       </div>
     </div>
     <footer-comp/>
@@ -33,10 +34,12 @@ import AddPersonComp from "@/components/events/addPersonComp";
 import SettingsComp from '@/components/header/settingsComp'
 import ProVersionComp from "@/components/dropdown/proVersionComp";
 import CalendarComp from "@/components/header/calendarComp";
+import AllPersons from "@/components/header/allPersonsComp";
 
 export default {
   name: 'App',
   components: {
+    AllPersons,
     CalendarComp,
     ProVersionComp,
     SettingsComp,
@@ -53,17 +56,18 @@ export default {
   data() {
     return {
       isLoginPage: true,
-      isShowTokenPage: true,
-      isShowLoginPage: true,
-      isShowRegistrationPage: true,
+      isShowTokenPage: false,
+      isShowLoginPage: false,
+      isShowRegistrationPage: false,
 
-      isShowMainPage: true,
-      isShowEditProfilePage: true,
-      isShowAddEventPage: true,
-      isShowAddPersonPage: true,
-      isShowSettingsPage: true,
-      isShowProVersionPage: true,
-      isShowCalendarPage:true
+      isShowMainPage: false,
+      isShowEditProfilePage: false,
+      isShowAddEventPage: false,
+      isShowAddPersonPage: false,
+      isShowSettingsPage: false,
+      isShowProVersionPage: false,
+      isShowCalendarPage:false,
+      isShowAllPersonsPage:true
     }
   },
   methods: {
