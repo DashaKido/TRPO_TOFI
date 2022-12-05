@@ -1,25 +1,25 @@
 const { ObjectId } = require("mongodb");
 const { logger } = require("../service/logger");
 
-const getAll = async (collection, db) => {
+const getAll = async (collection, db, token) => {
   try {
-    const entities = await db.collection(collection).find({}).toArray();
+    const entities = await db.collection(collection).find({ token }).toArray();
 
     return entities;
   } catch (e) {
-    logger.error(e);
+    logger.error(e.stack);
   }
 };
 
-const getById = async (collection, _id, db) => {
+const getById = async (collection, _id, db, token) => {
   try {
     const entities = await db
       .collection(collection)
-      .findMany({ _id: new ObjectId(_id) });
+      .findMany({ _id: new ObjectId(_id), token });
 
     return entities;
   } catch (e) {
-    logger.error(e);
+    logger.error(e.stack);
   }
 };
 
@@ -31,39 +31,49 @@ const create = async (collection, body, db) => {
 
     return createdEntity;
   } catch (e) {
-    logger.error(e);
+    logger.error(e.stack);
   }
 };
 
 const deleteEntity = async (collection, _id, db) => {
   try {
-    await db.collection(collection).deleteOne({ _id: new ObjectId(_id) });
+    await db
+      .collection(collection)
+      .deleteOne({ _id: new ObjectId(_id), token });
   } catch (e) {
-    logger.error(e);
+    logger.error(e.stack);
   }
 };
 
 const updateEntity = async (collection, id, body, db) => {
   console.log(collection);
   try {
-    console.log(
-      await db.collection(collection).findOne({ _id: new ObjectId(id) })
-    );
     const updated = await db
       .collection(collection)
       .findOneAndUpdate(
-        { _id: new ObjectId(id) },
+        { _id: new ObjectId(id), token },
         { $set: body },
         { returnDocument: "after" }
       );
 
     return updated.value;
   } catch (e) {
-    logger.error(e);
+    logger.error(e.stack);
+  }
+};
+
+const getMe = async (token, db) => {
+  try {
+    const me = await db.collection("User").find({ token });
+
+    return me;
+  } catch (e) {
+    logger.error(e.stack);
   }
 };
 
 module.exports = {
+  getMe,
   getAll,
   getById,
   create,

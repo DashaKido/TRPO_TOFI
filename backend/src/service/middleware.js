@@ -1,9 +1,8 @@
-const authMiddleware = (req, res) => {
+const authMiddleware = (req, res, next) => {
+  console.log(req.headers.token);
   if (req.headers.token) {
-    res.next();
-  }
-
-  res.status(401).send("No token presented in the headers");
+    next();
+  } else res.status(401).send("No token presented in the headers");
 };
 
 module.exports = {

@@ -39,7 +39,7 @@ const deleteEntity = async (req, res) => {
     await repository.deleteEntity(collection, id, req.app.locals.db);
     res.status(200);
   } catch (e) {
-    logger.error(e);
+    logger.error(e.stack);
     res.status(400).send(400);
   }
 };
@@ -47,12 +47,23 @@ const create = async (req, res) => {
   const { collection } = req.params;
   const { body } = req;
 
-  const created = repository.create(collection, body, req.app.locals.db);
+  const created = await repository.create(collection, body, req.app.locals.db);
 
   res.status(200).send(created);
 };
 
+const getMe = async (req, res) => {
+  const { token } = req.headers;
+
+  const me = await repository.getMe(token, req.app.locals.db);
+
+  console.log();
+
+  res.status(200).send((await me.toArray())[0]);
+};
+
 module.exports = {
+  getMe,
   getAll,
   getById,
   updateById,

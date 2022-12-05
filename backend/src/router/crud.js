@@ -1,13 +1,14 @@
 const express = require("express");
 const service = require("../service/crud");
-const authMiddleware = require("../service/middleware");
+const { authMiddleware } = require("../service/middleware");
 
 const router = express.Router();
 
+router.get("/me", authMiddleware, service.getMe);
 router.get("/:collection", service.getAll);
-router.get("/:collection/:id", service.getById);
+router.get("/:collection/:id",service.getById);
 router.post("/:collection", service.create);
-router.put("/:collection/:id", service.updateById);
+router.put("/:collection/:id",service.updateById);
 router.delete("/:collection/:id", service.deleteEntity);
 
 // GET /api/:collection/ -> [<collection>: {_id}]
