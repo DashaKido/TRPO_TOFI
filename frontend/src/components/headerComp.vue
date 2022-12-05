@@ -2,17 +2,17 @@
   <div class="header-block">
     <span class="logo-text">TELEGRAM</span>
     <div class="main-sections-block" v-show="isLoginPage">
-      <span class="link-item" :class="`${isShowMain?'active':''}`">ГЛАВНАЯ</span>
-      <span class="link-item" :class="`${isShowCalendar?'active':''}`">КАЛЕНДАРЬ</span>
-      <span class="link-item" :class="`${isShowSetting?'active':''}`">НАСТРОЙКИ ЧАТА</span>
-      <span class="link-item" :class="`${isShowAllPerson?'active':''}`">ДРУЗЬЯ</span>
+      <span class="link-item" :class="`${isShowMain?'active':''}`" @click="goToMain">ГЛАВНАЯ</span>
+      <span class="link-item" :class="`${isShowCalendar?'active':''}`" @click="goToCalendar">КАЛЕНДАРЬ</span>
+      <span class="link-item" :class="`${isShowSetting?'active':''}`" @click="goToSetting">НАСТРОЙКИ ЧАТА</span>
+      <span class="link-item" :class="`${isShowAllPerson?'active':''}`" @click="goToAllPerson">ДРУЗЬЯ</span>
       <b-dropdown no-caret variant="link">
         <template #button-content>
           <div class="dropdown-btn"></div>
         </template>
-        <b-dropdown-item class="text-style">РЕДАКТИРОВАТЬ ПРОФИЛЬ</b-dropdown-item>
-        <b-dropdown-item class="text-style">ТАРИФЫ</b-dropdown-item>
-        <b-dropdown-item class="text-style">ДОСУГ</b-dropdown-item>
+        <b-dropdown-item class="text-style" @click="goToEditProfile">РЕДАКТИРОВАТЬ ПРОФИЛЬ</b-dropdown-item>
+        <b-dropdown-item class="text-style" @click="goToProVersion">ТАРИФЫ</b-dropdown-item>
+        <b-dropdown-item class="text-style" @click="goToLeisure">ДОСУГ</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item class="text-style">ВЫХОД</b-dropdown-item>
       </b-dropdown>
@@ -23,20 +23,229 @@
 <script>
 export default {
   name: "headerComp",
-  props: [
-    'isLoginPage',
-    'isShowMain',
-    'isShowSetting',
-    'isShowCalendar',
-    'isShowAllPerson'
-  ],
+  props: {
+    'isLoginPage': Boolean,
+    'isShowMain': Boolean,
+    'isShowSetting': Boolean,
+    'isShowCalendar': Boolean,
+    'isShowAllPerson': Boolean,
+
+    'goToMainPage': Function,
+    'goToCalendarPage': Function,
+    'goToSettingPage': Function,
+    'goToAllPersonPage': Function,
+
+    'goToEditProfilePage': Function,
+    'goToProVersionPage': Function,
+    'goToLeisurePage': Function,
+  },
+  data() {
+    return {
+      showMainPage: false,
+      showCalendarPage: false,
+      showSettingPage: false,
+      showAllPersonPage: false,
+
+      showEditProfilePage: false,
+      showProVersionPage: false,
+      showLeisurePage: false,
+
+      showAddEventPage: false,
+      showAddPersonPage: false,
+    }
+  },
+  methods: {
+    goToMain() {
+      this.showMainPage = true;
+      this.showCalendarPage = false;
+      this.showSettingPage = false;
+      this.showAllPersonPage = false;
+
+      this.showEditProfilePage = false;
+      this.showProVersionPage = false;
+      this.showLeisurePage = false;
+
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
+      this.goToMainPage({
+        showMainPage: this.showMainPage,
+        showCalendarPage: this.showCalendarPage,
+        showSettingPage: this.showSettingPage,
+        showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
+      })
+    },
+    goToCalendar() {
+      this.showMainPage = false;
+      this.showCalendarPage = true;
+      this.showSettingPage = false;
+      this.showAllPersonPage = false;
+
+      this.showEditProfilePage = false;
+      this.showProVersionPage = false;
+      this.showLeisurePage = false;
+
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
+      this.goToCalendarPage({
+        showMainPage: this.showMainPage,
+        showCalendarPage: this.showCalendarPage,
+        showSettingPage: this.showSettingPage,
+        showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
+      })
+    },
+    goToSetting() {
+      this.showMainPage = false;
+      this.showCalendarPage = false;
+      this.showSettingPage = true;
+      this.showAllPersonPage = false;
+
+      this.showEditProfilePage = false;
+      this.showProVersionPage = false;
+      this.showLeisurePage = false;
+
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
+      this.goToSettingPage({
+        showMainPage: this.showMainPage,
+        showCalendarPage: this.showCalendarPage,
+        showSettingPage: this.showSettingPage,
+        showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
+      })
+    },
+    goToAllPerson() {
+      this.showMainPage = false;
+      this.showCalendarPage = false;
+      this.showSettingPage = false;
+      this.showAllPersonPage = true;
+
+      this.showEditProfilePage = false;
+      this.showProVersionPage = false;
+      this.showLeisurePage = false;
+
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
+      this.goToAllPersonPage({
+        showMainPage: this.showMainPage,
+        showCalendarPage: this.showCalendarPage,
+        showSettingPage: this.showSettingPage,
+        showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
+      })
+    },
+
+    goToEditProfile() {
+      this.showMainPage = false;
+      this.showCalendarPage = false;
+      this.showSettingPage = false;
+      this.showAllPersonPage = false;
+
+      this.showEditProfilePage = true;
+      this.showProVersionPage = false;
+      this.showLeisurePage = false;
+
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
+      this.goToEditProfilePage({
+        showMainPage: this.showMainPage,
+        showCalendarPage: this.showCalendarPage,
+        showSettingPage: this.showSettingPage,
+        showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
+      })
+    },
+    goToProVersion() {
+      this.showMainPage = false;
+      this.showCalendarPage = false;
+      this.showSettingPage = false;
+      this.showAllPersonPage = false;
+
+      this.showEditProfilePage = false;
+      this.showProVersionPage = true;
+      this.showLeisurePage = false;
+
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
+      this.goToProVersionPage({
+        showMainPage: this.showMainPage,
+        showCalendarPage: this.showCalendarPage,
+        showSettingPage: this.showSettingPage,
+        showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
+      })
+    },
+    goToLeisure() {
+      this.showMainPage = false;
+      this.showCalendarPage = false;
+      this.showSettingPage = false;
+      this.showAllPersonPage = false;
+
+      this.showEditProfilePage = false;
+      this.showProVersionPage = false;
+      this.showLeisurePage = true;
+
+      this.showAddEventPage = false;
+      this.showAddPersonPage = false;
+      this.goToLeisurePage({
+        showMainPage: this.showMainPage,
+        showCalendarPage: this.showCalendarPage,
+        showSettingPage: this.showSettingPage,
+        showAllPersonPage: this.showAllPersonPage,
+
+        showEditProfilePage: this.showEditProfilePage,
+        showProVersionPage: this.showProVersionPage,
+        showLeisurePage: this.showLeisurePage,
+
+        showAddEventPage: this.showAddEventPage,
+        showAddPersonPage: this.showAddPersonPage,
+      })
+    },
+  }
 }
 </script>
 
 <style scoped>
 .dropdown-btn {
   margin-top: 5px;
-  background-image: url("../assets/anon.jpg");
+  background-image: url("@/assets/anon.jpg");
   background-repeat: no-repeat;
   background-color: transparent;
   width: 30px;
@@ -57,6 +266,7 @@ export default {
   font-weight: 500;
   color: #405159;
   line-height: 19px;
+  cursor: pointer;
 }
 
 .logo-text {

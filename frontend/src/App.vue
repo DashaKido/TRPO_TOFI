@@ -1,18 +1,43 @@
 <template>
   <div class="main-block">
     <div>
-      <header-comp :is-show-main="isShowMain" :is-show-setting="isShowSettings" :is-login-page="isLoginPage"/>
-      <div>
-        <token-comp v-show="isShowToken" :onShowToken='onShowToken'/>
-        <login-comp v-show="isShowLogin" :onShowLogin='onShowLogin'/>
-        <registration-comp v-show="isShowRegistration" :onShowRegistration="onShowRegistration"/>
+      <header-comp :is-show-main="isShowMainPage"
+                   :is-show-all-person="isShowAllPersonsPage"
+                   :is-show-calendar="isShowCalendarPage"
+                   :is-show-setting="isShowSettingsPage"
+                   :is-login-page="isLoginPage"
 
-        <main-comp v-show="isShowMain"/>
-        <edit-profile-comp v-show="isShowEditProfile"/>
-        <add-event-comp v-show="isShowAddEvent"/>
-        <add-person-comp v-show="isShowAddPerson"/>
-        <settings-comp v-show="isShowSettings"/>
+                   :goToMainPage="goToPage"
+                   :goToCalendarPage="goToPage"
+                   :goToSettingPage="goToPage"
+                   :goToAllPersonPage="goToPage"
+
+                   :goToEditProfilePage="goToPage"
+                   :goToProVersionPage="goToPage"
+                   :goToLeisurePage="goToPage"
+      />
+      <div>
+        <token-comp v-show="isShowTokenPage" :onShowToken='onShowToken'/>
+        <login-comp v-show="isShowLoginPage" :onShowLogin='onShowLogin'/>
+        <registration-comp v-show="isShowRegistrationPage" :onShowRegistration="onShowRegistration"/>
+
+        <main-comp v-show="isShowMainPage"/>
+        <edit-profile-comp v-show="isShowEditProfilePage"/>
+
+        <add-event-comp v-show="isShowAddEventPage"
+                        :goToCalendarPage="goToPage"/>
+
+        <add-person-comp v-show="isShowAddPersonPage"
+                         :goToAllPersonPage="goToPage"/>
+        <settings-comp v-show="isShowSettingsPage"/>
         <pro-version-comp v-show="isShowProVersionPage"/>
+
+        <calendar-comp v-show="isShowCalendarPage"
+                       :goToAddEventPage="goToPage"/>
+
+        <all-persons v-show="isShowAllPersonsPage"
+                     :goToAddPersonPage="goToPage"/>
+        <leisure-page v-show="isShowLeisurePage"/>
       </div>
     </div>
     <footer-comp/>
@@ -22,19 +47,25 @@
 <script>
 import headerComp from "./components/headerComp";
 import footerComp from "./components/footerComp";
-import TokenComp from "./components/tokenComp";
-import LoginComp from "./components/loginComp";
-import RegistrationComp from "./components/registrationComp";
-import MainComp from "./components/mainComp";
-import EditProfileComp from "./components/editProfileComp";
-import AddEventComp from "./components/addEventComp";
-import AddPersonComp from "./components/addPersonComp";
-import SettingsComp from './components/settingsComp'
-import ProVersionComp from "./components/proVersionComp";
+import TokenComp from "@/components/login/tokenComp";
+import LoginComp from "@/components/login/loginComp";
+import RegistrationComp from "@/components/login/registrationComp";
+import MainComp from "@/components/header/mainComp";
+import EditProfileComp from "@/components/dropdown/editProfileComp";
+import AddEventComp from "@/components/events/addEventComp";
+import AddPersonComp from "@/components/events/addPersonComp";
+import SettingsComp from '@/components/header/settingsComp'
+import ProVersionComp from "@/components/dropdown/proVersionComp";
+import CalendarComp from "@/components/header/calendarComp";
+import AllPersons from "@/components/header/allPersonsComp";
+import LeisurePage from "@/components/dropdown/leisurePage";
 
 export default {
   name: 'App',
   components: {
+    LeisurePage,
+    AllPersons,
+    CalendarComp,
     ProVersionComp,
     SettingsComp,
     AddPersonComp,
@@ -50,34 +81,51 @@ export default {
   data() {
     return {
       isLoginPage: true,
-      isShowToken: false,
-      isShowLogin: false,
-      isShowRegistration: false,
+      isShowTokenPage: false,
+      isShowLoginPage: false,
+      isShowRegistrationPage: false,
 
-      isShowMain: false,
-      isShowEditProfile: false,
-      isShowAddEvent: false,
-      isShowAddPerson: false,
-      isShowSettings: false,
-      isShowProVersionPage:true
+      isShowMainPage: true,
+      isShowEditProfilePage: false,
+      isShowAddEventPage: false,
+      isShowAddPersonPage: false,
+      isShowSettingsPage: false,
+      isShowProVersionPage: false,
+      isShowCalendarPage: false,
+      isShowAllPersonsPage: false,
+      isShowLeisurePage: false,
     }
   },
   methods: {
     onShowToken() {
-      this.isShowLogin = false;
-      this.isShowToken = false;
-      this.isShowRegistration = true;
+      // this.isShowLoginPage = false;
+      // this.isShowTokenPage = false;
+      // this.isShowRegistrationPage = true;
     },
     onShowLogin() {
-      this.isShowLogin = false;
-      this.isShowToken = true;
-      this.isShowRegistration = false;
+      // this.isShowLoginPage = false;
+      // this.isShowTokenPage = true;
+      // this.isShowRegistrationPage = false;
     },
     onShowRegistration() {
-      this.isShowLogin = true;
-      this.isShowToken = false;
-      this.isShowRegistration = false;
-    }
+      // this.isShowLoginPage = true;
+      // this.isShowTokenPage = false;
+      // this.isShowRegistrationPage = false;
+    },
+
+    goToPage(data) {
+      this.isShowMainPage = data.showMainPage;
+      this.isShowCalendarPage = data.showCalendarPage;
+      this.isShowSettingsPage = data.showSettingPage;
+      this.isShowAllPersonsPage = data.showAllPersonPage;
+
+      this.isShowEditProfilePage = data.showEditProfilePage;
+      this.isShowProVersionPage = data.showProVersionPage;
+      this.isShowLeisurePage = data.showLeisurePage;
+
+      this.isShowAddEventPage = data.showAddEventPage;
+      this.isShowAddPersonPage = data.showAddPersonPage;
+    },
   }
 }
 </script>

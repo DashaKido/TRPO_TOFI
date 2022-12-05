@@ -223,15 +223,15 @@ export default {
 }
 
 .news1 {
-  background-image: url("../assets/news1.jpg");
+  background-image: url("@/assets/news1.jpg");
 }
 
 .news2 {
-  background-image: url("../assets/news2.jpg");
+  background-image: url("@/assets/news2.jpg");
 }
 
 .news3 {
-  background-image: url("../assets/news3.jpg");
+  background-image: url("@/assets/news3.jpg");
 }
 
 .news-img {
