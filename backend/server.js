@@ -1,10 +1,12 @@
 const app = require("express")();
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
+const cors = require('cors');
+
 const router = require("./src/router/crud");
 const client = require("./src/service/db");
-const { logger } = require("./src/service/logger");
-const { runMigration } = require("./src/service/migrations");
+// const { logger } = require("./src/service/logger");
+// const { runMigration } = require("./src/service/migrations");
 const { onStart } = require("./src/service/telegram");
 
 dotenv.config();
@@ -17,6 +19,7 @@ client.connect(process.env.MONGODB_CLUSTER_URI, (err, database) => {
   app.locals.db = database.db("trpotofi");
 
   app.use(bodyParser.json());
+  app.use(cors())
 
   app.use((req, res) => {
 

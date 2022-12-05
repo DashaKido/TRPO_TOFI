@@ -167,14 +167,21 @@ const onStart = (db) => {
         {}
       );
 
+    let settingsEntity = await db.collection("Settings").findOne({ id });
+    // console.log(Object.keys(settingsEntity).length > 0);
+    if (!settingsEntity || Object.keys(settingsEntity).length > 0) {
+      await db
+        .collection("Settings")
+        .findOneAndUpdate({ id }, { $set: settings });
+    } else await db.collection("Settings").insertOne({ ...settings, id });
+
     if (settings.randomCat) {
       const catPhoto = await getBase64("https://cataas.com/cat");
       bot.sendPhoto(id, catPhoto);
-      const task = cron.schedule("*/1 * * * *", async () => {
+      const task = cron.schedule("*/10 * * * *", async () => {
         const catPhoto = await getBase64("https://cataas.com/cat");
         bot.sendPhoto(id, catPhoto);
       });
-      db.collection("Settings").updateOne();
     } else {
     }
 
