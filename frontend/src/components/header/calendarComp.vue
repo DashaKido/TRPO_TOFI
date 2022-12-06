@@ -32,13 +32,11 @@
 import {CalendarView, CalendarViewHeader} from "vue-simple-calendar";
 import '../../../node_modules/vue-simple-calendar/dist/css/default.css'
 import '../../../node_modules/vue-simple-calendar/dist/css/holidays-us.css'
+import {mapActions} from "vuex";
 
 export default {
   name: "calendarComp",
   components: {CalendarViewHeader, CalendarView},
-  props: {
-    'goToAddEventPage': Function,
-  },
   data() {
     return {
       showDate: new Date(),
@@ -119,49 +117,38 @@ export default {
           tooltip: '@самое лучшее событие5'
         },
       ],
-
-      showMainPage: false,
-      showCalendarPage: false,
-      showSettingPage: false,
-      showAllPersonPage: false,
-
-      showEditProfilePage: false,
-      showProVersionPage: false,
-      showLeisurePage: false,
-
-      showAddEventPage: false,
-      showAddPersonPage: false,
     }
   },
+
   methods: {
+    ...mapActions({
+      loadMainPage: 'setMainPage',
+      loadSettingsPage: 'setSettingsPage',
+      loadCalendarPage: 'setCalendarPage',
+      loadAllPersonsPage: 'setAllPersonsPage',
+
+      loadEditProfilePage: 'setEditProfilePage',
+      loadProVersionPage: 'setProVersionPage',
+      loadLeisurePage: 'setLeisurePage',
+
+      loadAddEventPage: 'setAddEventPage',
+      loadAddPersonPage: 'setAddPersonPage'
+    }),
     setShowDate(d) {
       this.showDate = d;
     },
     goToAddEvent() {
-      this.showMainPage = false;
-      this.showCalendarPage = false;
-      this.showSettingPage = false;
-      this.showAllPersonPage = false;
+      this.loadMainPage(false);
+      this.loadCalendarPage(false);
+      this.loadSettingsPage(false);
+      this.loadAllPersonsPage(false);
 
-      this.showEditProfilePage = false;
-      this.showProVersionPage = false;
-      this.showLeisurePage = false;
+      this.loadEditProfilePage(false);
+      this.loadProVersionPage(false);
+      this.loadLeisurePage(false);
 
-      this.showAddEventPage = true;
-      this.showAddPersonPage = false;
-      this.goToAddEventPage({
-        showMainPage: this.showMainPage,
-        showCalendarPage: this.showCalendarPage,
-        showSettingPage: this.showSettingPage,
-        showAllPersonPage: this.showAllPersonPage,
-
-        showEditProfilePage: this.showEditProfilePage,
-        showProVersionPage: this.showProVersionPage,
-        showLeisurePage: this.showLeisurePage,
-
-        showAddEventPage: this.showAddEventPage,
-        showAddPersonPage: this.showAddPersonPage,
-      })
+      this.loadAddEventPage(true);
+      this.loadAddPersonPage(false);
     }
   }
 }

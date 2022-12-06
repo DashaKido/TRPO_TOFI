@@ -6,11 +6,14 @@
       <span class="text-style">
         TOKEN
       </span>
-
-        <input class="input-style">
+        <input class="input-style" v-model="token" style="margin-bottom: 0;"
+               v-on:keyup.enter="signIn">
+        <label v-show="errorToken" style="color: red; margin-top: 5px;" class="subtext-style">
+          НЕВЕРНЫЙ TOKEN
+        </label>
       </div>
 
-      <button class="btn-style" @click="onShow">
+      <button class="btn-style" :style="`${errorToken?'margin-top:10px;':'margin-top:15px;'}`" @click="signIn">
         ВОЙТИ
       </button>
     </div>
@@ -18,23 +21,47 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: "tokenComp",
-  props: ['onShowToken'],
   data() {
     return {
       isShow: false,
+      token: '',
+      errorToken: false
     }
   },
   methods: {
-    onShow() {
-      this.onShowToken({
-        isShow: this.isShow,
+    async signIn() {
+      await axios.get(' http://localhost:7000/api/me', {
+        headers: {
+          'token': `${this.token}`
+        }
       })
+          .then(responce => {
+                if (responce.data == '') {
+                  this.errorToken = true;
+                } else {
+                  // for (let user of responce.data) {
+                  //   i
+                  console.log(responce)
+                  // }
+                  this.errorToken = false;
+                }
+              }
+          )
+          .catch(error => console.log(error));
     }
   }
 }
 </script>
 
 <style scoped>
+.subtext-style {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 9px;
+  line-height: 9px;
+}
 </style>

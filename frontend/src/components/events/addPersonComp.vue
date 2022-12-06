@@ -126,11 +126,10 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
   name: "addPersonComp",
-  props: {
-    'goToAllPersonPage': Function,
-  },
   data() {
     return {
       selectedCategory: null,
@@ -185,21 +184,22 @@ export default {
       info: '',
       errorName: false,
       errorInfo: false,
-
-      showMainPage: false,
-      showCalendarPage: false,
-      showSettingPage: false,
-      showAllPersonPage: false,
-
-      showEditProfilePage: false,
-      showProVersionPage: false,
-      showLeisurePage: false,
-
-      showAddEventPage: false,
-      showAddPersonPage: false,
     }
   },
   methods: {
+    ...mapActions({
+      loadMainPage: 'setMainPage',
+      loadSettingsPage: 'setSettingsPage',
+      loadCalendarPage: 'setCalendarPage',
+      loadAllPersonsPage: 'setAllPersonsPage',
+
+      loadEditProfilePage: 'setEditProfilePage',
+      loadProVersionPage: 'setProVersionPage',
+      loadLeisurePage: 'setLeisurePage',
+
+      loadAddEventPage: 'setAddEventPage',
+      loadAddPersonPage: 'setAddPersonPage'
+    }),
     addNewInfo() {
       this.errorName = false;
       this.errorInfo = false;
@@ -231,30 +231,17 @@ export default {
       this.selectedInfo = '';
     },
     goToAllPerson() {
-      this.showMainPage = false;
-      this.showCalendarPage = false;
-      this.showSettingPage = false;
-      this.showAllPersonPage = true;
+      this.loadMainPage(false);
+      this.loadCalendarPage(false);
+      this.loadSettingsPage(false);
+      this.loadAllPersonsPage(true);
 
-      this.showEditProfilePage = false;
-      this.showProVersionPage = false;
-      this.showLeisurePage = false;
+      this.loadEditProfilePage(false);
+      this.loadProVersionPage(false);
+      this.loadLeisurePage(false);
 
-      this.showAddEventPage = false;
-      this.showAddPersonPage = false;
-      this.goToAllPersonPage({
-        showMainPage: this.showMainPage,
-        showCalendarPage: this.showCalendarPage,
-        showSettingPage: this.showSettingPage,
-        showAllPersonPage: this.showAllPersonPage,
-
-        showEditProfilePage: this.showEditProfilePage,
-        showProVersionPage: this.showProVersionPage,
-        showLeisurePage: this.showLeisurePage,
-
-        showAddEventPage: this.showAddEventPage,
-        showAddPersonPage: this.showAddPersonPage,
-      })
+      this.loadAddEventPage(false);
+      this.loadAddPersonPage(false);
     },
   }
 }

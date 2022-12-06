@@ -64,11 +64,10 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
   name: "addEventComp",
-  props: {
-    'goToCalendarPage': Function,
-  },
   data() {
     return {
       selectedFriend: null,
@@ -94,46 +93,34 @@ export default {
           text: 'Friend 4 (@tg4)'
         },
       ],
-
-      showMainPage: false,
-      showCalendarPage: false,
-      showSettingPage: false,
-      showAllPersonPage: false,
-
-      showEditProfilePage: false,
-      showProVersionPage: false,
-      showLeisurePage: false,
-
-      showAddEventPage: false,
-      showAddPersonPage: false,
     }
   },
   methods: {
+    ...mapActions({
+      loadMainPage: 'setMainPage',
+      loadSettingsPage: 'setSettingsPage',
+      loadCalendarPage: 'setCalendarPage',
+      loadAllPersonsPage: 'setAllPersonsPage',
+
+      loadEditProfilePage: 'setEditProfilePage',
+      loadProVersionPage: 'setProVersionPage',
+      loadLeisurePage: 'setLeisurePage',
+
+      loadAddEventPage: 'setAddEventPage',
+      loadAddPersonPage: 'setAddPersonPage'
+    }),
     goToCalendar() {
-      this.showMainPage = false;
-      this.showCalendarPage = true;
-      this.showSettingPage = false;
-      this.showAllPersonPage = false;
+      this.loadMainPage(false);
+      this.loadCalendarPage(true);
+      this.loadSettingsPage(false);
+      this.loadAllPersonsPage(false);
 
-      this.showEditProfilePage = false;
-      this.showProVersionPage = false;
-      this.showLeisurePage = false;
+      this.loadEditProfilePage(false);
+      this.loadProVersionPage(false);
+      this.loadLeisurePage(false);
 
-      this.showAddEventPage = false;
-      this.showAddPersonPage = false;
-      this.goToCalendarPage({
-        showMainPage: this.showMainPage,
-        showCalendarPage: this.showCalendarPage,
-        showSettingPage: this.showSettingPage,
-        showAllPersonPage: this.showAllPersonPage,
-
-        showEditProfilePage: this.showEditProfilePage,
-        showProVersionPage: this.showProVersionPage,
-        showLeisurePage: this.showLeisurePage,
-
-        showAddEventPage: this.showAddEventPage,
-        showAddPersonPage: this.showAddPersonPage,
-      })
+      this.loadAddEventPage(false);
+      this.loadAddPersonPage(false);
     },
   }
 }

@@ -1,43 +1,22 @@
 <template>
   <div class="main-block">
     <div>
-      <header-comp :is-show-main="isShowMainPage"
-                   :is-show-all-person="isShowAllPersonsPage"
-                   :is-show-calendar="isShowCalendarPage"
-                   :is-show-setting="isShowSettingsPage"
-                   :is-login-page="isLoginPage"
-
-                   :goToMainPage="goToPage"
-                   :goToCalendarPage="goToPage"
-                   :goToSettingPage="goToPage"
-                   :goToAllPersonPage="goToPage"
-
-                   :goToEditProfilePage="goToPage"
-                   :goToProVersionPage="goToPage"
-                   :goToLeisurePage="goToPage"
+      <header-comp
+          :is-login-page="isLoginPage"
       />
       <div>
         <token-comp v-show="isShowTokenPage" :onShowToken='onShowToken'/>
-        <login-comp v-show="isShowLoginPage" :onShowLogin='onShowLogin'/>
-        <registration-comp v-show="isShowRegistrationPage" :onShowRegistration="onShowRegistration"/>
+        <main-comp v-show="mainPage"/>
+        <edit-profile-comp v-show="editProfile"/>
 
-        <main-comp v-show="isShowMainPage"/>
-        <edit-profile-comp v-show="isShowEditProfilePage"/>
+        <add-event-comp v-show="addEventPage"/>
 
-        <add-event-comp v-show="isShowAddEventPage"
-                        :goToCalendarPage="goToPage"/>
-
-        <add-person-comp v-show="isShowAddPersonPage"
-                         :goToAllPersonPage="goToPage"/>
-        <settings-comp v-show="isShowSettingsPage"/>
-        <pro-version-comp v-show="isShowProVersionPage"/>
-
-        <calendar-comp v-show="isShowCalendarPage"
-                       :goToAddEventPage="goToPage"/>
-
-        <all-persons v-show="isShowAllPersonsPage"
-                     :goToAddPersonPage="goToPage"/>
-        <leisure-page v-show="isShowLeisurePage"/>
+        <add-person-comp v-show="addPersonPage"/>
+        <settings-comp v-show="settingsPage"/>
+        <pro-version-comp v-show="proVersionPage"/>
+        <calendar-comp v-show="calendarPage"/>
+        <all-persons v-show="allPersons"/>
+        <leisure-page v-show="leisurePage"/>
       </div>
     </div>
     <footer-comp/>
@@ -48,8 +27,6 @@
 import headerComp from "./components/headerComp";
 import footerComp from "./components/footerComp";
 import TokenComp from "@/components/login/tokenComp";
-import LoginComp from "@/components/login/loginComp";
-import RegistrationComp from "@/components/login/registrationComp";
 import MainComp from "@/components/header/mainComp";
 import EditProfileComp from "@/components/dropdown/editProfileComp";
 import AddEventComp from "@/components/events/addEventComp";
@@ -59,6 +36,7 @@ import ProVersionComp from "@/components/dropdown/proVersionComp";
 import CalendarComp from "@/components/header/calendarComp";
 import AllPersons from "@/components/header/allPersonsComp";
 import LeisurePage from "@/components/dropdown/leisurePage";
+import {mapGetters} from "vuex";
 
 export default {
   name: 'App',
@@ -72,8 +50,6 @@ export default {
     AddEventComp,
     EditProfileComp,
     MainComp,
-    RegistrationComp,
-    LoginComp,
     TokenComp,
     headerComp,
     footerComp
@@ -82,49 +58,28 @@ export default {
     return {
       isLoginPage: true,
       isShowTokenPage: false,
-      isShowLoginPage: false,
-      isShowRegistrationPage: false,
-
-      isShowMainPage: true,
-      isShowEditProfilePage: false,
-      isShowAddEventPage: false,
-      isShowAddPersonPage: false,
-      isShowSettingsPage: false,
-      isShowProVersionPage: false,
-      isShowCalendarPage: false,
-      isShowAllPersonsPage: false,
-      isShowLeisurePage: false,
     }
+  },
+  computed: {
+    ...mapGetters({
+      mainPage: 'getShowMainPage',
+      settingsPage: 'getShowSettingsPage',
+      calendarPage:'getShowCalendarPage',
+      allPersons:'getShowAllPersonsPage',
+
+      editProfilePage:'getShowEditProfilePage',
+      proVersionPage:"getShowProVersionPage",
+      leisurePage:'getShowLeisurePage',
+
+      addPersonPage:'getShowAddPersonPage',
+      addEventPage:'getShowAddEventPage'
+    })
   },
   methods: {
     onShowToken() {
       // this.isShowLoginPage = false;
       // this.isShowTokenPage = false;
       // this.isShowRegistrationPage = true;
-    },
-    onShowLogin() {
-      // this.isShowLoginPage = false;
-      // this.isShowTokenPage = true;
-      // this.isShowRegistrationPage = false;
-    },
-    onShowRegistration() {
-      // this.isShowLoginPage = true;
-      // this.isShowTokenPage = false;
-      // this.isShowRegistrationPage = false;
-    },
-
-    goToPage(data) {
-      this.isShowMainPage = data.showMainPage;
-      this.isShowCalendarPage = data.showCalendarPage;
-      this.isShowSettingsPage = data.showSettingPage;
-      this.isShowAllPersonsPage = data.showAllPersonPage;
-
-      this.isShowEditProfilePage = data.showEditProfilePage;
-      this.isShowProVersionPage = data.showProVersionPage;
-      this.isShowLeisurePage = data.showLeisurePage;
-
-      this.isShowAddEventPage = data.showAddEventPage;
-      this.isShowAddPersonPage = data.showAddPersonPage;
     },
   }
 }
