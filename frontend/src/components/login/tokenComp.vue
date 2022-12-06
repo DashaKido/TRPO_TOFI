@@ -39,12 +39,13 @@ export default {
       loadMain: 'loadMainPage'
     }),
     async signIn() {
-      await axios.get(' http://localhost:7000/api/me', {
+      await axios.get('http://localhost:7000/api/me', {
         headers: {
           'token': `${this.token}`
         }
       })
           .then(responce => {
+            console.log(responce)
                 if (responce.data == '') {
                   this.errorToken = true;
                 } else {
@@ -55,7 +56,8 @@ export default {
                     isPro: user.isPro,
                     lastName: user.lastName,
                     name: user.name,
-                    persons: user.persons
+                    persons: user.persons,
+                    id: user._id
                   });
                   this.loadMain();
                 }

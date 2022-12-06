@@ -30,6 +30,11 @@ const store = createStore({
                 lastName: '',
                 name: '',
                 persons: [],
+                id: ''
+            },
+            settings: {
+                goodMorning: '',
+                randomCat: '',
             }
         }
     },
@@ -69,6 +74,9 @@ const store = createStore({
         },
         getUser(state) {
             return state.user;
+        },
+        getSettings(state) {
+            return state.settings;
         }
     },
     mutations: {
@@ -108,6 +116,9 @@ const store = createStore({
 
         setUser(state, new_val) {
             state.user = new_val;
+        },
+        setSettings(state, new_val) {
+            state.settings = new_val;
         }
     },
     actions: {
@@ -169,15 +180,19 @@ const store = createStore({
             commit('setShowAddPersonPage', true);
         },
 
-        fillUser({commit}, {birth, isPro, lastName, name, persons}) {
+        fillUser({commit}, {birth, isPro, lastName, name, persons, id}) {
             let user = {
                 birth: birth,
                 isPro: isPro,
                 lastName: lastName,
                 name: name,
-                persons: persons
+                persons: persons,
+                id: id
             };
-            commit('setUser',user);
+            commit('setUser', user);
+        },
+        updateUser({commit}, {user}) {
+            commit('setUser', user);
         }
     }
 })
