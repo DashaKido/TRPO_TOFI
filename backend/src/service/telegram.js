@@ -50,21 +50,26 @@ const onStart = (db) => {
   bot.onText(/\/my_persons/, async (msg, match) => {
     const chatId = msg.chat.id;
     const persons = (await db.collection("User").findOne({ chatId })).persons;
-    const personsInfo = (
-      await Promise.all(
-        persons.map(async (personId) => {
-          let person = await db.collection("Person").findOne({ _id: personId });
-          console.log(person);
-          return person;
-        })
+    let personsInfo = "No persons were added yet...";
+    if (persons.length) {
+      personsInfo = (
+        await Promise.all(
+          persons.map(async (personId) => {
+            let person = await db
+              .collection("Person")
+              .findOne({ _id: personId });
+            console.log(person);
+            return person;
+          })
+        )
       )
-    )
-      .map((person) =>
-        Object.keys(person)
-          .filter((key) => key !== "_id")
-          .reduce((curr, acc) => (curr += `${acc}: ${person[acc]} \n`), "")
-      )
-      .join("           ---------------------           \n");
+        .map((person) =>
+          Object.keys(person)
+            .filter((key) => key !== "_id")
+            .reduce((curr, acc) => (curr += `${acc}: ${person[acc]} \n`), "")
+        )
+        .join("           ---------------------           \n");
+    }
     bot.sendMessage(chatId, personsInfo);
   });
 
