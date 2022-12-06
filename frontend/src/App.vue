@@ -1,13 +1,11 @@
 <template>
   <div class="main-block">
     <div>
-      <header-comp
-          :is-login-page="isLoginPage"
-      />
+      <header-comp/>
       <div>
-        <token-comp v-show="isShowTokenPage" :onShowToken='onShowToken'/>
+        <token-comp v-show="tokenPage"/>
         <main-comp v-show="mainPage"/>
-        <edit-profile-comp v-show="editProfile"/>
+        <edit-profile-comp v-show="editProfilePage"/>
 
         <add-event-comp v-show="addEventPage"/>
 
@@ -56,31 +54,27 @@ export default {
   },
   data() {
     return {
-      isLoginPage: true,
-      isShowTokenPage: false,
+      isLoginPage: false,
     }
   },
   computed: {
     ...mapGetters({
+      tokenPage: 'getShowTokenPage',
+
       mainPage: 'getShowMainPage',
       settingsPage: 'getShowSettingsPage',
-      calendarPage:'getShowCalendarPage',
-      allPersons:'getShowAllPersonsPage',
+      calendarPage: 'getShowCalendarPage',
+      allPersons: 'getShowAllPersonsPage',
 
-      editProfilePage:'getShowEditProfilePage',
-      proVersionPage:"getShowProVersionPage",
-      leisurePage:'getShowLeisurePage',
+      editProfilePage: 'getShowEditProfilePage',
+      proVersionPage: "getShowProVersionPage",
+      leisurePage: 'getShowLeisurePage',
 
-      addPersonPage:'getShowAddPersonPage',
-      addEventPage:'getShowAddEventPage'
+      addPersonPage: 'getShowAddPersonPage',
+      addEventPage: 'getShowAddEventPage'
     })
   },
   methods: {
-    onShowToken() {
-      // this.isShowLoginPage = false;
-      // this.isShowTokenPage = false;
-      // this.isShowRegistrationPage = true;
-    },
   }
 }
 </script>

@@ -51,7 +51,7 @@ const onStart = (db) => {
     const chatId = msg.chat.id;
     const persons = (await db.collection("User").findOne({ chatId })).persons;
     let personsInfo = "No persons were added yet...";
-    if (persons.length) {
+    if (persons && persons.length) {
       personsInfo = (
         await Promise.all(
           persons.map(async (personId) => {

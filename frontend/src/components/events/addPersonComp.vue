@@ -188,17 +188,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      loadMainPage: 'setMainPage',
-      loadSettingsPage: 'setSettingsPage',
-      loadCalendarPage: 'setCalendarPage',
-      loadAllPersonsPage: 'setAllPersonsPage',
-
-      loadEditProfilePage: 'setEditProfilePage',
-      loadProVersionPage: 'setProVersionPage',
-      loadLeisurePage: 'setLeisurePage',
-
-      loadAddEventPage: 'setAddEventPage',
-      loadAddPersonPage: 'setAddPersonPage'
+      loadAllPersonsPage: 'loadAllPersonsPage',
     }),
     addNewInfo() {
       this.errorName = false;
@@ -231,17 +221,7 @@ export default {
       this.selectedInfo = '';
     },
     goToAllPerson() {
-      this.loadMainPage(false);
-      this.loadCalendarPage(false);
-      this.loadSettingsPage(false);
-      this.loadAllPersonsPage(true);
-
-      this.loadEditProfilePage(false);
-      this.loadProVersionPage(false);
-      this.loadLeisurePage(false);
-
-      this.loadAddEventPage(false);
-      this.loadAddPersonPage(false);
+      this.loadAllPersonsPage();
     },
   }
 }

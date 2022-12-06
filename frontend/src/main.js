@@ -11,6 +11,8 @@ import {createStore} from "vuex";
 const store = createStore({
     state() {
         return {
+            showTokenPage: false,
+
             showMainPage: true,
             showSettingsPage: false,
             showCalendarPage: false,
@@ -25,6 +27,10 @@ const store = createStore({
         }
     },
     getters: {
+        getShowTokenPage(state) {
+            return state.showTokenPage;
+        },
+
         getShowMainPage(state) {
             return state.showMainPage;
         },
@@ -56,6 +62,10 @@ const store = createStore({
         },
     },
     mutations: {
+        setShowTokenPage(state, new_val) {
+            state.showTokenPage = new_val;
+        },
+
         setShowMainPage(state, new_val) {
             state.showMainPage = new_val;
         },
@@ -87,46 +97,64 @@ const store = createStore({
         },
     },
     actions: {
-        setMainPage({commit}, value) {
-            commit('setShowMainPage', value);
-            return value;
+        closeAllPages({commit}) {
+            commit('setShowTokenPage', false);
+
+            commit('setShowMainPage', false);
+            commit('setShowSettingsPage', false);
+            commit('setShowCalendarPage', false);
+            commit('setShowAllPersonsPage', false);
+
+            commit('setShowEditProfilePage', false);
+            commit('setShowProVersionPage', false);
+            commit('setShowLeisurePage', false);
+
+            commit('setShowAddEventPage', false);
+            commit('setShowAddPersonPage', false);
         },
-        setSettingsPage({commit}, value) {
-            commit('setShowSettingsPage', value);
-            return value;
+        loadTokenPage({commit, dispatch}) {
+            dispatch('closeAllPages');
+            commit('setShowTokenPage', true);
         },
-        setCalendarPage({commit}, value) {
-            commit('setShowCalendarPage', value);
-            return value;
+        loadMainPage({commit, dispatch}) {
+            dispatch('closeAllPages');
+            commit('setShowMainPage', true);
         },
-        setAllPersonsPage({commit}, value) {
-            commit('setShowAllPersonsPage', value);
-            return value;
+        loadSettingsPage({commit, dispatch}) {
+            dispatch('closeAllPages');
+            commit('setShowSettingsPage', true);
+        },
+        loadCalendarPage({commit, dispatch}) {
+            dispatch('closeAllPages');
+            commit('setShowCalendarPage', true);
+        },
+        loadAllPersonsPage({commit, dispatch}) {
+            dispatch('closeAllPages');
+            commit('setShowAllPersonsPage', true);
         },
 
-        setEditProfilePage({commit}, value) {
-            commit('setShowEditProfilePage', value);
-            return value;
+        loadEditProfilePage({commit, dispatch}) {
+            dispatch('closeAllPages');
+            commit('setShowEditProfilePage', true);
         },
-        setProVersionPage({commit}, value) {
-            commit('setShowProVersionPage', value);
-            return value;
+        loadProVersionPage({commit, dispatch}) {
+            dispatch('closeAllPages');
+            commit('setShowProVersionPage', true);
         },
-        setLeisurePage({commit}, value) {
-            commit('setShowLeisurePage', value);
-            return value;
+        loadLeisurePage({commit, dispatch}) {
+            dispatch('closeAllPages');
+            commit('setShowLeisurePage', true);
         },
 
-        setAddEventPage({commit}, value) {
-            commit('setShowAddEventPage', value);
-            return value;
+        loadAddEventPage({commit, dispatch}) {
+            dispatch('closeAllPages');
+            commit('setShowAddEventPage', true);
         },
-        setAddPersonPage({commit}, value) {
-            commit('setShowAddPersonPage', value);
-            return value;
+        loadAddPersonPage({commit, dispatch},) {
+            dispatch('closeAllPages');
+            commit('setShowAddPersonPage', true);
         },
     }
-
 })
 const app = createApp(App)
 app.use(BootstrapVue3)

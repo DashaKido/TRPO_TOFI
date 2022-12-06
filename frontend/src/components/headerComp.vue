@@ -1,7 +1,7 @@
 <template>
   <div class="header-block">
     <span class="logo-text">TELEGRAM</span>
-    <div class="main-sections-block" v-show="isLoginPage">
+    <div class="main-sections-block" v-show="!tokenPage">
       <span class="link-item" :class="`${mainPage?'active':''}`" @click="goToMain">ГЛАВНАЯ</span>
       <span class="link-item" :class="`${calendarPage?'active':''}`" @click="goToCalendar">КАЛЕНДАРЬ</span>
       <span class="link-item" :class="`${settingsPage?'active':''}`" @click="goToSetting">НАСТРОЙКИ ЧАТА</span>
@@ -25,17 +25,10 @@ import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: "headerComp",
-  props: {
-    'isLoginPage': Boolean,
-  },
-  data() {
-    return {
-      showAddEventPage: false,
-      showAddPersonPage: false,
-    }
-  },
   computed: {
     ...mapGetters({
+      tokenPage:'getShowTokenPage',
+
       mainPage: 'getShowMainPage',
       settingsPage: 'getShowSettingsPage',
       calendarPage: 'getShowCalendarPage',
@@ -44,109 +37,41 @@ export default {
   },
   methods: {
     ...mapActions({
-      loadMainPage: 'setMainPage',
-      loadSettingsPage: 'setSettingsPage',
-      loadCalendarPage: 'setCalendarPage',
-      loadAllPersonsPage: 'setAllPersonsPage',
+      loadTokenPage:'loadTokenPage',
 
-      loadEditProfilePage: 'setEditProfilePage',
-      loadProVersionPage: 'setProVersionPage',
-      loadLeisurePage: 'setLeisurePage',
+      loadMainPage: 'loadMainPage',
+      loadSettingsPage: 'loadSettingsPage',
+      loadCalendarPage: 'loadCalendarPage',
+      loadAllPersonsPage: 'loadAllPersonsPage',
 
-      loadAddEventPage: 'setAddEventPage',
-      loadAddPersonPage: 'setAddPersonPage'
+      loadEditProfilePage: 'loadEditProfilePage',
+      loadProVersionPage: 'loadProVersionPage',
+      loadLeisurePage: 'loadLeisurePage',
+
+      loadAddEventPage: 'loadAddEventPage',
+      loadAddPersonPage: 'loadAddPersonPage'
     }),
     goToMain() {
-      this.loadMainPage(true);
-      this.loadCalendarPage(false);
-      this.loadSettingsPage(false);
-      this.loadAllPersonsPage(false);
-
-      this.loadEditProfilePage(false);
-      this.loadProVersionPage(false);
-      this.loadLeisurePage(false);
-
-      this.loadAddEventPage(false);
-      this.loadAddPersonPage(false);
+      this.loadMainPage();
     },
     goToCalendar() {
-      this.loadMainPage(false);
-      this.loadCalendarPage(true);
-      this.loadSettingsPage(false);
-      this.loadAllPersonsPage(false);
-
-      this.loadEditProfilePage(false);
-      this.loadProVersionPage(false);
-      this.loadLeisurePage(false);
-
-      this.loadAddEventPage(false);
-      this.loadAddPersonPage(false);
+      this.loadCalendarPage();
     },
     goToSetting() {
-      this.loadMainPage(false);
-      this.loadCalendarPage(false);
-      this.loadSettingsPage(true);
-      this.loadAllPersonsPage(false);
-
-      this.loadEditProfilePage(false);
-      this.loadProVersionPage(false);
-      this.loadLeisurePage(false);
-
-      this.loadAddEventPage(false);
-      this.loadAddPersonPage(false);
+      this.loadSettingsPage();
     },
     goToAllPerson() {
-      this.loadMainPage(false);
-      this.loadCalendarPage(false);
-      this.loadSettingsPage(false);
-      this.loadAllPersonsPage(true);
-
-      this.loadEditProfilePage(false);
-      this.loadProVersionPage(false);
-      this.loadLeisurePage(false);
-
-      this.loadAddEventPage(false);
-      this.loadAddPersonPage(false);
+      this.loadAllPersonsPage();
     },
 
     goToEditProfile() {
-      this.loadMainPage(false);
-      this.loadCalendarPage(false);
-      this.loadSettingsPage(false);
-      this.loadAllPersonsPage(false);
-
-      this.loadEditProfilePage(true);
-      this.loadProVersionPage(false);
-      this.loadLeisurePage(false);
-
-      this.loadAddEventPage(false);
-      this.loadAddPersonPage(false);
+      this.loadEditProfilePage();
     },
     goToProVersion() {
-      this.loadMainPage(false);
-      this.loadCalendarPage(false);
-      this.loadSettingsPage(false);
-      this.loadAllPersonsPage(false);
-
-      this.loadEditProfilePage(false);
-      this.loadProVersionPage(true);
-      this.loadLeisurePage(false);
-
-      this.loadAddEventPage(false);
-      this.loadAddPersonPage(false);
+      this.loadProVersionPage();
     },
     goToLeisure() {
-      this.loadMainPage(false);
-      this.loadCalendarPage(false);
-      this.loadSettingsPage(false);
-      this.loadAllPersonsPage(false);
-
-      this.loadEditProfilePage(false);
-      this.loadProVersionPage(false);
       this.loadLeisurePage(true);
-
-      this.loadAddEventPage(false);
-      this.loadAddPersonPage(false);
     },
   }
 }

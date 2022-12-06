@@ -122,33 +122,13 @@ export default {
 
   methods: {
     ...mapActions({
-      loadMainPage: 'setMainPage',
-      loadSettingsPage: 'setSettingsPage',
-      loadCalendarPage: 'setCalendarPage',
-      loadAllPersonsPage: 'setAllPersonsPage',
-
-      loadEditProfilePage: 'setEditProfilePage',
-      loadProVersionPage: 'setProVersionPage',
-      loadLeisurePage: 'setLeisurePage',
-
-      loadAddEventPage: 'setAddEventPage',
-      loadAddPersonPage: 'setAddPersonPage'
+      loadAddEventPage: 'loadAddEventPage',
     }),
     setShowDate(d) {
       this.showDate = d;
     },
     goToAddEvent() {
-      this.loadMainPage(false);
-      this.loadCalendarPage(false);
-      this.loadSettingsPage(false);
-      this.loadAllPersonsPage(false);
-
-      this.loadEditProfilePage(false);
-      this.loadProVersionPage(false);
-      this.loadLeisurePage(false);
-
-      this.loadAddEventPage(true);
-      this.loadAddPersonPage(false);
+      this.loadAddEventPage();
     }
   }
 }
