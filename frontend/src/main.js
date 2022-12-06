@@ -11,9 +11,9 @@ import {createStore} from "vuex";
 const store = createStore({
     state() {
         return {
-            showTokenPage: false,
+            showTokenPage: true,
 
-            showMainPage: true,
+            showMainPage: false,
             showSettingsPage: false,
             showCalendarPage: false,
             showAllPersonsPage: false,
@@ -23,7 +23,14 @@ const store = createStore({
             showLeisurePage: false,
 
             showAddEventPage: false,
-            showAddPersonPage: false
+            showAddPersonPage: false,
+            user: {
+                birth: new Date(),
+                isPro: false,
+                lastName: '',
+                name: '',
+                persons: [],
+            }
         }
     },
     getters: {
@@ -60,6 +67,9 @@ const store = createStore({
         getShowAddPersonPage(state) {
             return state.showAddPersonPage;
         },
+        getUser(state) {
+            return state.user;
+        }
     },
     mutations: {
         setShowTokenPage(state, new_val) {
@@ -95,6 +105,10 @@ const store = createStore({
         setShowAddEventPage(state, new_val) {
             state.showAddEventPage = new_val;
         },
+
+        setUser(state, new_val) {
+            state.user = new_val;
+        }
     },
     actions: {
         closeAllPages({commit}) {
@@ -154,6 +168,17 @@ const store = createStore({
             dispatch('closeAllPages');
             commit('setShowAddPersonPage', true);
         },
+
+        fillUser({commit}, {birth, isPro, lastName, name, persons}) {
+            let user = {
+                birth: birth,
+                isPro: isPro,
+                lastName: lastName,
+                name: name,
+                persons: persons
+            };
+            commit('setUser',user);
+        }
     }
 })
 const app = createApp(App)

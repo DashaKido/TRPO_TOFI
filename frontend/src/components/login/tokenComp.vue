@@ -22,6 +22,7 @@
 
 <script>
 import axios from 'axios'
+import {mapActions} from "vuex";
 
 export default {
   name: "tokenComp",
@@ -33,6 +34,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      fillUser: 'fillUser',
+      loadMain: 'loadMainPage'
+    }),
     async signIn() {
       await axios.get(' http://localhost:7000/api/me', {
         headers: {
@@ -43,11 +48,16 @@ export default {
                 if (responce.data == '') {
                   this.errorToken = true;
                 } else {
-                  // for (let user of responce.data) {
-                  //   i
-                  console.log(responce)
-                  // }
                   this.errorToken = false;
+                  let user = responce.data;
+                  this.fillUser({
+                    birth: user.birth,
+                    isPro: user.isPro,
+                    lastName: user.lastName,
+                    name: user.name,
+                    persons: user.persons
+                  });
+                  this.loadMain();
                 }
               }
           )
