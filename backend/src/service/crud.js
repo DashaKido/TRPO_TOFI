@@ -3,30 +3,33 @@ const { logger } = require("./logger");
 
 const getAll = async (req, res) => {
   const { collection } = req.params;
+  const { token } = req.headers;
 
-  const results = await repository.getAll(collection, req.app.locals.db);
+  const results = await repository.getAll(collection, req.app.locals.db, token);
 
   res.status(200).send(results);
 };
 
 const getById = async (req, res) => {
   const { collection, id } = req.params;
+  const { token } = req.headers;
 
-  const result = await repository.getById(collection, id, req.app.locals.db);
+  const result = await repository.getById(collection, id, req.app.locals.db, token);
 
   res.status(200).send(result);
 };
 
 const updateById = async (req, res) => {
-  console.log("here");
   const { collection, id } = req.params;
   const { body } = req;
+  const { token } = req.headers;
 
   const updated = await repository.updateEntity(
     collection,
     id,
     body,
-    req.app.locals.db
+    req.app.locals.db,
+    token
   );
 
   res.status(200).send(updated);
@@ -34,9 +37,10 @@ const updateById = async (req, res) => {
 
 const deleteEntity = async (req, res) => {
   const { collection, id } = req.params;
+  const { token } = req.headers;
 
   try {
-    await repository.deleteEntity(collection, id, req.app.locals.db);
+    await repository.deleteEntity(collection, id, req.app.locals.db, token);
     res.status(200);
   } catch (e) {
     logger.error(e.stack);
@@ -46,8 +50,9 @@ const deleteEntity = async (req, res) => {
 const create = async (req, res) => {
   const { collection } = req.params;
   const { body } = req;
+  const { token } = req.headers;
 
-  const created = await repository.create(collection, body, req.app.locals.db);
+  const created = await repository.create(collection, body, req.app.locals.db, token);
 
   res.status(200).send(created);
 };

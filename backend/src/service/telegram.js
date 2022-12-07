@@ -58,14 +58,13 @@ const onStart = (db) => {
             let person = await db
               .collection("Person")
               .findOne({ _id: personId });
-            console.log(person);
             return person;
           })
         )
       )
         .map((person) =>
           Object.keys(person)
-            .filter((key) => key !== "_id")
+            .filter((key) => (key !== "_id" && key !== "token"))
             .reduce((curr, acc) => (curr += `${acc}: ${person[acc]} \n`), "")
         )
         .join("           ---------------------           \n");
@@ -83,9 +82,10 @@ const onStart = (db) => {
           (curr, acc) => ({ ...curr, [acc.split("=")[0]]: acc.split("=")[1] }),
           {}
         );
+      const user = await db.collection("User").findOne({ chatId: id });
       const person = await db
         .collection("Person")
-        .insertOne(personInfo, { new: true });
+        .insertOne({ ...personInfo, token: user.token }, { new: true });
       await db
         .collection("User")
         .findOneAndUpdate(

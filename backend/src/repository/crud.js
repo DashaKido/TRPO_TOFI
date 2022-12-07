@@ -3,7 +3,7 @@ const { logger } = require("../service/logger");
 
 const getAll = async (collection, db, token) => {
   try {
-    const entities = await db.collection(collection).find({ token }).toArray();
+    const entities = await db.collection(collection).find({token}).toArray();
 
     return entities;
   } catch (e) {
@@ -15,7 +15,7 @@ const getById = async (collection, _id, db, token) => {
   try {
     const entities = await db
       .collection(collection)
-      .findMany({ _id: new ObjectId(_id), token });
+      .findMany({ _id: new ObjectId(_id) });
 
     return entities;
   } catch (e) {
@@ -23,11 +23,11 @@ const getById = async (collection, _id, db, token) => {
   }
 };
 
-const create = async (collection, body, db) => {
+const create = async (collection, body, db, token) => {
   try {
     const createdEntity = await db
       .collection(collection)
-      .insertOne(body, { new: true });
+      .insertOne({...body, token}, { new: true });
 
     return createdEntity;
   } catch (e) {
@@ -35,17 +35,17 @@ const create = async (collection, body, db) => {
   }
 };
 
-const deleteEntity = async (collection, _id, db) => {
+const deleteEntity = async (collection, _id, db, token) => {
   try {
     await db
       .collection(collection)
-      .deleteOne({ _id: new ObjectId(_id), token });
+      .deleteOne({ _id: new ObjectId(_id) });
   } catch (e) {
     logger.error(e.stack);
   }
 };
 
-const updateEntity = async (collection, id, body, db) => {
+const updateEntity = async (collection, id, body, db, token) => {
   console.log(collection);
   try {
     const updated = await db
