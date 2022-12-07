@@ -15,7 +15,7 @@ const getById = async (collection, _id, db, token) => {
   try {
     const entities = await db
       .collection(collection)
-      .findMany({ _id: new ObjectId(_id) });
+      .find({ _id: new ObjectId(_id), token });
 
     return entities;
   } catch (e) {
