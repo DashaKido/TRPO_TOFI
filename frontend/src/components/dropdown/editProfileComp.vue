@@ -99,13 +99,18 @@ export default {
         name: this.user.name,
         persons: this.user.persons,
         id: this.user.id,
+        token: this.user.token
       };
       // this.updateUser({user: new_user});
-      await axios.put('http://localhost:7000/api/User/' + this.user.id, new_user)
+      await axios.put('http://localhost:7000/api/User/' + this.user.id, new_user, {
+        headers: {
+          'token': `${this.token}`
+        }
+      })
           .then(responce => {
-            console.log(responce);
-          }
-      ).catch(error => console.log(error));
+                console.log(responce);
+              }
+          ).catch(error => console.log(error));
     }
   }
 }

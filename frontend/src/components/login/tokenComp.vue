@@ -45,7 +45,6 @@ export default {
         }
       })
           .then(responce => {
-            console.log(responce)
                 if (responce.data == '') {
                   this.errorToken = true;
                 } else {
@@ -57,13 +56,17 @@ export default {
                     lastName: user.lastName,
                     name: user.name,
                     persons: user.persons,
-                    id: user._id
+                    id: user._id,
+                    token: user.token,
                   });
                   this.loadMain();
                 }
               }
           )
-          .catch(error => console.log(error));
+          .catch(error =>{
+            this.errorToken = true;
+            console.log(error);
+          });
     }
   }
 }

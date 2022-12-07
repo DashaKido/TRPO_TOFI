@@ -30,7 +30,8 @@ const store = createStore({
                 lastName: '',
                 name: '',
                 persons: [],
-                id: ''
+                id: '',
+                token:''
             },
             settings: {
                 goodMorning: '',
@@ -180,20 +181,29 @@ const store = createStore({
             commit('setShowAddPersonPage', true);
         },
 
-        fillUser({commit}, {birth, isPro, lastName, name, persons, id}) {
+        fillUser({commit}, {birth, isPro, lastName, name, persons, id, token}) {
             let user = {
                 birth: birth,
                 isPro: isPro,
                 lastName: lastName,
                 name: name,
                 persons: persons,
-                id: id
+                id: id,
+                token:token
             };
             commit('setUser', user);
         },
         updateUser({commit}, {user}) {
             commit('setUser', user);
-        }
+        },
+        // async updateSetting({commit},{settings}){
+        //     await axios.get('http://localhost:7000/api/me',{
+        //         params:{
+        //             'body':
+        // }
+        // })
+        // commit('setSettings',settings)
+        // }
     }
 })
 const app = createApp(App)
