@@ -8,7 +8,7 @@
 
       <div class="check-item">
         <div style="display: flex; align-items: center;">
-          <b-form-checkbox>
+          <b-form-checkbox v-model="settings.goodMorning">
           </b-form-checkbox>
           <label class="text-style">
             ДОБРОЕ УТРО
@@ -19,7 +19,7 @@
 
       <div class="check-item">
         <div style="display: flex; align-items: center;">
-          <b-form-checkbox>
+          <b-form-checkbox v-model="settings.goodNight">
           </b-form-checkbox>
           <label class="text-style">
             СПОКОЙНОЙ НОЧИ
@@ -30,7 +30,7 @@
 
       <div class="check-item">
         <div style="display: flex; align-items: center;">
-          <b-form-checkbox>
+          <b-form-checkbox v-model="settings.randomCat">
           </b-form-checkbox>
           <label class="text-style">
             ОТПРАВКА РАНДОМНОГО КОТИКА
@@ -41,7 +41,7 @@
 
       <div class="check-item">
         <div style="display: flex; align-items: center;">
-          <b-form-checkbox>
+          <b-form-checkbox v-model="settings.template">
           </b-form-checkbox>
           <label class="text-style">
             СООБЩЕНИЕ ПО ШАБЛОНУ
@@ -68,8 +68,23 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from "vuex";
+
 export default {
   name: "settingsComp",
+  computed: {
+    ...mapGetters({
+      settings: 'getSettings'
+    })
+  },
+  methods: {
+    ...mapActions({
+      updateSettings: 'updateSettings'
+    }),
+    updateSettingsBtn(){
+
+    }
+  }
 }
 </script>
 

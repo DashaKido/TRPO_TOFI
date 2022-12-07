@@ -22,7 +22,7 @@
 
 <script>
 import axios from 'axios'
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "tokenComp",
@@ -33,10 +33,16 @@ export default {
       errorToken: false
     }
   },
+  computed: {
+    ...mapGetters({
+      user: 'getUser'
+    })
+  },
   methods: {
     ...mapActions({
       fillUser: 'fillUser',
-      loadMain: 'loadMainPage'
+      loadMain: 'loadMainPage',
+      createSettings: 'createSetting'
     }),
     async signIn() {
       await axios.get('http://localhost:7000/api/me', {
@@ -58,12 +64,14 @@ export default {
                     persons: user.persons,
                     id: user._id,
                     token: user.token,
+                    chatId: user.chatId,
                   });
+                  this.createSettings({user: this.user});
                   this.loadMain();
                 }
               }
           )
-          .catch(error =>{
+          .catch(error => {
             this.errorToken = true;
             console.log(error);
           });

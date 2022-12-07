@@ -7,6 +7,7 @@ import {CalendarView} from "vue-simple-calendar";
 import {CalendarViewHeader} from "vue-simple-calendar";
 import 'vue-simple-calendar/dist/style.css'
 import {createStore} from "vuex";
+import axios from "axios";
 
 const store = createStore({
     state() {
@@ -31,11 +32,22 @@ const store = createStore({
                 name: '',
                 persons: [],
                 id: '',
-                token:''
+                token: '',
+                chatId: ''
             },
             settings: {
-                goodMorning: '',
-                randomCat: '',
+                _id: "",
+                goodMorning: true,
+                gmTime: new Date(),
+                goodNight: false,
+                gnTime: new Date(),
+                randomCat: false,
+                rcTime: new Date(),
+                template: false,
+                templateText: '',
+                templateTime: new Date(),
+                id: '',
+                token: ''
             }
         }
     },
@@ -181,7 +193,7 @@ const store = createStore({
             commit('setShowAddPersonPage', true);
         },
 
-        fillUser({commit}, {birth, isPro, lastName, name, persons, id, token}) {
+        fillUser({commit}, {birth, isPro, lastName, name, persons, id, token, chatId}) {
             let user = {
                 birth: birth,
                 isPro: isPro,
@@ -189,21 +201,43 @@ const store = createStore({
                 name: name,
                 persons: persons,
                 id: id,
-                token:token
+                token: token,
+                chatId: chatId
             };
             commit('setUser', user);
         },
         updateUser({commit}, {user}) {
             commit('setUser', user);
         },
-        // async updateSetting({commit},{settings}){
-        //     await axios.get('http://localhost:7000/api/me',{
-        //         params:{
-        //             'body':
-        // }
-        // })
-        // commit('setSettings',settings)
-        // }
+
+        async createSetting({commit}, {user}) {
+            let settings = {
+                _id: user.id,
+                goodMorning: true,
+                gmTime: '10:00:00',
+                goodNight: false,
+                gnTime: '22:00:00',
+                randomCat: false,
+                rcTime: '15:00:00',
+                template: false,
+                templateText: '',
+                templateTime: '18:00:00',
+                id: user.chatId,
+                token: user.token
+            };
+            await axios.post('http://localhost:7000/api/Settings', {
+                settings
+            })
+                .then(
+                    commit('setSettings', settings)
+                )
+                .catch(error => {
+                    console.log(error);
+                })
+        },
+        updateSettings({commit}, {settings}) {
+            commit('setSettings', settings)
+        },
     }
 })
 const app = createApp(App)

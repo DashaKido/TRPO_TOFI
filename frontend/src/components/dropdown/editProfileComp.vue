@@ -98,16 +98,13 @@ export default {
         lastName: this.user.lastName,
         name: this.user.name,
       };
-      // this.updateUser({user: new_user});
       await axios.put('http://localhost:7000/api/User/' + this.user.id, new_user, {
         headers: {
           'token': `${this.user.token}`
         }
       })
-          .then(responce => {
-                console.log(responce);
-              }
-          ).catch(error => console.log(error));
+          .then(this.updateUser({user: new_user}))
+          .catch(error => console.log(error));
     }
   }
 }
