@@ -58,7 +58,7 @@
           <button class="btn-style btn-grey">
             ОТМЕНА
           </button>
-          <button class="btn-style">
+          <button class="btn-style" @click="updateSettingsBtn">
             СОХРАНИТЬ
           </button>
         </div>
@@ -74,15 +74,16 @@ export default {
   name: "settingsComp",
   computed: {
     ...mapGetters({
-      settings: 'getSettings'
+      settings: 'getSettings',
+      user: 'getUser'
     })
   },
   methods: {
     ...mapActions({
       updateSettings: 'updateSettings'
     }),
-    updateSettingsBtn(){
-
+    async updateSettingsBtn() {
+      await this.updateSettings({settings: this.settings})
     }
   }
 }
