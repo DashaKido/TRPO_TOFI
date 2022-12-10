@@ -27,28 +27,28 @@
             <label class="text-style">
               ФАМИЛИЯ
             </label>
-            <b-form-input class="input-style"></b-form-input>
+            <b-form-input class="input-style" v-model="lastName"></b-form-input>
           </div>
 
           <div class="input-item">
             <label class="text-style">
               ИМЯ
             </label>
-            <input class="input-style">
+            <input class="input-style" v-model="name">
           </div>
 
           <div class="input-item">
             <label class="text-style">
               ТЕЛЕГРАМ
             </label>
-            <input class="input-style">
+            <input class="input-style" v-model="nickname">
           </div>
 
           <div class="input-item">
             <label class="text-style">
               ДАТА РОЖДЕНИЯ
             </label>
-            <input type="date" class="input-style">
+            <input type="date" class="input-style" v-model="birthdate">
           </div>
 
           <div class="input-item">
@@ -71,7 +71,7 @@
               </label>
 
               <div class="btns-group-small">
-                <input style="width: 100% !important; margin-bottom: 0px;" v-model="name" class="input-style">
+                <input style="width: 100% !important; margin-bottom: 0px;" v-model="nameInfo" class="input-style">
                 <button class="btn-add" @click="addNewInfo"></button>
               </div>
 
@@ -116,7 +116,7 @@
           <button class="btn-style btn-grey" @click="goToAllPerson">
             ОТМЕНА
           </button>
-          <button class="btn-style" @click="goToAllPerson">
+          <button class="btn-style" @click="addPerson">
             СОХРАНИТЬ
           </button>
         </div>
@@ -126,65 +126,87 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
+import axios from "axios";
 
 export default {
   name: "addPersonComp",
   data() {
     return {
-      selectedCategory: null,
+      selectedCategory: 1,
       allCategory: [
         {
-          value: null,
+          value: 1,
           text: 'Друг'
         },
         {
-          value: 1,
-          text: 'Парень/девушка'
-        },
-        {
           value: 2,
-          text: 'Сестра/брат'
+          text: 'Подруга'
         },
         {
           value: 3,
-          text: 'Родитель'
+          text: 'Парень'
         },
         {
           value: 4,
+          text: 'Девушка'
+        },
+        {
+          value: 5,
+          text: 'Брат'
+        },
+        {
+          value: 6,
+          text: 'Сестра'
+        },
+        {
+          value: 7,
+          text: 'Родитель'
+        },
+        {
+          value: 8,
           text: 'Другое'
         },
       ],
       selectedName: 1,
-      selectedInfo: 'Родилась 30.10.2003. Любит танцы и мотоциклы',
+      selectedInfo: '',
       allInfo: [
-        {
-          value: 1,
-          text: 'Информация о сестре',
-          main: 'Родилась 30.10.2003. Любит танцы и мотоциклы',
-        },
-        {
-          value: 2,
-          text: 'Информация о папе',
-          main: 'Родился 30.10.1975. Любит рыбалку и хоккей.' +
-              'Родился 30.10.1975. Любит рыбалку и хоккей.' +
-              'Родился 30.10.1975. Любит рыбалку и хоккей.' +
-              'Родился 30.10.1975. Любит рыбалку и хоккей.' +
-              'Родился 30.10.1975. Любит рыбалку и хоккей.' +
-              'Родился 30.10.1975. Любит рыбалку и хоккей.' +
-              '',
-        },
-        {
-          value: 3,
-          text: 'Информация о брате',
-          main: 'Родился 11.12.2019. Любит собак.',
-        }
+        // {
+        //   value: 1,
+        //   text: 'Информация о сестре',
+        //   main: 'Родилась 30.10.2003. Любит танцы и мотоциклы',
+        // },
+        // {
+        //   value: 2,
+        //   text: 'Информация о папе',
+        //   main: 'Родился 30.10.1975. Любит рыбалку и хоккей.' +
+        //       'Родился 30.10.1975. Любит рыбалку и хоккей.' +
+        //       'Родился 30.10.1975. Любит рыбалку и хоккей.' +
+        //       'Родился 30.10.1975. Любит рыбалку и хоккей.' +
+        //       'Родился 30.10.1975. Любит рыбалку и хоккей.' +
+        //       'Родился 30.10.1975. Любит рыбалку и хоккей.' +
+        //       '',
+        // },
+        // {
+        //   value: 3,
+        //   text: 'Информация о брате',
+        //   main: 'Родился 11.12.2019. Любит собак.',
+        // }
       ],
-      name: '',
+      nameInfo: '',
       info: '',
       errorName: false,
       errorInfo: false,
+      birthdate: '',
+      lastName: '',
+      name: '',
+      nickname: ''
     }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'getUser'
+    })
   },
   methods: {
     ...mapActions({
@@ -193,12 +215,12 @@ export default {
     addNewInfo() {
       this.errorName = false;
       this.errorInfo = false;
-      if (this.name == '' && this.info == '') {
+      if (this.nameInfo == '' && this.info == '') {
         this.errorName = true;
         this.errorInfo = true;
         return;
       }
-      if (this.name == '') {
+      if (this.nameInfo == '') {
         this.errorName = true;
         return;
       }
@@ -206,10 +228,15 @@ export default {
         this.errorInfo = true;
         return;
       }
-      let value = this.allInfo[this.allInfo.length - 1].value + 1;
-      this.allInfo.push({main: this.info, text: this.name, value: value})
+      let value = 0;
+      if (this.allInfo.length == 0) {
+        value = 1;
+      } else {
+        value = this.allInfo[this.allInfo.length - 1].value + 1;
+      }
+      this.allInfo.push({main: this.info, text: this.nameInfo, value: value})
       this.info = '';
-      this.name = '';
+      this.nameInfo = '';
     },
     changeSelect(value) {
       let index = this.allInfo.findIndex(item => item.value == value);
@@ -223,6 +250,23 @@ export default {
     goToAllPerson() {
       this.loadAllPersonsPage();
     },
+    async addPerson() {
+      let new_person = {
+        birthdate: this.birthdate,
+        category: this.selectedCategory,
+        lastName: this.lastName,
+        name: this.name,
+        nickname: this.nickname,
+        token: this.user.token,
+        info: this.allInfo,
+      }
+      await axios.post('http://localhost:7000/api/Person', new_person, {
+        headers: {
+          'token': this.user.token
+        }
+      }).then(response => console.log(response))
+          .catch(error => console.log(error))
+    }
   }
 }
 </script>

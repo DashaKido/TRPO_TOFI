@@ -10,12 +10,16 @@ import Vuex from "vuex";
 import {UserDataStore} from "./store/user.js"
 import {SettingsDataStore} from './store/settings.js'
 import {PagesDataStore} from "@/store/pages";
+import {EventsDataStore} from "@/store/events";
+import {PersonDataStore} from '@/store/person'
 
 const store = new Vuex.Store({
     modules: {
         user: UserDataStore,
-        settings:SettingsDataStore,
-        pages:PagesDataStore
+        settings: SettingsDataStore,
+        pages: PagesDataStore,
+        events: EventsDataStore,
+        person: PersonDataStore
     }
 })
 const app = createApp(App)
