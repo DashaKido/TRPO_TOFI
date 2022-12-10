@@ -42,7 +42,8 @@ export default {
     ...mapActions({
       fillUser: 'fillUser',
       loadMain: 'loadMainPage',
-      createSettings: 'createSetting'
+      createSettings: 'createSetting',
+      getAllPersons: 'getAllPersons'
     }),
     async signIn() {
       await axios.get('http://localhost:7000/api/me', {
@@ -67,6 +68,7 @@ export default {
                     chatId: user.chatId,
                   });
                   this.createSettings({user: this.user});
+                  this.getAllPersons({user: this.user});
                   this.loadMain();
                 }
               }

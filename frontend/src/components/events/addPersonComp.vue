@@ -50,13 +50,6 @@
             </label>
             <input type="date" class="input-style" v-model="birthdate">
           </div>
-
-          <div class="input-item">
-            <label class="text-style">
-              ВРЕМЯ
-            </label>
-            <input type="time" class="input-style">
-          </div>
         </div>
 
         <div>
@@ -170,29 +163,7 @@ export default {
       ],
       selectedName: 1,
       selectedInfo: '',
-      allInfo: [
-        // {
-        //   value: 1,
-        //   text: 'Информация о сестре',
-        //   main: 'Родилась 30.10.2003. Любит танцы и мотоциклы',
-        // },
-        // {
-        //   value: 2,
-        //   text: 'Информация о папе',
-        //   main: 'Родился 30.10.1975. Любит рыбалку и хоккей.' +
-        //       'Родился 30.10.1975. Любит рыбалку и хоккей.' +
-        //       'Родился 30.10.1975. Любит рыбалку и хоккей.' +
-        //       'Родился 30.10.1975. Любит рыбалку и хоккей.' +
-        //       'Родился 30.10.1975. Любит рыбалку и хоккей.' +
-        //       'Родился 30.10.1975. Любит рыбалку и хоккей.' +
-        //       '',
-        // },
-        // {
-        //   value: 3,
-        //   text: 'Информация о брате',
-        //   main: 'Родился 11.12.2019. Любит собак.',
-        // }
-      ],
+      allInfo: [],
       nameInfo: '',
       info: '',
       errorName: false,
@@ -264,7 +235,7 @@ export default {
         headers: {
           'token': this.user.token
         }
-      }).then(response => console.log(response))
+      }).then(this.loadAllPersonsPage())
           .catch(error => console.log(error))
     }
   }

@@ -24,37 +24,38 @@
             <label class="text-style">
               НАЗВАНИЕ
             </label>
-            <b-form-input class="input-style"></b-form-input>
+            <b-form-input class="input-style" v-model="title"></b-form-input>
           </div>
 
           <div class="input-item">
             <label class="text-style">
               ВАЖНОСТЬ
             </label>
-            <input class="input-style">
+            <input class="input-style" v-model="importance">
           </div>
 
           <div class="input-item">
             <label class="text-style">
               ДАТА СОБЫТИЯ
             </label>
-            <input type="date" class="input-style">
+            <input type="date" class="input-style" v-model="startDate">
           </div>
 
           <div class="input-item">
             <label class="text-style">
               ВРЕМЯ
             </label>
-            <input type="time" class="input-style">
+            <input type="time" class="input-style" v-model="time">
           </div>
         </div>
       </div>
+
       <div class="btns-all-width">
         <div class="btns-group">
           <button class="btn-style btn-grey" @click="goToCalendar">
             ОТМЕНА
           </button>
-          <button class="btn-style" @click="goToCalendar">
+          <button class="btn-style" @click="addEvent">
             СОХРАНИТЬ
           </button>
         </div>
@@ -64,35 +65,39 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
+import axios from "axios";
 
 export default {
   name: "addEventComp",
   data() {
     return {
       selectedFriend: null,
-      allFriends: [
-        {
-          value: null,
-          text: 'Я (@mytg)'
-        },
-        {
-          value: 1,
-          text: 'Friend 1 (@tg1)'
-        },
-        {
-          value: 2,
-          text: 'Friend 2 (@tg2)'
-        },
-        {
-          value: 3,
-          text: 'Friend 3 (@tg3)'
-        },
-        {
-          value: 4,
-          text: 'Friend 4 (@tg4)'
-        },
-      ],
+      startDate: '',
+      title: '',
+      time: '',
+      importance: ''
+    }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'getUser',
+      persons: 'getPersons',
+    }),
+    allFriends() {
+      let arr = []
+      arr.push({
+        value: this.user._id,
+        text: 'Я'
+      })
+      for (let item of this.persons) {
+        arr.push({
+          value: item._id,
+          text: item.name + " (" + item.nickname + ")"
+        })
+      }
+
+      return arr;
     }
   },
   methods: {
@@ -102,6 +107,28 @@ export default {
     goToCalendar() {
       this.loadCalendarPage();
     },
+    async addEvent() {
+      let date = new Date()
+      date.setFullYear(this.startDate.substring(0, 4))
+      date.setDate(this.startDate.substring(8, 10));
+      date.setHours(this.time.substring(0, 2));
+      date.setMonth(this.startDate.substring(5, 7) - 1);
+      date.setMinutes(this.time.substring(3, 5));
+      let new_event = {
+        startDate: this.startDate,
+        title: this.title,
+        tooltip: this.title,
+        person: this.selectedFriend,
+        importance: this.importance
+      }
+      await axios.post('http://localhost:7000/api/Event', new_event, {
+        headers: {
+          'token': this.user.token
+        }
+      }).then(this.loadCalendarPage)
+          .catch(error => console.log(error))
+    },
+
   }
 }
 </script>
