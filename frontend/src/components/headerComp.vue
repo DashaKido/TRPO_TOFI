@@ -14,7 +14,7 @@
         <b-dropdown-item class="text-style" @click="goToProVersion">ТАРИФЫ</b-dropdown-item>
         <b-dropdown-item class="text-style" @click="goToLeisure">ДОСУГ</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item class="text-style">ВЫХОД</b-dropdown-item>
+        <b-dropdown-item class="text-style" @click="goToToken">ВЫХОД</b-dropdown-item>
       </b-dropdown>
     </div>
   </div>
@@ -71,8 +71,11 @@ export default {
       this.loadProVersionPage();
     },
     goToLeisure() {
-      this.loadLeisurePage(true);
+      this.loadLeisurePage();
     },
+    goToToken(){
+      this.loadTokenPage();
+    }
   }
 }
 </script>

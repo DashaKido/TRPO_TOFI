@@ -103,7 +103,7 @@ export default {
           'token': `${this.user.token}`
         }
       })
-          .then(this.updateUser({user: new_user}))
+          .then(this.updateUser({user: this.user}))
           .catch(error => console.log(error));
     }
   }

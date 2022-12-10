@@ -14,7 +14,7 @@
             ДОБРОЕ УТРО
           </label>
         </div>
-        <input type="time" class="input-style input-settings">
+        <div type="time" class="input-style input-settings">{{ settings.gmTime }}</div>
       </div>
 
       <div class="check-item">
@@ -25,7 +25,7 @@
             СПОКОЙНОЙ НОЧИ
           </label>
         </div>
-        <input type="time" class="input-style input-settings">
+        <div type="time" class="input-style input-settings">{{ settings.gnTime }}</div>
       </div>
 
       <div class="check-item">
@@ -36,7 +36,7 @@
             ОТПРАВКА РАНДОМНОГО КОТИКА
           </label>
         </div>
-        <input type="time" class="input-style input-settings">
+        <div type="time" class="input-style input-settings">{{ settings.rcTime }}</div>
       </div>
 
       <div class="check-item">
@@ -47,10 +47,10 @@
             СООБЩЕНИЕ ПО ШАБЛОНУ
           </label>
         </div>
-        <input type="time" class="input-style input-settings">
+        <div type="time" class="input-style input-settings">{{ settings.templateTime }}</div>
       </div>
 
-      <b-form-textarea class="input-style textarea-style">
+      <b-form-textarea class="input-style textarea-style" v-model="settings.templateText">
       </b-form-textarea>
 
       <div class="btns-all-width">
@@ -69,21 +69,38 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+import axios from "axios";
 
 export default {
   name: "settingsComp",
   computed: {
     ...mapGetters({
       settings: 'getSettings',
-      user: 'getUser'
     })
   },
   methods: {
     ...mapActions({
-      updateSettings: 'updateSettings'
+      updateSettings: 'updateSettings',
     }),
     async updateSettingsBtn() {
-      await this.updateSettings({settings: this.settings})
+      let new_settings = {
+        goodMorning: this.settings.goodMorning,
+        goodNight: this.settings.goodNight,
+        randomCat: this.settings.randomCat,
+        template: this.settings.template,
+        templateText: this.settings.templateText,
+      }
+      await axios.put('http://localhost:7000/api/Settings/' + this.settings.id, new_settings, {
+        headers: {
+          'token': `${this.settings.token}`
+        }
+      })
+          .then(()=>{
+                this.updateSettings({settings: this.settings});
+                this
+              }
+          )
+          .catch(error => console.log(error))
     }
   }
 }
