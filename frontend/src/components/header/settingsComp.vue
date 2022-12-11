@@ -81,6 +81,8 @@ export default {
   methods: {
     ...mapActions({
       updateSettings: 'updateSettings',
+      createLog: 'createLog',
+      loadMainPage: 'loadMainPage'
     }),
     async updateSettingsBtn() {
       let new_settings = {
@@ -95,9 +97,10 @@ export default {
           'token': `${this.settings.token}`
         }
       })
-          .then(()=>{
+          .then(() => {
                 this.updateSettings({settings: this.settings});
-                this
+                this.createLog({action: 'Изменение настроек чата', token: this.settings.token})
+                this.loadMainPage();
               }
           )
           .catch(error => console.log(error))

@@ -20,7 +20,7 @@
         <b-dropdown-item class="text-style" @click="loadProVersionPage">ТАРИФЫ</b-dropdown-item>
         <b-dropdown-item class="text-style" @click="loadLeisurePage">ДОСУГ</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item class="text-style" @click="loadTokenPage">ВЫХОД</b-dropdown-item>
+        <b-dropdown-item class="text-style" @click="goToTokenPage">ВЫХОД</b-dropdown-item>
       </b-dropdown>
     </div>
   </div>
@@ -41,7 +41,8 @@ export default {
       allPersons: 'getShowAllPersonsPage',
       admin: 'getAdmin',
       adminPage: 'getShowAdminPage',
-      newsPage: 'getShowNewsPage'
+      newsPage: 'getShowNewsPage',
+      user: 'getUser'
     })
   },
   methods: {
@@ -61,8 +62,13 @@ export default {
       loadAddPersonPage: 'loadAddPersonPage',
 
       loadAdminPage: 'loadAdminPage',
-      loadNewsPage: 'loadNewsPage'
+      loadNewsPage: 'loadNewsPage',
+      createLog: 'createLog'
     }),
+    goToTokenPage() {
+      this.loadTokenPage()
+      this.createLog({action: 'Выход из системы', token: this.user.token})
+    }
   }
 }
 </script>

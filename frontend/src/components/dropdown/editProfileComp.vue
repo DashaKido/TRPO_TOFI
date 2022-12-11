@@ -82,7 +82,8 @@ export default {
     ...mapActions({
       loadProVersion: 'loadProVersionPage',
       loadMainPage: 'loadMainPage',
-      updateUser: 'updateUser'
+      updateUser: 'updateUser',
+      createLog: 'createLog'
     }),
     version() {
       if (this.user.isPro) {
@@ -103,7 +104,11 @@ export default {
           'token': `${this.user.token}`
         }
       })
-          .then(this.updateUser({user: this.user}))
+          .then(() => {
+            this.createLog({action: "Редактирование пользователя", token: this.user.token})
+            this.updateUser({user: this.user})
+            this.loadMainPage();
+          })
           .catch(error => console.log(error));
     }
   }

@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="one-person-block">
-          <button class="btn-add-person" @click="goToAddPerson"></button>
+          <button class="btn-add-person" @click="loadAddPersonPage"></button>
         </div>
       </div>
     </div>
@@ -60,9 +60,6 @@ export default {
     ...mapActions({
       loadAddPersonPage: 'loadAddPersonPage'
     }),
-    goToAddPerson() {
-      this.loadAddPersonPage();
-    }
   }
 }
 </script>

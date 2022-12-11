@@ -104,7 +104,8 @@ export default {
   methods: {
     ...mapActions({
       loadCalendarPage: 'loadCalendarPage',
-      updateEvents: 'updateEvents'
+      updateEvents: 'updateEvents',
+      createLog: 'createLog'
     }),
     goToCalendar() {
       this.loadCalendarPage();
@@ -131,6 +132,7 @@ export default {
         new_event._id = response.data.insertedId;
         this.events.push(new_event);
         this.updateEvents({events: this.events})
+        this.createLog({action: 'Добавление события', addedId: response.data.insertedId, token: this.user.token})
         this.loadCalendarPage();
         this.startDate = '';
         this.time = '';

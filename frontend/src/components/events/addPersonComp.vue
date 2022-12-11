@@ -183,7 +183,8 @@ export default {
   methods: {
     ...mapActions({
       loadAllPersonsPage: 'loadAllPersonsPage',
-      updatePersons: 'updatePersons'
+      updatePersons: 'updatePersons',
+      createLog: 'createLog'
     }),
     addNewInfo() {
       this.errorName = false;
@@ -238,6 +239,7 @@ export default {
             new_person._id = response.data.insertedId;
             this.persons.push(new_person)
             this.updatePersons({persons: this.persons});
+            this.createLog({action: 'Добавление друга', addedId: response.data.insertedId, token: this.user.token})
             this.loadAllPersonsPage();
             this.birthdate = "";
             this.selectedCategory = 1;

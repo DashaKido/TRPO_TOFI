@@ -46,25 +46,26 @@ export default {
       getAllPersons: 'getAllPersons',
       getAllEvents: 'getAllEvents',
       updateAdmin: 'updateAdmin',
-      loadAdmin: 'loadAdminPage'
+      loadAdmin: 'loadAdminPage',
+      createLog: 'createLog'
     }),
     async signIn() {
       if (this.token == 'admin') {
         this.updateAdmin({isAdmin: true})
         this.token = '';
-        this.loadAdmin()
+        this.loadAdmin();
       } else {
         await axios.get('http://localhost:7000/api/me', {
           headers: {
             'token': `${this.token}`
           }
         })
-            .then(responce => {
-                  if (responce.data == '') {
+            .then(async response => {
+                  if (response.data == '') {
                     this.errorToken = true;
                   } else {
                     this.errorToken = false;
-                    let user = responce.data;
+                    let user = response.data;
                     this.fillUser({
                       birth: user.birth,
                       isPro: user.isPro,
@@ -75,10 +76,11 @@ export default {
                       token: user.token,
                       chatId: user.chatId,
                     });
+                    await this.createLog({action: 'Вход в систему', token: user.token})
                     this.updateAdmin({isAdmin: false})
-                    this.createSettings({user: this.user});
-                    this.getAllPersons({user: this.user});
-                    this.getAllEvents({user: this.user})
+                    await this.createSettings({user: this.user});
+                    await this.getAllPersons({user: this.user});
+                    await this.getAllEvents({user: this.user})
                     this.loadMain();
                     this.token = '';
                   }

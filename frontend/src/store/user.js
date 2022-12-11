@@ -1,3 +1,6 @@
+// eslint-disable-next-line no-unused-vars
+import axios from "axios";
+
 export let UserDataStore = {
     state() {
         return {
@@ -40,5 +43,20 @@ export let UserDataStore = {
         updateUser({commit}, {user}) {
             commit('setUser', user);
         },
+        // eslint-disable-next-line no-unused-vars
+        async createLog({commit}, {action, addedId, token}) {
+            let log = {
+                action: action,
+                token: token,
+                date: new Date(),
+                addedId: addedId
+            }
+            await axios.post('http://localhost:7000/api/Logs', log, {
+                headers: {
+                    'token': token
+                }
+            })
+                .catch(error => console.log(error));
+        }
     }
 }
