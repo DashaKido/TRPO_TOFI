@@ -4,13 +4,16 @@
       <header-comp/>
       <div>
         <admin-page v-show="adminPage"/>
+        <news-page v-show="newsPage"/>
         <token-comp v-show="tokenPage"/>
+
         <main-comp v-show="mainPage"/>
         <edit-profile-comp v-show="editProfilePage"/>
 
         <add-event-comp v-show="addEventPage"/>
-
         <add-person-comp v-show="addPersonPage"/>
+        <add-news-comp v-show="addNewsPage"/>
+
         <settings-comp v-show="settingsPage"/>
         <pro-version-comp v-show="proVersionPage"/>
         <calendar-comp v-show="calendarPage"/>
@@ -36,12 +39,15 @@ import CalendarComp from "@/components/header/calendarComp";
 import AllPersons from "@/components/header/allPersonsComp";
 import LeisurePage from "@/components/dropdown/leisurePage";
 import {mapGetters} from "vuex";
-import AdminPage from "@/components/admin/adminPage";
-// import AddNews from "@/components/admin/addNews";
+import AdminPage from "@/components/admin/adminComp";
+import NewsPage from "@/components/admin/newsComp";
+import AddNewsComp from "@/components/events/addNewsComp";
 
 export default {
   name: 'App',
   components: {
+    AddNewsComp,
+    NewsPage,
     AdminPage,
     LeisurePage,
     AllPersons,
@@ -71,7 +77,10 @@ export default {
 
       addPersonPage: 'getShowAddPersonPage',
       addEventPage: 'getShowAddEventPage',
-      adminPage: 'getShowAdminPage'
+      addNewsPage: 'getShowAddNewsPage',
+
+      adminPage: 'getShowAdminPage',
+      newsPage: 'getShowNewsPage',
     })
   },
   methods: {}

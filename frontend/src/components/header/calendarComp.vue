@@ -8,7 +8,7 @@
         <div class="btns-group">
           <div></div>
           <button class="btn-style" style="width:166px; margin-top: 0px; margin-bottom: 22px;"
-                  @click="goToAddEvent">
+                  @click="loadAddEventPage">
             ДОБАВИТЬ СОБЫТИЕ
           </button>
         </div>
@@ -43,7 +43,6 @@ export default {
       locale: 'ru-RU',
       monthNameFormat: 'long',
       currentPeriodLabel: 'СЕГОДНЯ',
-       // startDate: new Date(2023, (1 - 1), 10, 12, 0)
     }
   },
   computed: {
@@ -57,9 +56,6 @@ export default {
     }),
     setShowDate(d) {
       this.showDate = d;
-    },
-    goToAddEvent() {
-      this.loadAddEventPage();
     },
   }
 }

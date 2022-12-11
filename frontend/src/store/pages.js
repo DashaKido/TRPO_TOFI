@@ -4,6 +4,8 @@ export let PagesDataStore = {
             showTokenPage: true,
             Admin: false,
             showAdminPage: false,
+            showNewsPage: false,
+
             showMainPage: false,
             showSettingsPage: false,
             showCalendarPage: false,
@@ -14,6 +16,7 @@ export let PagesDataStore = {
 
             showAddEventPage: false,
             showAddPersonPage: false,
+            showAddNewsPage: false
         }
     },
     getters: {
@@ -50,11 +53,18 @@ export let PagesDataStore = {
         getShowAddPersonPage(state) {
             return state.showAddPersonPage;
         },
+        getShowAddNewsPage(state) {
+            return state.showAddNewsPage;
+        },
+
         getAdmin(state) {
             return state.Admin;
         },
         getShowAdminPage(state) {
             return state.showAdminPage;
+        },
+        getShowNewsPage(state) {
+            return state.showNewsPage;
         }
     },
     mutations: {
@@ -91,11 +101,18 @@ export let PagesDataStore = {
         setShowAddEventPage(state, new_val) {
             state.showAddEventPage = new_val;
         },
+        setShowAddNewsPage(state, new_val) {
+            state.showAddNewsPage = new_val;
+        },
+
         setAdmin(state, new_val) {
             state.Admin = new_val
         },
         setShowAdminPage(state, new_val) {
             state.showAdminPage = new_val;
+        },
+        setShowNewsPage(state, new_val) {
+            state.showNewsPage = new_val;
         }
     },
     actions: {
@@ -113,8 +130,10 @@ export let PagesDataStore = {
 
             commit('setShowAddEventPage', false);
             commit('setShowAddPersonPage', false);
+            commit('setShowAddNewsPage', false);
 
             commit('setShowAdminPage', false);
+            commit('setShowNewsPage', false)
         },
         loadTokenPage({commit, dispatch}) {
             dispatch('closeAllPages');
@@ -159,9 +178,18 @@ export let PagesDataStore = {
             dispatch('closeAllPages');
             commit('setShowAddPersonPage', true);
         },
+        loadAddNewsPage({commit, dispatch}) {
+            dispatch('closeAllPages');
+            commit('setShowAddNewsPage', true);
+        },
+
         loadAdminPage({commit, dispatch}) {
             dispatch('closeAllPages');
             commit('setShowAdminPage', true);
+        },
+        loadNewsPage({commit, dispatch}) {
+            dispatch('closeAllPages');
+            commit('setShowNewsPage', true);
         },
         updateAdmin({commit}, {isAdmin}) {
             commit('setAdmin', isAdmin)

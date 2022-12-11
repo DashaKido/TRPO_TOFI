@@ -2,9 +2,11 @@
   <div class="header-block">
     <span class="logo-text">TELEGRAM</span>
     <div class="main-sections-block" v-show="admin">
-      <span class="link-item" :class="`${adminPage?'active':''}`" @click="loadAdminPage">ВСЕ ПОЛЬЗОВАТЕЛИ</span>
+      <span class="link-item" :class="`${adminPage?'active':''}`" @click="loadAdminPage">ПОЛЬЗОВАТЕЛИ</span>
+      <span class="link-item" :class="`${newsPage?'active':''}`" @click="loadNewsPage">НОВОСТИ</span>
       <span class="link-item" @click="loadTokenPage">ВЫХОД</span>
     </div>
+
     <div class="main-sections-block" v-show="!tokenPage&&!admin">
       <span class="link-item" :class="`${mainPage?'active':''}`" @click="loadMainPage">ГЛАВНАЯ</span>
       <span class="link-item" :class="`${calendarPage?'active':''}`" @click="loadCalendarPage">КАЛЕНДАРЬ</span>
@@ -38,7 +40,8 @@ export default {
       calendarPage: 'getShowCalendarPage',
       allPersons: 'getShowAllPersonsPage',
       admin: 'getAdmin',
-      adminPage: 'getShowAdminPage'
+      adminPage: 'getShowAdminPage',
+      newsPage: 'getShowNewsPage'
     })
   },
   methods: {
@@ -57,7 +60,8 @@ export default {
       loadAddEventPage: 'loadAddEventPage',
       loadAddPersonPage: 'loadAddPersonPage',
 
-      loadAdminPage: 'loadAdminPage'
+      loadAdminPage: 'loadAdminPage',
+      loadNewsPage: 'loadNewsPage'
     }),
   }
 }

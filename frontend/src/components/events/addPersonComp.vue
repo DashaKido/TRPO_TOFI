@@ -106,7 +106,7 @@
 
       <div class="btns-all-width">
         <div class="btns-group">
-          <button class="btn-style btn-grey" @click="goToAllPerson">
+          <button class="btn-style btn-grey" @click="loadAllPersonsPage">
             ОТМЕНА
           </button>
           <button class="btn-style" @click="addPerson">
@@ -219,9 +219,6 @@ export default {
       let index = this.allInfo.findIndex(item => item.main == this.selectedInfo);
       this.allInfo.splice(index, 1);
       this.selectedInfo = '';
-    },
-    goToAllPerson() {
-      this.loadAllPersonsPage();
     },
     async addPerson() {
       let new_person = {
