@@ -54,7 +54,7 @@
           <button class="btn-style btn-grey" @click="loadNewsPage">
             ОТМЕНА
           </button>
-          <button class="btn-style" @click="addNews">
+          <button class="btn-style">
             СОХРАНИТЬ
           </button>
         </div>
@@ -97,16 +97,6 @@ export default {
     ...mapActions({
       loadNewsPage: 'loadNewsPage'
     }),
-    addNews() {
-      // let new_news = {
-      //   title: this.title,
-      //   text: this.text
-      // }
-      // await axios.post('http://localhost:7000/api/News', new_news, {
-      //   headers
-      // }
-      // )
-    }
   }
 }
 </script>
