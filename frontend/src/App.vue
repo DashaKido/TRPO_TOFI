@@ -3,6 +3,7 @@
     <div>
       <header-comp/>
       <div>
+        <admin-page v-show="adminPage"/>
         <token-comp v-show="tokenPage"/>
         <main-comp v-show="mainPage"/>
         <edit-profile-comp v-show="editProfilePage"/>
@@ -35,10 +36,13 @@ import CalendarComp from "@/components/header/calendarComp";
 import AllPersons from "@/components/header/allPersonsComp";
 import LeisurePage from "@/components/dropdown/leisurePage";
 import {mapGetters} from "vuex";
+import AdminPage from "@/components/admin/adminPage";
+// import AddNews from "@/components/admin/addNews";
 
 export default {
   name: 'App',
   components: {
+    AdminPage,
     LeisurePage,
     AllPersons,
     CalendarComp,
@@ -51,11 +55,6 @@ export default {
     TokenComp,
     headerComp,
     footerComp
-  },
-  data() {
-    return {
-      isLoginPage: false,
-    }
   },
   computed: {
     ...mapGetters({
@@ -71,11 +70,11 @@ export default {
       leisurePage: 'getShowLeisurePage',
 
       addPersonPage: 'getShowAddPersonPage',
-      addEventPage: 'getShowAddEventPage'
+      addEventPage: 'getShowAddEventPage',
+      adminPage: 'getShowAdminPage'
     })
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 <style>

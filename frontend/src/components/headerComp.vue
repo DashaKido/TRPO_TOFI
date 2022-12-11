@@ -1,20 +1,24 @@
 <template>
   <div class="header-block">
     <span class="logo-text">TELEGRAM</span>
-    <div class="main-sections-block" v-show="!tokenPage">
-      <span class="link-item" :class="`${mainPage?'active':''}`" @click="goToMain">ГЛАВНАЯ</span>
-      <span class="link-item" :class="`${calendarPage?'active':''}`" @click="goToCalendar">КАЛЕНДАРЬ</span>
-      <span class="link-item" :class="`${settingsPage?'active':''}`" @click="goToSetting">НАСТРОЙКИ ЧАТА</span>
-      <span class="link-item" :class="`${allPersons?'active':''}`" @click="goToAllPerson">ДРУЗЬЯ</span>
+    <div class="main-sections-block" v-show="admin">
+      <span class="link-item" :class="`${adminPage?'active':''}`" @click="loadAdminPage">ВСЕ ПОЛЬЗОВАТЕЛИ</span>
+      <span class="link-item" @click="loadTokenPage">ВЫХОД</span>
+    </div>
+    <div class="main-sections-block" v-show="!tokenPage&&!admin">
+      <span class="link-item" :class="`${mainPage?'active':''}`" @click="loadMainPage">ГЛАВНАЯ</span>
+      <span class="link-item" :class="`${calendarPage?'active':''}`" @click="loadCalendarPage">КАЛЕНДАРЬ</span>
+      <span class="link-item" :class="`${settingsPage?'active':''}`" @click="loadSettingsPage">НАСТРОЙКИ ЧАТА</span>
+      <span class="link-item" :class="`${allPersons?'active':''}`" @click="loadAllPersonsPage">ДРУЗЬЯ</span>
       <b-dropdown no-caret variant="link">
         <template #button-content>
           <div class="dropdown-btn"></div>
         </template>
-        <b-dropdown-item class="text-style" @click="goToEditProfile">РЕДАКТИРОВАТЬ ПРОФИЛЬ</b-dropdown-item>
-        <b-dropdown-item class="text-style" @click="goToProVersion">ТАРИФЫ</b-dropdown-item>
-        <b-dropdown-item class="text-style" @click="goToLeisure">ДОСУГ</b-dropdown-item>
+        <b-dropdown-item class="text-style" @click="loadEditProfilePage">РЕДАКТИРОВАТЬ ПРОФИЛЬ</b-dropdown-item>
+        <b-dropdown-item class="text-style" @click="loadProVersionPage">ТАРИФЫ</b-dropdown-item>
+        <b-dropdown-item class="text-style" @click="loadLeisurePage">ДОСУГ</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item class="text-style" @click="goToToken">ВЫХОД</b-dropdown-item>
+        <b-dropdown-item class="text-style" @click="loadTokenPage">ВЫХОД</b-dropdown-item>
       </b-dropdown>
     </div>
   </div>
@@ -27,17 +31,19 @@ export default {
   name: "headerComp",
   computed: {
     ...mapGetters({
-      tokenPage:'getShowTokenPage',
+      tokenPage: 'getShowTokenPage',
 
       mainPage: 'getShowMainPage',
       settingsPage: 'getShowSettingsPage',
       calendarPage: 'getShowCalendarPage',
       allPersons: 'getShowAllPersonsPage',
+      admin: 'getAdmin',
+      adminPage: 'getShowAdminPage'
     })
   },
   methods: {
     ...mapActions({
-      loadTokenPage:'loadTokenPage',
+      loadTokenPage: 'loadTokenPage',
 
       loadMainPage: 'loadMainPage',
       loadSettingsPage: 'loadSettingsPage',
@@ -49,33 +55,10 @@ export default {
       loadLeisurePage: 'loadLeisurePage',
 
       loadAddEventPage: 'loadAddEventPage',
-      loadAddPersonPage: 'loadAddPersonPage'
-    }),
-    goToMain() {
-      this.loadMainPage();
-    },
-    goToCalendar() {
-      this.loadCalendarPage();
-    },
-    goToSetting() {
-      this.loadSettingsPage();
-    },
-    goToAllPerson() {
-      this.loadAllPersonsPage();
-    },
+      loadAddPersonPage: 'loadAddPersonPage',
 
-    goToEditProfile() {
-      this.loadEditProfilePage();
-    },
-    goToProVersion() {
-      this.loadProVersionPage();
-    },
-    goToLeisure() {
-      this.loadLeisurePage();
-    },
-    goToToken(){
-      this.loadTokenPage();
-    }
+      loadAdminPage: 'loadAdminPage'
+    }),
   }
 }
 </script>

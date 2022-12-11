@@ -2,12 +2,12 @@ export let PagesDataStore = {
     state() {
         return {
             showTokenPage: true,
-
+            Admin: false,
+            showAdminPage: false,
             showMainPage: false,
             showSettingsPage: false,
             showCalendarPage: false,
             showAllPersonsPage: false,
-
             showEditProfilePage: false,
             showProVersionPage: false,
             showLeisurePage: false,
@@ -50,6 +50,12 @@ export let PagesDataStore = {
         getShowAddPersonPage(state) {
             return state.showAddPersonPage;
         },
+        getAdmin(state) {
+            return state.Admin;
+        },
+        getShowAdminPage(state) {
+            return state.showAdminPage;
+        }
     },
     mutations: {
         setShowTokenPage(state, new_val) {
@@ -85,6 +91,12 @@ export let PagesDataStore = {
         setShowAddEventPage(state, new_val) {
             state.showAddEventPage = new_val;
         },
+        setAdmin(state, new_val) {
+            state.Admin = new_val
+        },
+        setShowAdminPage(state, new_val) {
+            state.showAdminPage = new_val;
+        }
     },
     actions: {
         closeAllPages({commit}) {
@@ -101,9 +113,12 @@ export let PagesDataStore = {
 
             commit('setShowAddEventPage', false);
             commit('setShowAddPersonPage', false);
+
+            commit('setShowAdminPage', false);
         },
         loadTokenPage({commit, dispatch}) {
             dispatch('closeAllPages');
+            commit('setAdmin', false);
             commit('setShowTokenPage', true);
         },
         loadMainPage({commit, dispatch}) {
@@ -140,9 +155,16 @@ export let PagesDataStore = {
             dispatch('closeAllPages');
             commit('setShowAddEventPage', true);
         },
-        loadAddPersonPage({commit, dispatch},) {
+        loadAddPersonPage({commit, dispatch}) {
             dispatch('closeAllPages');
             commit('setShowAddPersonPage', true);
         },
+        loadAdminPage({commit, dispatch}) {
+            dispatch('closeAllPages');
+            commit('setShowAdminPage', true);
+        },
+        updateAdmin({commit}, {isAdmin}) {
+            commit('setAdmin', isAdmin)
+        }
     },
 }

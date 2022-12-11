@@ -44,41 +44,51 @@ export default {
       loadMain: 'loadMainPage',
       createSettings: 'createSetting',
       getAllPersons: 'getAllPersons',
-      getAllEvents: 'getAllEvents'
+      getAllEvents: 'getAllEvents',
+      updateAdmin: 'updateAdmin',
+      loadAdmin: 'loadAdminPage'
     }),
     async signIn() {
-      await axios.get('http://localhost:7000/api/me', {
-        headers: {
-          'token': `${this.token}`
-        }
-      })
-          .then(responce => {
-                if (responce.data == '') {
-                  this.errorToken = true;
-                } else {
-                  this.errorToken = false;
-                  let user = responce.data;
-                  this.fillUser({
-                    birth: user.birth,
-                    isPro: user.isPro,
-                    lastName: user.lastName,
-                    name: user.name,
-                    persons: user.persons,
-                    id: user._id,
-                    token: user.token,
-                    chatId: user.chatId,
-                  });
-                  this.createSettings({user: this.user});
-                  this.getAllPersons({user: this.user});
-                  this.getAllEvents({user: this.user})
-                  this.loadMain();
+      if (this.token == 'admin') {
+        this.updateAdmin({isAdmin: true})
+        this.token = '';
+        this.loadAdmin()
+      } else {
+        await axios.get('http://localhost:7000/api/me', {
+          headers: {
+            'token': `${this.token}`
+          }
+        })
+            .then(responce => {
+                  if (responce.data == '') {
+                    this.errorToken = true;
+                  } else {
+                    this.errorToken = false;
+                    let user = responce.data;
+                    this.fillUser({
+                      birth: user.birth,
+                      isPro: user.isPro,
+                      lastName: user.lastName,
+                      name: user.name,
+                      persons: user.persons,
+                      id: user._id,
+                      token: user.token,
+                      chatId: user.chatId,
+                    });
+                    this.updateAdmin({isAdmin: false})
+                    this.createSettings({user: this.user});
+                    this.getAllPersons({user: this.user});
+                    this.getAllEvents({user: this.user})
+                    this.loadMain();
+                    this.token = '';
+                  }
                 }
-              }
-          )
-          .catch(error => {
-            this.errorToken = true;
-            console.log(error);
-          });
+            )
+            .catch(error => {
+              this.errorToken = true;
+              console.log(error);
+            });
+      }
     }
   }
 }
