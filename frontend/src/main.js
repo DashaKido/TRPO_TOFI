@@ -11,7 +11,7 @@ import {UserDataStore} from "./store/user.js"
 import {SettingsDataStore} from './store/settings.js'
 import {PagesDataStore} from "@/store/pages";
 import {EventsDataStore} from "@/store/events";
-import {PersonDataStore} from '@/store/person'
+import {PersonsDataStore} from '@/store/persons'
 
 const store = new Vuex.Store({
     modules: {
@@ -19,7 +19,7 @@ const store = new Vuex.Store({
         settings: SettingsDataStore,
         pages: PagesDataStore,
         events: EventsDataStore,
-        person: PersonDataStore
+        persons: PersonsDataStore
     }
 })
 const app = createApp(App)

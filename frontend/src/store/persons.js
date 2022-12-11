@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export let PersonDataStore = {
+export let PersonsDataStore = {
     state() {
         return {
             persons: []

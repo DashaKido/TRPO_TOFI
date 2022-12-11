@@ -83,6 +83,7 @@ export default {
     ...mapGetters({
       user: 'getUser',
       persons: 'getPersons',
+      events: 'getEvents'
     }),
     allFriends() {
       let arr = []
@@ -103,6 +104,7 @@ export default {
   methods: {
     ...mapActions({
       loadCalendarPage: 'loadCalendarPage',
+      updateEvents: 'updateEvents'
     }),
     goToCalendar() {
       this.loadCalendarPage();
@@ -115,7 +117,7 @@ export default {
       date.setMonth(this.startDate.substring(5, 7) - 1);
       date.setMinutes(this.time.substring(3, 5));
       let new_event = {
-        startDate: this.startDate,
+        startDate: date,
         title: this.title,
         tooltip: this.title + ' (' + this.selectedFriend + ')',
         person: this.selectedFriend,
@@ -125,7 +127,10 @@ export default {
         headers: {
           'token': this.user.token
         }
-      }).then(() => {
+      }).then((response) => {
+        new_event._id = response.data.insertedId;
+        this.events.push(new_event);
+        this.updateEvents({events: this.events})
         this.loadCalendarPage();
         this.startDate = '';
         this.time = '';

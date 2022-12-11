@@ -43,7 +43,8 @@ export default {
       fillUser: 'fillUser',
       loadMain: 'loadMainPage',
       createSettings: 'createSetting',
-      getAllPersons: 'getAllPersons'
+      getAllPersons: 'getAllPersons',
+      getAllEvents: 'getAllEvents'
     }),
     async signIn() {
       await axios.get('http://localhost:7000/api/me', {
@@ -69,6 +70,7 @@ export default {
                   });
                   this.createSettings({user: this.user});
                   this.getAllPersons({user: this.user});
+                  this.getAllEvents({user: this.user})
                   this.loadMain();
                 }
               }

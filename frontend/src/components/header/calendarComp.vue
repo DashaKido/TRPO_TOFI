@@ -32,7 +32,7 @@
 import {CalendarView, CalendarViewHeader} from "vue-simple-calendar";
 import '../../../node_modules/vue-simple-calendar/dist/css/default.css'
 import '../../../node_modules/vue-simple-calendar/dist/css/holidays-us.css'
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "calendarComp",
@@ -43,83 +43,14 @@ export default {
       locale: 'ru-RU',
       monthNameFormat: 'long',
       currentPeriodLabel: 'СЕГОДНЯ',
-      items: [
-        {
-          id: 1,
-          startDate: new Date(2022, (12 - 1), 24, 12, 0),
-          title: 'самое лучшее событие1',
-          tooltip: '@самое лучшее событие1'
-        },
-        {
-          id: 2,
-          startDate: new Date(2022, (12 - 1), 24, 12, 0),
-          title: 'самое лучшее событие2',
-          tooltip: '@самое лучшее событие2'
-        },
-        {
-          id: 3,
-          startDate: new Date(2022, (12 - 1), 1, 12, 0),
-          title: 'самое лучшее событие3',
-          tooltip: '@самое лучшее событие3'
-        },
-        {
-          id: 4,
-          startDate: new Date(2022, (12 - 1), 12, 12, 0),
-          title: 'самое лучшее событие4',
-          tooltip: '@самое лучшее событие4'
-        },
-        {
-          id: 5,
-          startDate: new Date(2022, (12 - 1), 13, 12, 0),
-          title: 'самое лучшее событие5',
-          tooltip: '@самое лучшее событие5'
-        },
-        {
-          id: 6,
-          startDate: new Date(2022, (11 - 1), 28, 12, 0),
-          title: 'самое лучшее событие2',
-          tooltip: '@самое лучшее событие2'
-        },
-        {
-          id: 7,
-          startDate: new Date(2022, (12 - 1), 28, 12, 0),
-          title: 'самое лучшее событие3',
-          tooltip: '@самое лучшее событие3'
-        },
-        {
-          id: 8,
-          startDate: new Date(2023, (1 - 1), 1, 12, 0),
-          title: 'самое лучшее событие4',
-          tooltip: '@самое лучшее событие4'
-        },
-        {
-          id: 9,
-          startDate: new Date(2022, (12 - 1), 10, 12, 0),
-          title: 'самое лучшее событие5',
-          tooltip: '@самое лучшее событие5'
-        },
-        {
-          id: 10,
-          startDate: new Date(2023, (1 - 1), 28, 12, 0),
-          title: 'самое лучшее событие3',
-          tooltip: '@самое лучшее событие3'
-        },
-        {
-          id: 8,
-          startDate: new Date(2023, (2 - 1), 1, 12, 0),
-          title: 'самое лучшее событие4',
-          tooltip: '@самое лучшее событие4'
-        },
-        {
-          id: 9,
-          startDate: new Date(2023, (1 - 1), 10, 12, 0),
-          title: 'самое лучшее событие5',
-          tooltip: '@самое лучшее событие5'
-        },
-      ],
+       // startDate: new Date(2023, (1 - 1), 10, 12, 0)
     }
   },
-
+  computed: {
+    ...mapGetters({
+      items: 'getEvents'
+    })
+  },
   methods: {
     ...mapActions({
       loadAddEventPage: 'loadAddEventPage',
@@ -129,7 +60,7 @@ export default {
     },
     goToAddEvent() {
       this.loadAddEventPage();
-    }
+    },
   }
 }
 </script>
