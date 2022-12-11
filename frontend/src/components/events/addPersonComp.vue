@@ -176,12 +176,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: 'getUser'
+      user: 'getUser',
+      persons: 'getPersons'
     })
   },
   methods: {
     ...mapActions({
       loadAllPersonsPage: 'loadAllPersonsPage',
+      updatePersons: 'updatePersons'
     }),
     addNewInfo() {
       this.errorName = false;
@@ -235,8 +237,20 @@ export default {
         headers: {
           'token': this.user.token
         }
-      }).then(this.loadAllPersonsPage())
-          .catch(error => console.log(error))
+      }).then((response) => {
+            new_person._id = response.data.insertedId;
+            this.persons.push(new_person)
+            this.updatePersons({persons: this.persons});
+            this.loadAllPersonsPage();
+            this.birthdate = "";
+            this.selectedCategory = 1;
+            this.lastName = '';
+            this.name = '';
+            this.nickname = '';
+            this.allInfo = [];
+
+          }
+      ).catch(error => console.log(error))
     }
   }
 }

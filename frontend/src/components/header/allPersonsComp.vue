@@ -13,16 +13,16 @@
           <div style="margin-right: 5%;">
             <div class="input-item">
               <label class="text-style">
-                КАТЕГОРИЯ
+                ИМЯ
               </label>
-              <div class="input-style">{{ person.category }}</div>
+              <div class="input-style">{{ person.name }}</div>
             </div>
 
             <div class="input-item">
               <label class="text-style">
                 ТЕЛЕГРАМ
               </label>
-              <div class="input-style">{{ person.telegram }}</div>
+              <div class="input-style">{{ person.nickname }}</div>
             </div>
 
             <div class="btns-all-width" style="justify-content: flex-start;">
@@ -43,35 +43,18 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "allFriends",
   data() {
     return {
-      persons: [
-        {
-          photo: '@/assets/boyfriend.jpg',
-          category: 'Парень/девушка',
-          telegram: '@ya_naym',
-        },
-        {
-          photo: '@/assets/friend.jpg',
-          category: 'Подруга/друг',
-          telegram: '@lissaaa',
-        },
-        {
-          photo: '@/assets/sister.jpg',
-          category: 'Сестра/брат',
-          telegram: '@kat_rya',
-        },
-        // {
-        //   photo: '@/assets/brother.jpg',
-        //   category: 'Сестра/брат',
-        //   telegram: '@shef.in',
-        // },
-      ],
     }
+  },
+  computed: {
+    ...mapGetters({
+      persons: 'getPersons'
+    })
   },
   methods: {
     ...mapActions({

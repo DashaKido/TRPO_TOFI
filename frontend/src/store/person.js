@@ -23,6 +23,9 @@ export let PersonDataStore = {
                     'token': user.token
                 }
             }).then(response => commit('setPersons', response.data))
+        },
+        updatePersons({commit}, {persons}) {
+            commit('setPersons', persons)
         }
     }
 }

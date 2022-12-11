@@ -117,7 +117,7 @@ export default {
       let new_event = {
         startDate: this.startDate,
         title: this.title,
-        tooltip: this.title,
+        tooltip: this.title + ' (' + this.selectedFriend + ')',
         person: this.selectedFriend,
         importance: this.importance
       }
@@ -125,7 +125,14 @@ export default {
         headers: {
           'token': this.user.token
         }
-      }).then(this.loadCalendarPage)
+      }).then(() => {
+        this.loadCalendarPage();
+        this.startDate = '';
+        this.time = '';
+        this.title = '';
+        this.selectedFriend = 1;
+        this.importance = '';
+      })
           .catch(error => console.log(error))
     },
 
