@@ -34,18 +34,24 @@
             <label class="text-style">
               ИМЯ
             </label>
-            <input class="input-style" v-model="name">
+            <input class="input-style" v-model="name" style="margin-bottom: 0">
+            <label v-show="errorName" style="color: red; margin-top: 5px; " class="subtext-style">
+              ОБЯЗАТЕЛЬНОЕ ПОЛЕ ДЛЯ ЗАПОЛНЕНИЯ
+            </label>
           </div>
 
           <div class="input-item">
-            <label class="text-style">
+            <label class="text-style" style="margin-top: 15px;">
               ТЕЛЕГРАМ
             </label>
-            <input class="input-style" v-model="nickname">
+            <input class="input-style" v-model="nickname" style="margin-bottom: 0">
+            <label v-show="errorTelegram" style="color: red; margin-top: 5px;" class="subtext-style">
+              ОБЯЗАТЕЛЬНОЕ ПОЛЕ ДЛЯ ЗАПОЛНЕНИЯ
+            </label>
           </div>
 
           <div class="input-item">
-            <label class="text-style">
+            <label class="text-style" style="margin-top: 15px;">
               ДАТА РОЖДЕНИЯ
             </label>
             <input type="date" class="input-style" v-model="birthdate">
@@ -68,7 +74,7 @@
                 <button class="btn-add" @click="addNewInfo"></button>
               </div>
 
-              <label v-show="errorName" style="color: red; margin-top: 5px;" class="subtext-style">
+              <label v-show="errorNameInfo" style="color: red; margin-top: 5px;" class="subtext-style">
                 ОБЯЗАТЕЛЬНОЕ ПОЛЕ ДЛЯ ЗАПОЛНЕНИЯ
               </label>
             </div>
@@ -120,6 +126,7 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+// eslint-disable-next-line no-unused-vars
 import axios from "axios";
 
 export default {
@@ -166,8 +173,10 @@ export default {
       allInfo: [],
       nameInfo: '',
       info: '',
-      errorName: false,
+      errorNameInfo: false,
       errorInfo: false,
+      errorName: false,
+      errorTelegram: false,
       birthdate: '1970-01-01',
       lastName: '',
       name: '',
@@ -187,15 +196,15 @@ export default {
       createLog: 'createLog'
     }),
     addNewInfo() {
-      this.errorName = false;
+      this.errorNameInfo = false;
       this.errorInfo = false;
       if (this.nameInfo == '' && this.info == '') {
-        this.errorName = true;
+        this.errorNameInfo = true;
         this.errorInfo = true;
         return;
       }
       if (this.nameInfo == '') {
-        this.errorName = true;
+        this.errorNameInfo = true;
         return;
       }
       if (this.info == '') {
@@ -205,6 +214,7 @@ export default {
       let value = 0;
       if (this.allInfo.length == 0) {
         value = 1;
+        this.selectedInfo = this.info;
       } else {
         value = this.allInfo[this.allInfo.length - 1].value + 1;
       }
@@ -222,6 +232,21 @@ export default {
       this.selectedInfo = '';
     },
     async addPerson() {
+      this.errorName = false;
+      this.errorTelegram = false;
+      if (this.name == '' && this.nickname == '') {
+        this.errorName = true;
+        this.errorTelegram = true;
+        return;
+      }
+      if (this.name == '') {
+        this.errorName = true;
+        return;
+      }
+      if (this.nickname == '') {
+        this.errorTelegram = true;
+        return;
+      }
       let new_person = {
         birthdate: this.birthdate,
         category: this.selectedCategory,

@@ -95,6 +95,12 @@ export default {
 }
 </script>
 <style>
+.form-check-input:checked{
+  background-color: #4C7C8B!important;
+  border-color: #4C7C8B!important;
+}
+</style>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 ::-webkit-scrollbar {

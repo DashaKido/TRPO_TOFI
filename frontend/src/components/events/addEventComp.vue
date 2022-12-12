@@ -24,11 +24,14 @@
             <label class="text-style">
               НАЗВАНИЕ
             </label>
-            <b-form-input class="input-style" v-model="title"></b-form-input>
+            <b-form-input class="input-style" v-model="title" style="margin-bottom: 0"></b-form-input>
+            <label v-show="errorTitle" style="color: red; margin-top: 5px;" class="subtext-style">
+              ОБЯЗАТЕЛЬНОЕ ПОЛЕ ДЛЯ ЗАПОЛНЕНИЯ
+            </label>
           </div>
 
           <div class="input-item">
-            <label class="text-style">
+            <label class="text-style" style="margin-top: 15px;">
               ВАЖНОСТЬ
             </label>
             <input class="input-style" v-model="importance">
@@ -66,6 +69,7 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+// eslint-disable-next-line no-unused-vars
 import axios from "axios";
 
 export default {
@@ -76,7 +80,8 @@ export default {
       startDate: '2022-12-01',
       title: '',
       time: '12:00',
-      importance: ''
+      importance: '',
+      errorTitle: false
     }
   },
   computed: {
@@ -97,7 +102,6 @@ export default {
           text: item.name + " (" + item.nickname + ")"
         })
       }
-
       return arr;
     }
   },
@@ -111,16 +115,27 @@ export default {
       this.loadCalendarPage();
     },
     async addEvent() {
+      this.errorTitle = false;
+      if (this.title == '') {
+        this.errorTitle = true;
+        return;
+      }
       let date = new Date()
       date.setFullYear(this.startDate.substring(0, 4))
       date.setDate(this.startDate.substring(8, 10));
       date.setHours(this.time.substring(0, 2));
       date.setMonth(this.startDate.substring(5, 7) - 1);
       date.setMinutes(this.time.substring(3, 5));
+      let friend = "";
+      for (let item of this.persons) {
+        if (item._id == this.selectedFriend) {
+          friend = item.nickname
+        }
+      }
       let new_event = {
         startDate: date,
         title: this.title,
-        tooltip: this.title + ' (' + this.selectedFriend + ')',
+        tooltip: this.title + ' (' + friend + ')',
         person: this.selectedFriend,
         importance: this.importance
       }
@@ -173,4 +188,12 @@ export default {
 .select-style:focus {
   box-shadow: 0 0 5px 0.25rem #8fb1c1;
 }
+
+.subtext-style {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 9px;
+  line-height: 9px;
+}
+
 </style>
