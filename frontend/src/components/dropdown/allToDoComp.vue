@@ -15,7 +15,7 @@
                 <div v-for="td in item.items" :key="td" style="display: flex;">
                   <b-form-checkbox v-model="td.status" @change="changeStatus(item._id, item.items)">
                   </b-form-checkbox>
-                  {{ td.value }}. {{ td.text }}
+                  <span :class="`${td.status?'check_true':''}`">{{ td.value }}. {{ td.text }}</span>
                 </div>
               </div>
             </div>
@@ -106,5 +106,8 @@ export default {
   min-height: 60vh;
   height: 100%;
   flex-wrap: wrap;
+}
+.check_true{
+  text-decoration: line-through;
 }
 </style>

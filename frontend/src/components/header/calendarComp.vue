@@ -5,8 +5,12 @@
     </div>
     <div class="container-block" style="align-items: flex-start;">
       <div class="btns-all-width">
-        <div class="btns-group">
+        <div class="btns-group" style="width: 35%;">
           <div></div>
+          <button v-show="!user.isPro" class="btn-style" style="width:226px; margin-top: 0px; margin-bottom: 22px;"
+                  @click="loadProVersionPage">
+            РАЗБЛОКИРОВАТЬ КАЛЕНДАРЬ
+          </button>
           <button class="btn-style" style="width:166px; margin-top: 0px; margin-bottom: 22px;"
                   @click="loadAddEventPage">
             ДОБАВИТЬ СОБЫТИЕ
@@ -14,7 +18,7 @@
         </div>
       </div>
 
-      <div class="style-comp">
+      <div class="style-comp" :style="`${!user.isPro?'filter: blur(10px);':''}`">
         <calendar-view :show-date="showDate" :starting-day-of-week="1" :enable-date-selection="false"
                        :locale="locale" :month-name-format="monthNameFormat" :current-period-label="currentPeriodLabel"
                        :show-times="true" :items="items"
@@ -47,12 +51,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      items: 'getEvents'
+      items: 'getEvents',
+      user: 'getUser'
     })
   },
   methods: {
     ...mapActions({
       loadAddEventPage: 'loadAddEventPage',
+      loadProVersionPage: 'loadProVersionPage'
     }),
     setShowDate(d) {
       this.showDate = d;
