@@ -73,9 +73,9 @@ export default {
   data() {
     return {
       selectedFriend: null,
-      startDate: '',
+      startDate: '2022-12-01',
       title: '',
-      time: '',
+      time: '12:00',
       importance: ''
     }
   },

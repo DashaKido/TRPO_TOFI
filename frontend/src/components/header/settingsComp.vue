@@ -119,6 +119,7 @@ export default {
 .input-settings {
   margin: 0px;
   width: 30% !important;
+  cursor: default;
 }
 
 .check-item {

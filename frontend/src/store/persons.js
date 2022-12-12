@@ -3,17 +3,24 @@ import axios from "axios";
 export let PersonsDataStore = {
     state() {
         return {
-            persons: []
+            persons: [],
+            countPersons: 0
         }
     },
     getters: {
         getPersons(state) {
             return state.persons;
+        },
+        getCountPersons(state) {
+            return state.countPersons;
         }
     },
     mutations: {
         setPersons(state, new_val) {
             state.persons = new_val;
+        },
+        setCountsPersons(state, new_val) {
+            state.countPersons = new_val;
         }
     },
     actions: {
@@ -22,9 +29,13 @@ export let PersonsDataStore = {
                 headers: {
                     'token': user.token
                 }
-            }).then(response => commit('setPersons', response.data))
+            }).then(response => {
+                commit('setCountsPersons', response.data.length)
+                commit('setPersons', response.data)
+            })
         },
         updatePersons({commit}, {persons}) {
+            commit('setCountsPersons', persons.length)
             commit('setPersons', persons)
         }
     }

@@ -96,10 +96,10 @@
               </b-form-select>
               <button @click="deleteInfo" class="btn-add btn-delete"></button>
             </div>
-            <b-form-textarea v-model="selectedInfo" style="height: 150px!important; width: 100% !important;"
-                             class="input-style">
-
-            </b-form-textarea>
+            <div style="height: 150px!important; width: 100% !important;"
+                 class="input-style">
+              {{ selectedInfo }}
+            </div>
           </div>
         </div>
       </div>
@@ -168,10 +168,10 @@ export default {
       info: '',
       errorName: false,
       errorInfo: false,
-      birthdate: '',
+      birthdate: '1970-01-01',
       lastName: '',
       name: '',
-      nickname: ''
+      nickname: '',
     }
   },
   computed: {

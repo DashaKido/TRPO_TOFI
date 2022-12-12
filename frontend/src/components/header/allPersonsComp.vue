@@ -15,14 +15,14 @@
               <label class="text-style">
                 ИМЯ
               </label>
-              <div class="input-style">{{ person.name }}</div>
+              <div class="input-style" style="cursor: default">{{ person.name }}</div>
             </div>
 
             <div class="input-item">
               <label class="text-style">
                 ТЕЛЕГРАМ
               </label>
-              <div class="input-style">{{ person.nickname }}</div>
+              <div class="input-style"  style="cursor: default">{{ person.nickname }}</div>
             </div>
 
             <div class="btns-all-width" style="justify-content: flex-start;">
@@ -34,7 +34,10 @@
             </div>
           </div>
         </div>
-        <div class="one-person-block">
+        <div class="one-person-block" v-show="countPersons >= 5 && !user.isPro">
+          <button class="btn-upgrade" @click="loadProVersionPage"> РАЗБЛОКИРОВАТЬ ДОБАВЛЕНИЕ ДРУЗЕЙ</button>
+        </div>
+        <div class="one-person-block" v-show="(countPersons < 5 && !user.isPro) || (user.isPro)">
           <button class="btn-add-person" @click="loadAddPersonPage"></button>
         </div>
       </div>
@@ -47,18 +50,17 @@ import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "allFriends",
-  data() {
-    return {
-    }
-  },
   computed: {
     ...mapGetters({
-      persons: 'getPersons'
+      persons: 'getPersons',
+      user: 'getUser',
+      countPersons: 'getCountPersons'
     })
   },
   methods: {
     ...mapActions({
-      loadAddPersonPage: 'loadAddPersonPage'
+      loadAddPersonPage: 'loadAddPersonPage',
+      loadProVersionPage: 'loadProVersionPage'
     }),
   }
 }
@@ -87,6 +89,28 @@ export default {
 .btn-add-person:active, .btn-add-person:focus {
   background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='52' y1='5' x2='52' y2='95' stroke='%23E6ECF1' stroke-width='10' stroke-linecap='round'/%3E%3Cline x1='95' y1='53' x2='5' y2='53' stroke='%23E6ECF1' stroke-width='10' stroke-linecap='round'/%3E%3C/svg%3E%0A");
   background-color: #BBCAD8;
+  box-shadow: 0 0 5px 0.25rem #ACACAD;
+}
+
+.btn-upgrade {
+  font-size: 24px;
+  font-weight: bold;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #b0abae;
+  border-radius: 20px;
+  color: #FFFFFF;
+  border: none;
+  width: 90%;
+  height: 90%;
+}
+
+.btn-upgrade:hover {
+  background-color: #c1bcbf;
+}
+
+.btn-upgrade:active, .btn-upgrade:focus {
+  background-color: #b0abae;
   box-shadow: 0 0 5px 0.25rem #ACACAD;
 }
 
