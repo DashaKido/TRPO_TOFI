@@ -101,7 +101,7 @@ export default {
     async addToDo() {
       let new_todo = {
         items: this.allItems,
-        token: this.user,
+        token: this.user.token,
         title: this.title
       }
       await axios.post('http://localhost:7000/api/ToDo', new_todo, {
@@ -118,7 +118,7 @@ export default {
         this.allItems = [];
         this.selectedName = 1;
         this.title = '';
-      })
+      }).catch(error => console.log(error));
     }
   }
 }

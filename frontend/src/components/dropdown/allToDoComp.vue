@@ -5,31 +5,18 @@
     </div>
     <div class="container-block">
       <div class="main-comp">
-        <div class="one-person-block" v-for="item in todo" :key="item">
-          <div class="load-photo" style="margin-bottom: 5%;">
-            <img class="photo-style" :src="require('@/assets/friend.jpg')">
-          </div>
-
+        <div class="one-todo-block" v-for="item in todo" :key="item">
           <div style="margin-right: 5%;">
             <div class="input-item">
               <label class="text-style">
-                ИМЯ
+                {{ item.title }}
               </label>
-              <div class="input-style">{{ item.name }}</div>
-            </div>
-
-            <div class="input-item">
-              <label class="text-style">
-                ТЕЛЕГРАМ
-              </label>
-              <div class="input-style">{{ item.nickname }}</div>
-            </div>
-
-            <div class="btns-all-width" style="justify-content: flex-start;">
-              <div class="btns-group">
-                <button class="btn-style" style="width: 117px;">
-                  РЕДАКТИРОВАТЬ
-                </button>
+              <div class="input-style" style="height: auto;">
+                <div v-for="td in item.items" :key="td" style="display: flex;">
+                  <b-form-checkbox v-model="td.status" @change="changeStatus(item._id, item.items)">
+                  </b-form-checkbox>
+                  {{ td.value }}. {{ td.text }}
+                </div>
               </div>
             </div>
           </div>
@@ -44,18 +31,37 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+// eslint-disable-next-line no-unused-vars
+import axios from "axios";
 
 export default {
   name: "allToDoComp",
   computed: {
     ...mapGetters({
-      todo: 'getToDo'
+      todo: 'getToDo',
+      user: 'getUser'
     })
   },
   methods: {
     ...mapActions({
-      loadAddToDoPage: 'loadAddToDoPage'
-    })
+      loadAddToDoPage: 'loadAddToDoPage',
+      createLog: 'createLog',
+      updateToDo: 'updateToDo',
+    }),
+    async changeStatus(id, items) {
+      let new_todo = {
+        items: items
+      };
+      await axios.put('http://localhost:7000/api/ToDo/' + id, new_todo, {
+        headers: {
+          'token': this.user.token
+        }
+      }).then(() => {
+            this.updateToDo({todo: this.todo});
+            this.createLog({action: 'Изменен список дел', token: this.user.token});
+          }
+      ).catch(error => console.log(error));
+    }
   }
 }
 </script>
