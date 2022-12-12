@@ -8,17 +8,19 @@
         <token-comp v-show="tokenPage"/>
 
         <main-comp v-show="mainPage"/>
-        <edit-profile-comp v-show="editProfilePage"/>
+        <settings-comp v-show="settingsPage"/>
+        <calendar-comp v-show="calendarPage"/>
+        <all-persons v-show="allPersons"/>
 
         <add-event-comp v-show="addEventPage"/>
         <add-person-comp v-show="addPersonPage"/>
         <add-news-comp v-show="addNewsPage"/>
+        <add-to-do-comp v-show="addToDoPage"/>
 
-        <settings-comp v-show="settingsPage"/>
+        <edit-profile-comp v-show="editProfilePage"/>
         <pro-version-comp v-show="proVersionPage"/>
-        <calendar-comp v-show="calendarPage"/>
-        <all-persons v-show="allPersons"/>
         <leisure-page v-show="leisurePage"/>
+        <all-to-do-comp v-show="allToDoPage"/>
       </div>
     </div>
     <footer-comp/>
@@ -42,10 +44,14 @@ import {mapGetters} from "vuex";
 import AdminPage from "@/components/admin/adminComp";
 import NewsPage from "@/components/admin/newsComp";
 import AddNewsComp from "@/components/events/addNewsComp";
+import AllToDoComp from "@/components/dropdown/allToDoComp";
+import AddToDoComp from "@/components/events/addToDoComp";
 
 export default {
   name: 'App',
   components: {
+    AddToDoComp,
+    AllToDoComp,
     AddNewsComp,
     NewsPage,
     AdminPage,
@@ -74,10 +80,12 @@ export default {
       editProfilePage: 'getShowEditProfilePage',
       proVersionPage: "getShowProVersionPage",
       leisurePage: 'getShowLeisurePage',
+      allToDoPage: 'getShowAllToGoPage',
 
       addPersonPage: 'getShowAddPersonPage',
       addEventPage: 'getShowAddEventPage',
       addNewsPage: 'getShowAddNewsPage',
+      addToDoPage:'getShowAddToDoPage',
 
       adminPage: 'getShowAdminPage',
       newsPage: 'getShowNewsPage',

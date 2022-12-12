@@ -10,13 +10,16 @@ export let PagesDataStore = {
             showSettingsPage: false,
             showCalendarPage: false,
             showAllPersonsPage: false,
+
             showEditProfilePage: false,
             showProVersionPage: false,
             showLeisurePage: false,
+            showAllToDoPage: false,
 
             showAddEventPage: false,
             showAddPersonPage: false,
-            showAddNewsPage: false
+            showAddNewsPage: false,
+            showAddToDoPage: false,
         }
     },
     getters: {
@@ -46,6 +49,9 @@ export let PagesDataStore = {
         getShowLeisurePage(state) {
             return state.showLeisurePage;
         },
+        getShowAllToGoPage(state) {
+            return state.showAllToDoPage;
+        },
 
         getShowAddEventPage(state) {
             return state.showAddEventPage;
@@ -55,6 +61,9 @@ export let PagesDataStore = {
         },
         getShowAddNewsPage(state) {
             return state.showAddNewsPage;
+        },
+        getShowAddToDoPage(state) {
+            return state.showAddToDoPage;
         },
 
         getAdmin(state) {
@@ -94,6 +103,9 @@ export let PagesDataStore = {
         setShowLeisurePage(state, new_val) {
             state.showLeisurePage = new_val;
         },
+        setShowAllToDoPage(state, new_val) {
+            state.showAllToDoPage = new_val;
+        },
 
         setShowAddPersonPage(state, new_val) {
             state.showAddPersonPage = new_val;
@@ -103,6 +115,9 @@ export let PagesDataStore = {
         },
         setShowAddNewsPage(state, new_val) {
             state.showAddNewsPage = new_val;
+        },
+        setShowAddToDoPage(state, new_val) {
+            state.showAddToDoPage = new_val;
         },
 
         setAdmin(state, new_val) {
@@ -127,10 +142,12 @@ export let PagesDataStore = {
             commit('setShowEditProfilePage', false);
             commit('setShowProVersionPage', false);
             commit('setShowLeisurePage', false);
+            commit('setShowAllToDoPage', false);
 
             commit('setShowAddEventPage', false);
             commit('setShowAddPersonPage', false);
             commit('setShowAddNewsPage', false);
+            commit('setShowAddToDoPage', false);
 
             commit('setShowAdminPage', false);
             commit('setShowNewsPage', false)
@@ -169,6 +186,10 @@ export let PagesDataStore = {
             dispatch('closeAllPages');
             commit('setShowLeisurePage', true);
         },
+        loadAllToDoPage({commit, dispatch}) {
+            dispatch('closeAllPages');
+            commit('setShowAllToDoPage', true);
+        },
 
         loadAddEventPage({commit, dispatch}) {
             dispatch('closeAllPages');
@@ -181,6 +202,10 @@ export let PagesDataStore = {
         loadAddNewsPage({commit, dispatch}) {
             dispatch('closeAllPages');
             commit('setShowAddNewsPage', true);
+        },
+        loadAddToDoPage({commit, dispatch}){
+            dispatch('closeAllPages');
+            commit('setShowAddToDoPage', true)
         },
 
         loadAdminPage({commit, dispatch}) {

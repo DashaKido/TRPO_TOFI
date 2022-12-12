@@ -47,7 +47,8 @@ export default {
       getAllEvents: 'getAllEvents',
       updateAdmin: 'updateAdmin',
       loadAdmin: 'loadAdminPage',
-      createLog: 'createLog'
+      createLog: 'createLog',
+      getAllToDo: 'getAllToDo'
     }),
     async signIn() {
       if (this.token == 'admin') {
@@ -80,6 +81,7 @@ export default {
                     this.updateAdmin({isAdmin: false})
                     await this.createSettings({user: this.user});
                     await this.getAllPersons({user: this.user});
+                    await this.getAllToDo({user: this.user})
                     await this.getAllEvents({user: this.user})
                     this.loadMain();
                     this.token = '';

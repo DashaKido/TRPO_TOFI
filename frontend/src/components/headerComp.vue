@@ -19,6 +19,7 @@
         <b-dropdown-item class="text-style" @click="loadEditProfilePage">РЕДАКТИРОВАТЬ ПРОФИЛЬ</b-dropdown-item>
         <b-dropdown-item class="text-style" @click="loadProVersionPage">ТАРИФЫ</b-dropdown-item>
         <b-dropdown-item class="text-style" @click="loadLeisurePage">ДОСУГ</b-dropdown-item>
+        <b-dropdown-item class="text-style" @click="loadAllToDoPage">СПИСОК ДЕЛ</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item class="text-style" @click="goToTokenPage">ВЫХОД</b-dropdown-item>
       </b-dropdown>
@@ -63,7 +64,8 @@ export default {
 
       loadAdminPage: 'loadAdminPage',
       loadNewsPage: 'loadNewsPage',
-      createLog: 'createLog'
+      createLog: 'createLog',
+      loadAllToDoPage: 'loadAllToDoPage'
     }),
     goToTokenPage() {
       this.loadTokenPage()
