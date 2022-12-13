@@ -9,25 +9,33 @@ export let UserDataStore = {
                 isPro: false,
                 lastName: '',
                 name: '',
-                persons: [],
                 id: '',
                 token: '',
-                chatId: ''
+                chatId: '',
+                fileLink: '',
+                roles: []
             },
+            allUsers: []
         }
     },
     getters: {
         getUser(state) {
             return state.user;
         },
+        getAllUsers(state) {
+            return state.allUsers
+        }
     },
     mutations: {
         setUser(state, new_val) {
             state.user = new_val;
         },
+        setAllUsers(state, new_val) {
+            state.allUsers = new_val
+        }
     },
     actions: {
-        fillUser({commit}, {birth, isPro, lastName, name, persons, id, token, chatId}) {
+        fillUser({commit}, {birth, isPro, lastName, name, persons, id, token, chatId, fileLink, roles}) {
             let user = {
                 birth: birth,
                 isPro: isPro,
@@ -36,7 +44,9 @@ export let UserDataStore = {
                 persons: persons,
                 id: id,
                 token: token,
-                chatId: chatId
+                chatId: chatId,
+                fileLink: fileLink,
+                roles: roles
             };
             commit('setUser', user);
         },
@@ -57,6 +67,20 @@ export let UserDataStore = {
                 }
             })
                 .catch(error => console.log(error));
+        },
+        // eslint-disable-next-line no-unused-vars
+        async getAllUsers({commit}, {user}) {
+            await axios.get('http://localhost:7000/api/User', {
+                headers: {
+                    'token': user.token
+                }
+            }).then(response => {
+                commit('setAllUsers', response.data)
+            })
+        },
+        updateUsers({commit}, {users}) {
+            commit('setAllUsers', users)
         }
+
     }
 }

@@ -94,7 +94,7 @@ export default {
       this.name = '';
     },
     deleteInfo() {
-      let index = this.allItems.findIndex(item => item.text == this.selectedName);
+      let index = this.allItems.findIndex(item => item.value == this.selectedName);
       this.allItems.splice(index, 1);
       this.selectedName = '';
     },
