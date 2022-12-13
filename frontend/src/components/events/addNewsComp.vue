@@ -19,33 +19,35 @@
             <label class="text-style">
               ЗАГОЛОВОК
             </label>
-            <b-form-input class="input-style" style="width: 100%!important;" v-model="title"></b-form-input>
+            <b-form-input class="input-style" style="width: 100%!important;" v-model="name"></b-form-input>
           </div>
-
-          <!--          <div class="input-item">-->
-          <!--            <label class="text-style">-->
-          <!--              КОЛИЧЕСТВО РАЗДЕЛОВ-->
-          <!--            </label>-->
-          <!--            <b-form-select v-model="selectedCount" :options="allCounts" class="select-style">-->
-          <!--            </b-form-select>-->
-          <!--          </div>-->
-
-          <!--          <div v-for="">-->
-          <!--          <div class="input-item">-->
-          <!--            <label class="text-style">-->
-          <!--              НАЗВАНИЕ-->
-          <!--            </label>-->
-          <!--            <b-form-input class="input-style" style="width: 100%!important;" v-model="title"></b-form-input>-->
-          <!--          </div>-->
 
           <div class="input-item">
             <label class="text-style">
-              СОДЕРЖАНИЕ
+              КОЛИЧЕСТВО РАЗДЕЛОВ
             </label>
-            <b-form-textarea class="input-style textarea-style" style="width: 100%!important;"
-                             v-model="text"></b-form-textarea>
+            <b-form-select @change="changeSelect" v-model="selectedCount" :options="allCounts" class="select-style">
+            </b-form-select>
           </div>
-          <!--          </div>-->
+          <div class="news-main">
+            <div class="nw-item" v-for="item in arr_news" :key="item">
+              <div class="input-item">
+                <label class="text-style">
+                  НАЗВАНИЕ
+                </label>
+                <b-form-input class="input-style" style="width: 100%!important;" v-model="item.title"></b-form-input>
+              </div>
+
+              <div class="input-item">
+                <label class="text-style">
+                  СОДЕРЖАНИЕ
+                </label>
+                <b-form-textarea class="input-style textarea-style" style="width: 100%!important;"
+                                 v-model="item.content"></b-form-textarea>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -54,7 +56,7 @@
           <button class="btn-style btn-grey" @click="loadNewsPage">
             ОТМЕНА
           </button>
-          <button class="btn-style">
+          <button class="btn-style" @click="addNews">
             СОХРАНИТЬ
           </button>
         </div>
@@ -64,14 +66,16 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
+// eslint-disable-next-line no-unused-vars
+import axios from "axios";
 
 export default {
   name: "addNewsComp",
   data() {
     return {
       title: '',
-      text: '',
+      content: '',
       selectedCount: 2,
       allCounts: [
         {
@@ -90,13 +94,58 @@ export default {
           value: 8,
           text: 8
         },
-      ]
+      ],
+      errorTitle: false,
+      errorContent: false,
+      photo: '',
+      arr_news: [{title: '', content: ''}, {title: '', content: ''}],
+      name: ''
     }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'getUser',
+      news: 'getNews'
+    })
   },
   methods: {
     ...mapActions({
-      loadNewsPage: 'loadNewsPage'
+      loadNewsPage: 'loadNewsPage',
+      updateNews: 'updateNews',
+      createLog: 'createLog'
     }),
+    changeSelect(value) {
+      this.arr_news = [];
+      let index = this.allCounts.findIndex(item => item.value == value);
+      this.selectedCount = this.allCounts[index].value;
+      for (let i = 0; i < value; i++) {
+        this.arr_news.push({title: '', content: ''})
+      }
+    },
+    async addNews() {
+
+      let new_news = {
+        title: this.name,
+        content: this.arr_news,
+        photo: this.photo,
+        sectionCount: this.selectedCount
+      }
+      await axios.post('http://localhost:7000/api/News', new_news, {
+        headers: {
+          'token': this.user.token
+        }
+      }).then((response) => {
+            new_news._id = response.data.insertedId;
+            this.news.push(new_news);
+            this.updateNews({news: this.news});
+            this.createLog({action: 'Добавление новости', addedId: response.data.insertedId, token: this.user.token})
+            this.loadNewsPage();
+            this.name = '';
+            this.selectedCount = 2;
+            this.arr_news =  [{title: '', content: ''}, {title: '', content: ''}];
+          }
+      ).catch(error => console.log(error))
+    }
   }
 }
 </script>
@@ -104,7 +153,7 @@ export default {
 <style scoped>
 .textarea-style {
   margin-top: 15px;
-  height: 150px;
+  /*height: 150px;*/
 }
 
 .add-news {
@@ -131,5 +180,24 @@ export default {
 
 .select-style:focus {
   box-shadow: 0 0 5px 0.25rem #8fb1c1;
+}
+
+.news-main {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.nw-item {
+  width: 50%;
+  padding-bottom: 22px;
+}
+
+.nw-item:nth-child(2n) {
+  padding-left: 22px;
+}
+
+.news-block {
+  width: 100%;
+  margin-left: 4%;
 }
 </style>

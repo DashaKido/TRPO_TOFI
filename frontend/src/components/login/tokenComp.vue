@@ -48,51 +48,63 @@ export default {
       updateAdmin: 'updateAdmin',
       loadAdmin: 'loadAdminPage',
       createLog: 'createLog',
-      getAllToDo: 'getAllToDo'
+      getAllToDo: 'getAllToDo',
+      getAllUsers: 'getAllUsers',
+      getAllNews: 'getAllNews'
     }),
     async signIn() {
-      if (this.token == 'admin') {
-        this.updateAdmin({isAdmin: true})
-        this.token = '';
-        this.loadAdmin();
-      } else {
-        await axios.get('http://localhost:7000/api/me', {
-          headers: {
-            'token': `${this.token}`
-          }
-        })
-            .then(async response => {
-                  if (response.data == '') {
-                    this.errorToken = true;
+      await axios.get('http://localhost:7000/api/me', {
+        headers: {
+          'token': `${this.token}`
+        }
+      })
+          .then(async response => {
+                if (response.data == '') {
+                  this.errorToken = true;
+                } else {
+                  this.errorToken = false;
+                  let user = response.data;
+                  this.fillUser({
+                    birth: user.birth,
+                    isPro: user.isPro,
+                    lastName: user.lastName,
+                    name: user.name,
+                    persons: user.persons,
+                    id: user._id,
+                    token: user.token,
+                    chatId: user.chatId,
+                    fileLink: user.fileLink,
+                    roles: user.roles
+                  });
+                  let admin = false;
+                  for (let item of user.roles) {
+                    if (item == 'admin') {
+                      admin = true;
+                    }
+                  }
+                  if (admin) {
+                    this.updateAdmin({isAdmin: true})
+                    await this.createLog({action: 'Админ вошел в систему', token: user.token})
+                    await this.getAllUsers({user: this.user});
+                    await this.getAllNews({user: this.user})
+                    this.loadAdmin();
                   } else {
-                    this.errorToken = false;
-                    let user = response.data;
-                    this.fillUser({
-                      birth: user.birth,
-                      isPro: user.isPro,
-                      lastName: user.lastName,
-                      name: user.name,
-                      persons: user.persons,
-                      id: user._id,
-                      token: user.token,
-                      chatId: user.chatId,
-                    });
-                    await this.createLog({action: 'Вход в систему', token: user.token})
                     this.updateAdmin({isAdmin: false})
+                    await this.createLog({action: 'Вход в систему', token: user.token})
                     await this.createSettings({user: this.user});
                     await this.getAllPersons({user: this.user});
                     await this.getAllToDo({user: this.user})
                     await this.getAllEvents({user: this.user})
                     this.loadMain();
-                    this.token = '';
                   }
+                  this.token = '';
                 }
-            )
-            .catch(error => {
-              this.errorToken = true;
-              console.log(error);
-            });
-      }
+              }
+          )
+          .catch(error => {
+            this.errorToken = true;
+            console.log(error);
+          });
     }
   }
 }

@@ -7,10 +7,13 @@
       <div class="edit-profile">
         <div class="load-photo">
           <div>
-            <img class="photo-style" :src="require('@/assets/anon.jpg')">
+            <img class="photo-style" :src="file">
           </div>
-          <div>
-            <label class="input-label">ЗАГРУЗИТЬ ФОТО</label>
+          <div class="input_wrapper">
+            <input @input="handleInput" type="file" name="file" id="input_file" accept="image/*"
+                   class="input input_file">
+
+            <label for="input_file" class="input-label">ЗАГРУЗИТЬ ФОТО</label>
           </div>
         </div>
 
@@ -42,7 +45,8 @@
             </label>
             <div style="display: flex; justify-content: space-between;">
               <div class="input-style" style="cursor: default;width: 100%!important;">{{ version() }}</div>
-              <button class="btn-style btn-grey btn-upgrade" @click="loadProVersion">
+
+              <button v-show="!user.isPro" class="btn-style btn-grey btn-upgrade" @click="loadProVersion">
                 УЛУЧШИТЬ
               </button>
             </div>
@@ -66,12 +70,15 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+// eslint-disable-next-line no-unused-vars
 import axios from "axios";
 
 export default {
   name: "editProfileComp",
   data() {
-    return {}
+    return {
+      file: ''
+    }
   },
   computed: {
     ...mapGetters({
@@ -93,11 +100,15 @@ export default {
       }
     },
     async updateUserBtn() {
+      if (this.file != "") {
+        this.user.fileLink = this.file;
+      }
       let new_user = {
         birth: this.user.birth,
         isPro: this.user.isPro,
         lastName: this.user.lastName,
         name: this.user.name,
+        fileLink:this.user.fileLink
       };
       await axios.put('http://localhost:7000/api/User/' + this.user.id, new_user, {
         headers: {
@@ -110,6 +121,20 @@ export default {
             this.loadMainPage();
           })
           .catch(error => console.log(error));
+    },
+    handleInput(e) {
+      if (!e.target.files) return;
+      e.preventDefault();
+      const selectedImg = e.target.files[0];
+      this.createBase64Image(selectedImg);
+    },
+    createBase64Image(fileImg) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.file = e.target.result;
+        this.$emit('imgset', this.file);
+      }
+      reader.readAsDataURL(fileImg)
     }
   }
 }
@@ -127,5 +152,18 @@ export default {
   margin-top: 5px;
   margin-left: 5%;
   min-width: 106px;
+}
+
+.input_wrapper {
+  width: 100%;
+  position: relative;
+  margin: 15px 0;
+  text-align: center;
+}
+
+.input_file {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
 }
 </style>

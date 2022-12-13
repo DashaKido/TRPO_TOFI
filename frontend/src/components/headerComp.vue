@@ -14,7 +14,7 @@
       <span class="link-item" :class="`${allPersons?'active':''}`" @click="loadAllPersonsPage">ДРУЗЬЯ</span>
       <b-dropdown no-caret variant="link">
         <template #button-content>
-          <div class="dropdown-btn"></div>
+          <img class="dropdown-btn" :src="user.fileLink">
         </template>
         <b-dropdown-item class="text-style" @click="loadEditProfilePage">РЕДАКТИРОВАТЬ ПРОФИЛЬ</b-dropdown-item>
         <b-dropdown-item class="text-style" @click="loadProVersionPage">ТАРИФЫ</b-dropdown-item>
@@ -78,7 +78,6 @@ export default {
 <style scoped>
 .dropdown-btn {
   margin-top: 5px;
-  background-image: url("@/assets/anon.jpg");
   background-repeat: no-repeat;
   background-color: transparent;
   width: 30px;

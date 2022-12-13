@@ -13,6 +13,7 @@ import {PagesDataStore} from "@/store/pages";
 import {EventsDataStore} from "@/store/events";
 import {PersonsDataStore} from '@/store/persons'
 import {ToDoDataStore} from '@/store/todo'
+import {NewsDataStore} from "@/store/news";
 
 const store = new Vuex.Store({
     modules: {
@@ -21,7 +22,8 @@ const store = new Vuex.Store({
         pages: PagesDataStore,
         events: EventsDataStore,
         persons: PersonsDataStore,
-        todos: ToDoDataStore
+        todos: ToDoDataStore,
+        news: NewsDataStore
     }
 })
 const app = createApp(App)
