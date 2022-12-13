@@ -14,6 +14,8 @@ function getBase64(url) {
     .then((response) => Buffer.from(response.data, "binary"));
 }
 
+//TODO ADD REMINDERS (notify, add, delete) NOTES (add, show, delete) TODO (show)
+
 const onStart = (db) => {
   const bot = new TelegramBot(process.env.TG_BOT_TOKEN, { polling: true });
 
@@ -22,11 +24,6 @@ const onStart = (db) => {
       command: "start",
       description:
         "Start using service by receiving the token and following the provided link",
-    },
-    {
-      command: "add_person",
-      description:
-        'Add a new person in your person list by providing the data like this "/add_person name=<person_name>"',
     },
     {
       command: "my_persons",
@@ -40,6 +37,10 @@ const onStart = (db) => {
     {
       command: "upcoming_events",
       description: "Retrieve all upcoming events",
+    },
+    {
+      command: "token",
+      description: "Retrieve your personal token to access the website",
     },
   ]);
 
@@ -169,8 +170,10 @@ const onStart = (db) => {
       const eventsString = (
         await Promise.all(
           sortedEvents.map(async (event) => {
-            console.log(moment(event).format('DD.MM.YYYY'));
-            let strToReturn = `${event.title} - importance ${event.importance} - date ${moment(event.startDate).format('DD.MM.YYYY')} `;
+            console.log(moment(event).format("DD.MM.YYYY"));
+            let strToReturn = `${event.title} - importance ${
+              event.importance
+            } - date ${moment(event.startDate).format("DD.MM.YYYY")} `;
             console.log("event", event);
             if (event.person) {
               let person = await db

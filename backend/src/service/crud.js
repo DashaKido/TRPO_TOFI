@@ -4,11 +4,18 @@ const { logger } = require("./logger");
 const getAll = async (req, res) => {
   const { collection } = req.params;
   const { token } = req.headers;
-  const user = (await (await repository.getMe(token, req.app.locals.db)).toArray())[0];
+  const user = (
+    await (await repository.getMe(token, req.app.locals.db)).toArray()
+  )[0];
   console.log(token);
   console.log(user);
 
-  const results = await repository.getAll(user.roles?.includes('admin'), collection, req.app.locals.db, token);
+  const results = await repository.getAll(
+    user.roles?.includes("admin"),
+    collection,
+    req.app.locals.db,
+    token
+  );
 
   res.status(200).send(results);
 };
@@ -16,8 +23,17 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
   const { collection, id } = req.params;
   const { token } = req.headers;
+  const user = (
+    await (await repository.getMe(token, req.app.locals.db)).toArray()
+  )[0];
 
-  const result = await repository.getById(user.roles?.includes('admin'), collection, id, req.app.locals.db, token);
+  const result = await repository.getById(
+    user.roles?.includes("admin"),
+    collection,
+    id,
+    req.app.locals.db,
+    token
+  );
 
   res.status(200).send(result);
 };
@@ -26,9 +42,12 @@ const updateById = async (req, res) => {
   const { collection, id } = req.params;
   const { body } = req;
   const { token } = req.headers;
+  const user = (
+    await (await repository.getMe(token, req.app.locals.db)).toArray()
+  )[0];
 
   const updated = await repository.updateEntity(
-    user.roles.includes('admin'),
+    user.roles.includes("admin"),
     collection,
     id,
     body,
@@ -42,9 +61,18 @@ const updateById = async (req, res) => {
 const deleteEntity = async (req, res) => {
   const { collection, id } = req.params;
   const { token } = req.headers;
+  const user = (
+    await (await repository.getMe(token, req.app.locals.db)).toArray()
+  )[0];
 
   try {
-    await repository.deleteEntity(user.roles?.includes('admin'), collection, id, req.app.locals.db, token);
+    await repository.deleteEntity(
+      user.roles?.includes("admin"),
+      collection,
+      id,
+      req.app.locals.db,
+      token
+    );
     res.status(200);
   } catch (e) {
     logger.error(e.stack);
@@ -55,8 +83,17 @@ const create = async (req, res) => {
   const { collection } = req.params;
   const { body } = req;
   const { token } = req.headers;
+  const user = (
+    await (await repository.getMe(token, req.app.locals.db)).toArray()
+  )[0];
 
-  const created = await repository.create(user.roles?.includes('admin'), collection, body, req.app.locals.db, token);
+  const created = await repository.create(
+    user.roles?.includes("admin"),
+    collection,
+    body,
+    req.app.locals.db,
+    token
+  );
 
   res.status(200).send(created);
 };
