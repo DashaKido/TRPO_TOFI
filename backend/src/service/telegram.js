@@ -2,6 +2,9 @@ const TelegramBot = require("node-telegram-bot-api");
 const crypto = require("crypto");
 const { default: axios } = require("axios");
 const cron = require("node-cron");
+const moment = require("moment");
+
+const frontURL = "test";
 
 function getBase64(url) {
   return axios
@@ -34,164 +37,161 @@ const onStart = (db) => {
       description:
         'View a specific information about your person by providing the following command "/person <person_name>"',
     },
+    {
+      command: "upcoming_events",
+      description: "Retrieve all upcoming events",
+    },
   ]);
+
+  bot.onText(/\/token/, async (msg, match) => {
+    const chatId = msg.chat.id;
+
+    const user = await db.collection("User").findOne({ chatId });
+
+    if (user) {
+      bot.sendMessage(
+        chatId,
+        `Here is your token that you can use to access the site (${frontURL}): ${user.token},`
+      );
+    }
+  });
 
   bot.onText(/\/start/, async (msg, match) => {
     const chatId = msg.chat.id;
-    const token = crypto.randomUUID();
-    await db
-      .collection("User")
-      .insertOne({ chatId, token, isPro: false, name: msg.chat.first_name });
+    const user = await db.collection("User").findOne({ chatId });
+    if (!user) {
+      const token = crypto.randomUUID();
+      await db.collection("User").insertOne({
+        chatId,
+        token,
+        isPro: false,
+        name: msg.chat.first_name,
+        roles: ["client"],
+      });
 
-    const stringToSend = `Hello, thanks for starting using our service, here is your token ${token}`;
-    bot.sendMessage(chatId, stringToSend);
+      const stringToSend = `Hello, thanks for starting using our service, here is your token ${token}, website: ${frontURL}`;
+      bot.sendMessage(chatId, stringToSend);
+    } else
+      bot.sendMessage(
+        chatId,
+        `Hello, you have already registered, here is your token: ${user.token}`
+      );
   });
 
   bot.onText(/\/my_persons/, async (msg, match) => {
     const chatId = msg.chat.id;
-    const persons = (await db.collection("User").findOne({ chatId })).persons;
-    let personsInfo = "No persons were added yet...";
+    const userToken = (await db.collection("User").findOne({ chatId })).token;
+    let persons = await (
+      await db.collection("Person").find({ token: userToken })
+    ).toArray();
+    let personsInfo = [];
     if (persons && persons.length) {
-      personsInfo = (
-        await Promise.all(
-          persons.map(async (personId) => {
-            let person = await db
-              .collection("Person")
-              .findOne({ _id: personId });
-            return person;
-          })
-        )
-      )
+      personsInfo = persons
         .map((person) =>
           Object.keys(person)
-            .filter((key) => (key !== "_id" && key !== "token"))
+            .filter((key) => key !== "_id" && key !== "token" && key !== "info")
             .reduce((curr, acc) => (curr += `${acc}: ${person[acc]} \n`), "")
         )
         .join("           ---------------------           \n");
     }
-    bot.sendMessage(chatId, personsInfo);
-  });
 
-  bot.onText(/\/add_person (.*)/, async (msg, match) => {
-    const id = msg.chat.id;
-    try {
-      const personInfo = msg.text
-        .split("/add_person ")[1]
-        .split(" ")
-        .reduce(
-          (curr, acc) => ({ ...curr, [acc.split("=")[0]]: acc.split("=")[1] }),
-          {}
-        );
-      const user = await db.collection("User").findOne({ chatId: id });
-      const person = await db
-        .collection("Person")
-        .insertOne({ ...personInfo, token: user.token }, { new: true });
-      await db
-        .collection("User")
-        .findOneAndUpdate(
-          { chatId: msg.chat.id },
-          { $push: { persons: person.insertedId } }
-        );
-
+    if (personsInfo.length) {
+      bot.sendMessage(chatId, personsInfo);
+    } else
       bot.sendMessage(
-        id,
-        "Successfull, you can see your persons by clicking this..."
+        chatId,
+        `Seems like you haven't added any persons yet, try to do it in your account (${frontURL})`
       );
-    } catch (e) {
-      console.log(e);
-      bot.sendMessage(id, "Something went wrong...");
-    }
-  });
-
-  bot.onText(/\/set_me (.*)/, async (msg, match) => {
-    const id = msg.chat.id;
-    try {
-      const user = db.collection("User").findOne({ chatId: msg.chat.id });
-
-      if (user) {
-        throw new Error('First sign up <a href="command">/start</a>');
-      }
-
-      const personInfo = msg.text
-        .split("/set_me ")[1]
-        .split(" ")
-        .reduce(
-          (curr, acc) => ({ ...curr, [acc.split("=")[0]]: acc.split("=")[1] }),
-          {}
-        );
-      await db
-        .collection("User")
-        .findOneAndUpdate(
-          { chatId: msg.chat.id },
-          { $set: personInfo },
-          { new: true }
-        );
-
-      bot.sendMessage(
-        id,
-        "Successfull, you can see your persons by clicking this..."
-      );
-    } catch (e) {
-      console.log(e);
-      bot.sendMessage(id, e.message, {
-        parse_mode: "Markdown",
-      });
-    }
   });
 
   bot.onText(/\/person (.*)/, async (msg, match) => {
-    const [firstName, lastName] = msg.text.split("/person ").split(" ");
-    const user = db.collection("User").findOne({ chatId: msg.chat.id });
-    const foundPersonByName = await db
-      .collection("Person")
-      .findOne({ firstName, lastName });
-    if (user.persons.includes(foundPersonByName._id)) {
+    const [name, lastName] = msg.text.split("/person ")[1].split(" ");
+    const user = await db.collection("User").findOne({ chatId: msg.chat.id });
+    const foundPersonByName = (
+      await (
+        await db
+          .collection("Person")
+          .find({ name, lastName, token: user.token })
+      ).toArray()
+    )[0];
+    if (!foundPersonByName) {
       bot.sendMessage(
         msg.chat.id,
-        Object.keys(person)
-          .filter((key) => key !== "_id")
-          .reduce((curr, acc) => (curr += `${acc}: ${person[acc]} \n`), "")
+        "No persons were found via your query, try to follow this scheme /person <name> <lastname>"
       );
-    }
+    } else
+      bot.sendMessage(
+        msg.chat.id,
+        Object.keys(foundPersonByName)
+          .filter((key) => key !== "_id" && key !== "token")
+          .reduce((curr, acc) => {
+            if (acc === "info") {
+              return (curr +=
+                "Additional Info: " +
+                foundPersonByName[acc]
+                  .map((personInfo) => `${personInfo.text}: ${personInfo.main}`)
+                  .join(". "));
+            } else return (curr += `${acc}: ${foundPersonByName[acc]} \n`);
+          }, "")
+      );
   });
 
-  bot.onText(/\/events/, async (msg, match) => {});
-  bot.onText(/\/event (.*)/, async (msg, match) => {});
+  bot.onText(/\/events/, async (msg, match) => {
+    const chatId = msg.chat.id;
+    const { token } = await db
+      .collection("User")
+      .findOne({ chatId: msg.chat.id });
 
-  bot.onText(/\/upcoming (.*)/, async (msg, match) => {});
-  bot.onText(/\/upcoming (.*)/, async (msg, match) => {});
-
-  bot.onText(/\/remind (.*)/, async (msg, match) => {});
-  bot.onText(/\/settings (.*)/, async (msg, match) => {
-    const id = msg.chat.id;
-    const settings = msg.text
-      .split("/settings ")[1]
-      .split(" ")
-      .reduce(
-        (curr, acc) => ({ ...curr, [acc.split("=")[0]]: acc.split("=")[1] }),
-        {}
-      );
-
-    let settingsEntity = await db.collection("Settings").findOne({ id });
-    // console.log(Object.keys(settingsEntity).length > 0);
-    if (!settingsEntity || Object.keys(settingsEntity).length > 0) {
-      await db
-        .collection("Settings")
-        .findOneAndUpdate({ id }, { $set: settings });
-    } else await db.collection("Settings").insertOne({ ...settings, id });
-
-    if (settings.randomCat) {
-      const catPhoto = await getBase64("https://cataas.com/cat");
-      bot.sendPhoto(id, catPhoto);
-      const task = cron.schedule("*/10 * * * *", async () => {
-        const catPhoto = await getBase64("https://cataas.com/cat");
-        bot.sendPhoto(id, catPhoto);
-      });
-    } else {
-    }
-
-    console.log(settings);
+    const events = await (
+      await db.collection("Event").find({ token })
+    ).toArray();
+    console.log(events);
+    console.log(
+      events
+        .sort((a, b) => moment(a.startDate).unix() - moment(b.startDate).unix())
+        .filter((event) => moment(event.startDate).isAfter(moment()))
+    );
   });
+
+  bot.onText(/\/upcoming_events/, async (msg, match) => {
+    const chatId = msg.chat.id;
+    const { token } = await db
+      .collection("User")
+      .findOne({ chatId: msg.chat.id });
+
+    const events = await (
+      await db.collection("Event").find({ token })
+    ).toArray();
+    if (events) {
+      const sortedEvents = events
+        .sort((a, b) => moment(a.startDate).unix() - moment(b.startDate).unix())
+        .filter((event) => moment(event.startDate).isAfter(moment()));
+      const eventsString = (
+        await Promise.all(
+          sortedEvents.map(async (event) => {
+            console.log(moment(event).format('DD.MM.YYYY'));
+            let strToReturn = `${event.title} - importance ${event.importance} - date ${moment(event.startDate).format('DD.MM.YYYY')} `;
+            console.log("event", event);
+            if (event.person) {
+              let person = await db
+                .collection("Person")
+                .findOne({ _id: event.person });
+              console.log("event person", person);
+              if (person) {
+                strToReturn += `with: ${person.name} ${person.lastName}`;
+              }
+            }
+
+            return strToReturn;
+          })
+        )
+      ).join("\n\n-----------------------------------------\n\n");
+      // console.log(eventsString);
+      bot.sendMessage(chatId, eventsString);
+    } else bot.sendMessage(chatId, "Sorry, no events for you...");
+  });
+
+  bot.onText(/\/add_reminder (.*)/, async (msg, match) => {});
 };
 
 module.exports = {

@@ -1,9 +1,9 @@
 const { ObjectId } = require("mongodb");
 const { logger } = require("../service/logger");
 
-const getAll = async (collection, db, token) => {
+const getAll = async (isAdmin, collection, db, token) => {
   try {
-    const entities = await db.collection(collection).find({token}).toArray();
+    const entities = await db.collection(collection).find({token: isAdmin ? {$ne: null} : token}).toArray();
 
     return entities;
   } catch (e) {
@@ -11,11 +11,11 @@ const getAll = async (collection, db, token) => {
   }
 };
 
-const getById = async (collection, _id, db, token) => {
+const getById = async (isAdmin, collection, _id, db, token) => {
   try {
     const entities = await db
       .collection(collection)
-      .find({ _id: new ObjectId(_id), token });
+      .find({ _id: new ObjectId(_id), token: isAdmin ? {$ne: null} : token });
 
     return entities;
   } catch (e) {
@@ -23,7 +23,7 @@ const getById = async (collection, _id, db, token) => {
   }
 };
 
-const create = async (collection, body, db, token) => {
+const create = async (isAdmin, collection, body, db, token) => {
   try {
     const createdEntity = await db
       .collection(collection)
@@ -35,7 +35,7 @@ const create = async (collection, body, db, token) => {
   }
 };
 
-const deleteEntity = async (collection, _id, db, token) => {
+const deleteEntity = async (isAdmin, collection, _id, db, token) => {
   try {
     await db
       .collection(collection)
@@ -45,13 +45,13 @@ const deleteEntity = async (collection, _id, db, token) => {
   }
 };
 
-const updateEntity = async (collection, id, body, db, token) => {
+const updateEntity = async (isAdmin, collection, id, body, db, token) => {
   console.log(collection);
   try {
     const updated = await db
       .collection(collection)
       .findOneAndUpdate(
-        { _id: new ObjectId(id), token },
+        { _id: new ObjectId(id) },
         { $set: body },
         { returnDocument: "after" }
       );
