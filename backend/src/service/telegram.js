@@ -14,7 +14,7 @@ function getBase64(url) {
     .then((response) => Buffer.from(response.data, "binary"));
 }
 
-//TODO ADD REMINDERS (notify, add, delete) NOTES (add, show, delete) TODO (show)
+//TODO ADD NOTES (add, show, delete) TODO (show)
 
 const onStart = (db) => {
   const bot = new TelegramBot(process.env.TG_BOT_TOKEN, { polling: true });
@@ -59,7 +59,13 @@ const onStart = (db) => {
 
   bot.onText(/\/start/, async (msg, match) => {
     const chatId = msg.chat.id;
+    const userId = msg.from.id;
     const user = await db.collection("User").findOne({ chatId });
+    const { file_id } = (await bot.getUserProfilePhotos(userId)).photos[0][0];
+    let fileLink = "";
+    if (file_id) {
+      fileLink = await bot.getFileLink(file_id);
+    }
     if (!user) {
       const token = crypto.randomUUID();
       await db.collection("User").insertOne({
@@ -68,6 +74,7 @@ const onStart = (db) => {
         isPro: false,
         name: msg.chat.first_name,
         roles: ["client"],
+        fileLink,
       });
 
       const stringToSend = `Hello, thanks for starting using our service, here is your token ${token}, website: ${frontURL}`;
@@ -110,9 +117,13 @@ const onStart = (db) => {
     const user = await db.collection("User").findOne({ chatId: msg.chat.id });
     const foundPersonByName = (
       await (
-        await db
-          .collection("Person")
-          .find({ name, lastName, token: user.token })
+        await db.collection("Person").find({
+          $or: [
+            { name: { $in: [name, lastName] } },
+            { lastName: { $in: [name, lastName] } },
+          ],
+          token: user.token,
+        })
       ).toArray()
     )[0];
     if (!foundPersonByName) {
@@ -194,7 +205,73 @@ const onStart = (db) => {
     } else bot.sendMessage(chatId, "Sorry, no events for you...");
   });
 
-  bot.onText(/\/add_reminder (.*)/, async (msg, match) => {});
+  bot.onText(/\/add_reminder (.*)/, async (msg, match) => {
+    const {
+      text,
+      chat: { id: chatId },
+    } = msg;
+    const { token } = await db
+      .collection("User")
+      .findOne({ chatId: msg.chat.id });
+    let [note, time] = text?.split("/add_reminder ")[1].split(" ");
+    if (note && time) {
+      let [hours, mins] = time.split(":");
+      const now = moment();
+      await db.collection("Reminders_history").insertOne({
+        note,
+        time: `${moment().format("DD.MM.YYYY")}-${time}`,
+        chatId,
+        token,
+      });
+      let job = cron.schedule(
+        `0 ${mins} ${hours} ${now.date()} ${now.month() + 1} *`,
+        () => {
+          bot.sendMessage(chatId, note);
+          job.cancel();
+        }
+      );
+      bot.sendMessage(chatId, "Reminder is successfullt set up");
+    } else {
+      bot.sendMessage(
+        chatId,
+        "Missing required parameters, try to follow this scheme /add_reminder note_text time : {HH:mm}"
+      );
+    }
+  });
+
+  bot.onText(/\/passed_reminders/, async (msg, match) => {
+    const {
+      text,
+      chat: { id: chatId },
+    } = msg;
+
+    const { token } = await db
+      .collection("User")
+      .findOne({ chatId: msg.chat.id });
+    const passedReminders = await (
+      await db.collection("Reminders_history").find({ token })
+    ).toArray();
+
+    const parsedReminders = passedReminders
+      .map((reminder) => `${reminder.time}: ${reminder.note}`)
+      .join("\n\n-----------------------------------------\n\n");
+    bot.sendMessage(chatId, parsedReminders);
+  });
+
+  bot.onText(/\/todos/, async (msg, match) => {
+    const {
+      text,
+      chat: { id: chatId },
+    } = msg;
+
+    const { token } = await db
+      .collection("User")
+      .findOne({ chatId: msg.chat.id });
+    const userTODOS = await (
+      await db.collection("ToDo").find({ token })
+    ).toArray();
+    console.log(userTODOS);
+  });
 };
 
 module.exports = {
