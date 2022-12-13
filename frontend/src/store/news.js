@@ -9,6 +9,9 @@ export let NewsDataStore = {
     getters: {
         getNews(state) {
             return state.news;
+        },
+        getOneNews(state) {
+            return state.news[Math.floor(Math.random()*state.news.length)]
         }
     },
     mutations: {

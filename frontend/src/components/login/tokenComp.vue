@@ -82,11 +82,11 @@ export default {
                       admin = true;
                     }
                   }
+                  await this.getAllNews({user: this.user})
                   if (admin) {
                     this.updateAdmin({isAdmin: true})
                     await this.createLog({action: 'Админ вошел в систему', token: user.token})
                     await this.getAllUsers({user: this.user});
-                    await this.getAllNews({user: this.user})
                     this.loadAdmin();
                   } else {
                     this.updateAdmin({isAdmin: false})
