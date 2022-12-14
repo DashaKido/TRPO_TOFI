@@ -17,7 +17,7 @@
         <div style="margin-right: 5%;">
           <div class="input-item">
             <label class="text-style">
-              ВЫБОР ДРУГА
+              ВЫБОР КАТЕГОРИИ
             </label>
             <b-form-select v-model="selectedCategory" :options="allCategory" class="select-style">
             </b-form-select>

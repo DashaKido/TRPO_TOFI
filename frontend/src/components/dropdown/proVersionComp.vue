@@ -14,7 +14,7 @@
             в месяц
           </span>
         </span>
-        <button class="btn-style btn-pro">
+        <button class="btn-style btn-pro" @click="modalShow = !modalShow">
           УЛУЧШИТЬ СЕЙЧАС
         </button>
         <div class="features-block">
@@ -44,7 +44,7 @@
             всегда
           </span>
         </span>
-        <button class="btn-style btn-grey btn-pro">
+        <button class="btn-style btn-grey btn-pro" @click="modalShowfree = !modalShowfree">
           НАЧАТЬ ИСПОЛЬЗОВАНИЕ
         </button>
 
@@ -68,26 +68,165 @@
           </ul>
         </div>
       </div>
+
+      <b-modal v-model="modalShow" hide-footer id="modal-proversion" size="sm" title="ПЕРЕХОД НА PRO ВЕРСИЮ">
+        <div class="input-item">
+          <label class="text-style">
+            НОМЕР КАРТЫ
+          </label>
+          <b-form-input class="input-style" v-model="number"></b-form-input>
+        </div>
+        <div class="input-item">
+          <label class="text-style">
+            СРОК ДЕЙСТВИЯ
+          </label>
+          <div style="display: flex;">
+            <b-form-input class="input-style" style="width: 20%!important; margin-right:5%"
+                          v-model="month"></b-form-input>
+            <b-form-input class="input-style" style="width: 20%!important" v-model="year"></b-form-input>
+          </div>
+        </div>
+        <div class="input-item">
+          <label class="text-style">
+            CVV
+          </label>
+          <div style="display: flex;">
+            <b-form-input class="input-style" style="width: 20%!important;" v-model="cvv"></b-form-input>
+          </div>
+        </div>
+        <label v-show="error" style="color: red; margin-top: 5px;" class="subtext-style">
+          НЕВЕРНЫЕ ДАННЫЕ
+        </label>
+        <div class="btns-all-width" style="display: block">
+          <div class="btns-group" style="width: auto">
+            <button class="btn-style btn-grey" @click="cancel">
+              ОТМЕНА
+            </button>
+            <button class="btn-style" @click="getProVersion">
+              СОХРАНИТЬ
+            </button>
+          </div>
+        </div>
+      </b-modal>
+
+      <b-modal v-model="modalShowfree" hide-footer id="modal-freeversion" size="sm" title="ПЕРЕХОД НА FREE ВЕРСИЮ">
+        <label class="text-style">
+          ТЕПЕРЬ У ВАС БЕСПЛАТНАЯ ВЕРСИЯ
+        </label>
+        <div class="btns-all-width" style="display: block">
+          <div class="btns-group" style="width: auto">
+            <button class="btn-style" @click="getFreeVersion">
+              ОТЛИЧНО
+            </button>
+          </div>
+        </div>
+      </b-modal>
     </div>
   </div>
 </template>
 
 <script>
+import {mapActions, mapGetters} from "vuex";
+import axios from "axios";
+
 export default {
-  name: "proVersionComp"
+  name: "proVersionComp",
+  data() {
+    return {
+      modalShow: false,
+      modalShowfree: false,
+      cvv: '',
+      month: '',
+      year: '',
+      number: '',
+      error: false
+    }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'getUser'
+    })
+  },
+  methods: {
+    ...mapActions({
+      updateUserPRO: 'updateUserPRO',
+      createLog: 'createLog'
+    }),
+    cancel() {
+      this.modalShow = false;
+      this.cvv = "";
+      this.year = "";
+      this.month = "";
+      this.number = '';
+    },
+    async getFreeVersion() {
+      let new_version = {
+        isPro: false
+      }
+      await axios.put('http://localhost:7000/api/User/' + this.user.id, new_version, {
+        headers: {
+          'token': `${this.user.token}`
+        }
+      }).then(() => {
+        this.createLog({action: "Переход к FREE версии", token: this.user.token})
+        this.updateUserPRO({version: false})
+        this.modalShowfree = false;
+      })
+          .catch(error => console.log(error));
+    },
+    async getProVersion() {
+      this.error = false;
+      if (this.number.length != 16) {
+        this.error = true
+        return
+      }
+      if (this.year.length != 2) {
+        this.error = true
+        return
+      }
+      if (this.month.length != 2) {
+        this.error = true
+        return
+      }
+      if (this.cvv.length != 3) {
+        this.error = true
+        return
+      }
+      let new_version = {
+        isPro: true
+      }
+      await axios.put('http://localhost:7000/api/User/' + this.user.id, new_version, {
+        headers: {
+          'token': `${this.user.token}`
+        }
+      }).then(() => {
+        this.createLog({action: "Повышение версии до PRO", token: this.user.token})
+        this.updateUserPRO({version: true})
+        this.modalShow = false;
+        this.cvv = "";
+        this.year = "";
+        this.month = "";
+        this.number = '';
+      })
+          .catch(error => console.log(error));
+    }
+  }
 }
 </script>
 
 <style scoped>
-.features-title{
+.features-title {
   font-weight: bold;
 }
-.features-block{
+
+.features-block {
   margin-top: 20px;
 }
-.btn-pro{
-  width:200px;
+
+.btn-pro {
+  width: 200px;
 }
+
 .sub-cost {
   font-size: 15px;
   font-weight: normal;
@@ -118,5 +257,12 @@ export default {
 
 .pro-version {
   flex-direction: row;
+}
+
+.subtext-style {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 9px;
+  line-height: 9px;
 }
 </style>

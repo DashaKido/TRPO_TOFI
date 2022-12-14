@@ -32,6 +32,9 @@ export let UserDataStore = {
         },
         setAllUsers(state, new_val) {
             state.allUsers = new_val
+        },
+        setUserPRO(state, new_val) {
+            state.user.isPro = new_val
         }
     },
     actions: {
@@ -52,6 +55,9 @@ export let UserDataStore = {
         },
         updateUser({commit}, {user}) {
             commit('setUser', user);
+        },
+        updateUserPRO({commit}, {version}) {
+            commit('setUserPRO', version)
         },
         // eslint-disable-next-line no-unused-vars
         async createLog({commit}, {action, addedId, token}) {
