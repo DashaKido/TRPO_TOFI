@@ -6,16 +6,6 @@ const moment = require("moment");
 
 const frontURL = "test";
 
-function getBase64(url) {
-  return axios
-    .get(url, {
-      responseType: "arraybuffer",
-    })
-    .then((response) => Buffer.from(response.data, "binary"));
-}
-
-//TODO ADD NOTES (add, show, delete) TODO (show)
-
 const onStart = (db) => {
   const bot = new TelegramBot(process.env.TG_BOT_TOKEN, { polling: true });
 
@@ -270,7 +260,94 @@ const onStart = (db) => {
     const userTODOS = await (
       await db.collection("ToDo").find({ token })
     ).toArray();
-    console.log(userTODOS);
+    if (userTODOS.length) {
+      console.log(userTODOS[0].items);
+      const todosString = userTODOS
+        .map(
+          (todo) =>
+            `${todo.title}:\n${todo.items
+              .map((item) => `${item.status ? "✅" : "✖"} ${item.text}`)
+              .join("\n")}`
+        )
+        .join("\n\n-----------------------------------------\n\n");
+      bot.sendMessage(chatId, todosString);
+    } else {
+      bot.sendMessage(
+        chatId,
+        "No todos are added, try to manage it in your own account"
+      );
+    }
+  });
+
+  bot.onText(/\/add_note (.*)/, async (msg, match) => {
+    const {
+      text,
+      chat: { id: chatId },
+    } = msg;
+    const { token } = await db
+      .collection("User")
+      .findOne({ chatId: msg.chat.id });
+    let noteText = text.split("/add_note ")[1];
+
+    if (noteText) {
+      await db.collection("notes").insertOne({
+        token,
+        noteText,
+      });
+      bot.sendMessage(
+        chatId,
+        "Successfully added new note, /show_notes to see all your notes"
+      );
+    } else {
+      bot.sendMessage(chatId, "No text for a note was provided");
+    }
+  });
+
+  bot.onText(/\/show_notes/, async (msg, match) => {
+    const {
+      text,
+      chat: { id: chatId },
+    } = msg;
+    const { token } = await db
+      .collection("User")
+      .findOne({ chatId: msg.chat.id });
+
+    const userNotes = await (
+      await db.collection("notes").find({ token })
+    ).toArray();
+    if (userNotes.length) {
+      const userNotesString =
+        "Notes: \n" + userNotes.map((note) => `\n${note.noteText}`).join("\n");
+      bot.sendMessage(chatId, userNotesString);
+    } else {
+      bot.sendMessage(chatId, "No notes found for you");
+    }
+  });
+
+  bot.onText(/\/delete_note (.*)/, async (msg, match) => {
+    const {
+      text,
+      chat: { id: chatId },
+    } = msg;
+    const { token } = await db
+      .collection("User")
+      .findOne({ chatId: msg.chat.id });
+    const noteId = text.split("/delete_note ")[1];
+    console.log(noteId);
+    const foundNote = (
+      await (await db.collection("notes").find({ token })).toArray()
+    )[noteId - 1];
+    console.log(foundNote);
+    if (foundNote) {
+      await db.collection("notes").deleteOne({ _id: foundNote._id });
+
+      bot.sendMessage(chatId, "Successfully removed existing note");
+    } else {
+      bot.sendMessage(
+        chatId,
+        "You provided wrong note id, please send me a correct one"
+      );
+    }
   });
 };
 
