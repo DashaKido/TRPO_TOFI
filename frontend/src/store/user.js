@@ -15,7 +15,8 @@ export let UserDataStore = {
                 fileLink: '',
                 roles: []
             },
-            allUsers: []
+            allUsers: [],
+            file: ""
         }
     },
     getters: {
@@ -24,6 +25,9 @@ export let UserDataStore = {
         },
         getAllUsers(state) {
             return state.allUsers
+        },
+        getUserFile(state) {
+            return state.file
         }
     },
     mutations: {
@@ -35,6 +39,12 @@ export let UserDataStore = {
         },
         setUserPRO(state, new_val) {
             state.user.isPro = new_val
+        },
+        setUserPhoto(state, new_val) {
+            state.file = new_val
+        },
+        setUserFileLink(state, new_val) {
+            state.user.fileLink = new_val
         }
     },
     actions: {
@@ -58,6 +68,12 @@ export let UserDataStore = {
         },
         updateUserPRO({commit}, {version}) {
             commit('setUserPRO', version)
+        },
+        updateUserPhoto({commit}, {photo}) {
+            commit('setUserPhoto', photo)
+        },
+        updateUserFileLink({commit}, {photo}) {
+            commit('setUserFileLink', photo)
         },
         // eslint-disable-next-line no-unused-vars
         async createLog({commit}, {action, addedId, token}) {

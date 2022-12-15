@@ -10,10 +10,10 @@
             <img class="photo-style" :src="file">
           </div>
           <div class="input_wrapper">
-            <input @input="handleInput" type="file" name="file" id="input_file" accept="image/*"
+            <input @input="handleInput" type="file" name="file" id="input_file_user" accept="image/*"
                    class="input input_file">
 
-            <label for="input_file" class="input-label">ЗАГРУЗИТЬ ФОТО</label>
+            <label for="input_file_user" class="input-label">ЗАГРУЗИТЬ ФОТО</label>
           </div>
         </div>
 
@@ -76,13 +76,12 @@ import axios from "axios";
 export default {
   name: "editProfileComp",
   data() {
-    return {
-      file: ''
-    }
+    return {}
   },
   computed: {
     ...mapGetters({
-      user: 'getUser'
+      user: 'getUser',
+      file: 'getUserFile'
     }),
   },
   methods: {
@@ -90,7 +89,9 @@ export default {
       loadProVersion: 'loadProVersionPage',
       loadMainPage: 'loadMainPage',
       updateUser: 'updateUser',
-      createLog: 'createLog'
+      createLog: 'createLog',
+      updatePhoto: 'updateUserPhoto',
+      updateUserFileLink: 'updateUserFileLink'
     }),
     version() {
       if (this.user.isPro) {
@@ -100,15 +101,12 @@ export default {
       }
     },
     async updateUserBtn() {
-      if (this.file != "") {
-        this.user.fileLink = this.file;
-      }
       let new_user = {
         birth: this.user.birth,
         isPro: this.user.isPro,
         lastName: this.user.lastName,
         name: this.user.name,
-        fileLink:this.user.fileLink
+        fileLink: this.file
       };
       await axios.put('http://localhost:7000/api/User/' + this.user.id, new_user, {
         headers: {
@@ -118,6 +116,7 @@ export default {
           .then(() => {
             this.createLog({action: "Редактирование пользователя", token: this.user.token})
             this.updateUser({user: this.user})
+            this.updateUserFileLink({photo: this.file})
             this.loadMainPage();
           })
           .catch(error => console.log(error));
@@ -131,8 +130,7 @@ export default {
     createBase64Image(fileImg) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.file = e.target.result;
-        this.$emit('imgset', this.file);
+        this.updatePhoto({photo: e.target.result})
       }
       reader.readAsDataURL(fileImg)
     }
