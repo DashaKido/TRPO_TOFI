@@ -7,7 +7,7 @@
       <div class="main-comp">
         <div class="one-person-block" v-for="person in persons" :key="person">
           <div class="load-photo" style="margin-bottom: 5%;">
-            <img class="photo-style" :src="require('@/assets/friend.jpg')">
+            <img class="photo-style" :src="person.file">
           </div>
 
           <div style="margin-right: 5%;">
@@ -22,12 +22,12 @@
               <label class="text-style">
                 ТЕЛЕГРАМ
               </label>
-              <div class="input-style"  style="cursor: default">{{ person.nickname }}</div>
+              <div class="input-style" style="cursor: default">{{ person.nickname }}</div>
             </div>
 
             <div class="btns-all-width" style="justify-content: flex-start;">
               <div class="btns-group">
-                <button class="btn-style" style="width: 117px;">
+                <button class="btn-style" style="width: 117px;" @click="editPerson({id:person._id})">
                   РЕДАКТИРОВАТЬ
                 </button>
               </div>
@@ -60,7 +60,8 @@ export default {
   methods: {
     ...mapActions({
       loadAddPersonPage: 'loadAddPersonPage',
-      loadProVersionPage: 'loadProVersionPage'
+      loadProVersionPage: 'loadProVersionPage',
+      editPerson: 'editPerson'
     }),
   }
 }
