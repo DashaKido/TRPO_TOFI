@@ -14,8 +14,7 @@
         </div>
       </div>
       <div class="news-comp" v-for="item in news" :key="item">
-        <div class="news-img news1">
-        </div>
+        <img class="pht-style" :src="item.photo">
         <div class="news-block">
           <div class="news-title">
             {{ item.title }}
@@ -75,6 +74,7 @@ export default {
   line-height: 15px;
   text-align: justify;
 }
+
 .news-block {
   width: 100%;
   margin-left: 4%;
@@ -87,6 +87,7 @@ export default {
   justify-content: space-between;
   margin-bottom: 5%;
 }
+
 .news-img {
   border-radius: 20px;
   width: 80%;
@@ -96,6 +97,7 @@ export default {
   background-position-x: 50%;
   background-position-y: 50%;
 }
+
 .news-img {
   border-radius: 20px;
   width: 80%;
@@ -121,8 +123,10 @@ export default {
   flex-wrap: wrap;
 }
 
-.news1 {
-  background-image: url("@/assets/news1.jpg");
+.pht-style {
+  width: 80%;
+  height: auto;
+  border: 1px solid #405159;
+  border-radius: 20px;
 }
-
 </style>
