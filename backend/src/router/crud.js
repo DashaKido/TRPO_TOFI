@@ -4,12 +4,15 @@ const { authMiddleware } = require("../service/middleware");
 
 const router = express.Router();
 
+// router.use(service.getUserStatistics);
+
 router.get("/me", authMiddleware, service.getMe);
-router.get("/:collection", service.getAll);
-router.get("/:collection/:id",service.getById);
-router.post("/:collection", service.create);
-router.put("/:collection/:id",service.updateById);
-router.delete("/:collection/:id", service.deleteEntity);
+router.get("/generate-leisure", service.generateLeisure);
+router.get("/crud/:collection", service.getAll);
+router.get("/crud/:collection/:id", service.getById);
+router.post("/crud/:collection", service.create);
+router.put("/crud/:collection/:id", service.updateById);
+router.delete("/crud/:collection/:id", service.deleteEntity);
 
 // GET /api/:collection/ -> [<collection>: {_id}]
 // GET /api/:collection/{_id} -> <collection>:{_id}

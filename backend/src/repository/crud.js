@@ -69,6 +69,7 @@ const updateEntity = async (isAdmin, collection, id, body, db, token) => {
   }
 };
 
+
 const getMe = async (token, db) => {
   try {
     const me = await db.collection("User").find({ token });
