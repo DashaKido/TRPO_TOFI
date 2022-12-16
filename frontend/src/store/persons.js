@@ -25,7 +25,7 @@ export let PersonsDataStore = {
     },
     actions: {
         async getAllPersons({commit}, {user}) {
-            await axios.get('http://localhost:7000/api/Person', {
+            await axios.get('http://localhost:7000/api/crud/Person', {
                 headers: {
                     'token': user.token
                 }

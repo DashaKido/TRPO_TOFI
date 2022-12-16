@@ -132,7 +132,7 @@ export default {
         photo: this.file,
         sectionCount: this.selectedCount,
       }
-      await axios.post('http://localhost:7000/api/News', new_news, {
+      await axios.post('http://localhost:7000/api/crud/News', new_news, {
         headers: {
           'token': this.user.token
         }

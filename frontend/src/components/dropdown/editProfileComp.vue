@@ -108,7 +108,7 @@ export default {
         name: this.user.name,
         fileLink: this.file
       };
-      await axios.put('http://localhost:7000/api/User/' + this.user.id, new_user, {
+      await axios.put('http://localhost:7000/api/crud/User/' + this.user.id, new_user, {
         headers: {
           'token': `${this.user.token}`
         }

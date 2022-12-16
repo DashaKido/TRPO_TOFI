@@ -104,7 +104,7 @@ export default {
         token: this.user.token,
         title: this.title
       }
-      await axios.post('http://localhost:7000/api/ToDo', new_todo, {
+      await axios.post('http://localhost:7000/api/crud/ToDo', new_todo, {
         headers: {
           'token': this.user.token
         }

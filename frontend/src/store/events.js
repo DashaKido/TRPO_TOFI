@@ -18,7 +18,7 @@ export let EventsDataStore = {
     },
     actions: {
         async getAllEvents({commit}, {user}) {
-            await axios.get('http://localhost:7000/api/Event', {
+            await axios.get('http://localhost:7000/api/crud/Event', {
                 headers: {
                     'token': `${user.token}`
                 }

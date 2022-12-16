@@ -18,7 +18,7 @@ export let ToDoDataStore = {
     },
     actions: {
         async getAllToDo({commit}, {user}) {
-            await axios.get('http://localhost:7000/api/ToDo', {
+            await axios.get('http://localhost:7000/api/crud/ToDo', {
                 headers: {
                     'token': user.token
                 }

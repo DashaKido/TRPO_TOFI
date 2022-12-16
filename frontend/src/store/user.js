@@ -83,7 +83,7 @@ export let UserDataStore = {
                 date: new Date(),
                 addedId: addedId
             }
-            await axios.post('http://localhost:7000/api/Logs', log, {
+            await axios.post('http://localhost:7000/api/crud/Logs', log, {
                 headers: {
                     'token': token
                 }
@@ -92,7 +92,7 @@ export let UserDataStore = {
         },
         // eslint-disable-next-line no-unused-vars
         async getAllUsers({commit}, {user}) {
-            await axios.get('http://localhost:7000/api/User', {
+            await axios.get('http://localhost:7000/api/crud/User', {
                 headers: {
                     'token': user.token
                 }

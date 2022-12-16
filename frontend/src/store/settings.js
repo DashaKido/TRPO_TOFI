@@ -30,7 +30,7 @@ export let SettingsDataStore = {
     },
     actions: {
         async createSetting({commit}, {user}) {
-            await axios.get('http://localhost:7000/api/Settings', {
+            await axios.get('http://localhost:7000/api/crud/Settings', {
                 headers: {
                     'token': `${user.token}`
                 }
@@ -60,7 +60,7 @@ export let SettingsDataStore = {
                             templateTime: '18:00:00',
                             token: user.token
                         };
-                        await axios.post('http://localhost:7000/api/Settings', settings, {
+                        await axios.post('http://localhost:7000/api/crud/Settings', settings, {
                             headers: {
                                 'token': `${user.token}`
                             }

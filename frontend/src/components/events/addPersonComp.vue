@@ -261,7 +261,7 @@ export default {
         info: this.allInfo,
         file: this.file
       }
-      await axios.post('http://localhost:7000/api/Person', new_person, {
+      await axios.post('http://localhost:7000/api/crud/Person', new_person, {
         headers: {
           'token': this.user.token
         }

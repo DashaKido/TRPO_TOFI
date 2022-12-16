@@ -14,7 +14,11 @@
         </div>
       </div>
       <div class="news-comp" v-for="item in news" :key="item">
-        <img class="pht-style" :src="item.photo">
+        <div class="load-photo" style="width: 50%; margin-right: 0;">
+          <div>
+            <img class="photo-style" :src="item.photo">
+          </div>
+        </div>
         <div class="news-block">
           <div class="news-title">
             {{ item.title }}

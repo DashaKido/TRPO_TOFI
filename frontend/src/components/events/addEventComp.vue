@@ -148,7 +148,7 @@ export default {
         person: this.selectedFriend,
         importance: this.importance
       }
-      await axios.post('http://localhost:7000/api/Event', new_event, {
+      await axios.post('http://localhost:7000/api/crud/Event', new_event, {
         headers: {
           'token': this.user.token
         }

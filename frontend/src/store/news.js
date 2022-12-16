@@ -21,7 +21,7 @@ export let NewsDataStore = {
     },
     actions: {
         async getAllNews({commit}, {user}) {
-            await axios.get('http://localhost:7000/api/News', {
+            await axios.get('http://localhost:7000/api/crud/News', {
                 headers: {
                     'token': `${user.token}`
                 }

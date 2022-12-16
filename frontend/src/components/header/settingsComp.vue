@@ -92,7 +92,7 @@ export default {
         template: this.settings.template,
         templateText: this.settings.templateText,
       }
-      await axios.put('http://localhost:7000/api/Settings/' + this.settings.id, new_settings, {
+      await axios.put('http://localhost:7000/api/crud/Settings/' + this.settings.id, new_settings, {
         headers: {
           'token': `${this.settings.token}`
         }

@@ -163,7 +163,7 @@ export default {
       let new_version = {
         isPro: false
       }
-      await axios.put('http://localhost:7000/api/User/' + this.user.id, new_version, {
+      await axios.put('http://localhost:7000/api/crud/User/' + this.user.id, new_version, {
         headers: {
           'token': `${this.user.token}`
         }
@@ -195,7 +195,7 @@ export default {
       let new_version = {
         isPro: true
       }
-      await axios.put('http://localhost:7000/api/User/' + this.user.id, new_version, {
+      await axios.put('http://localhost:7000/api/crud/User/' + this.user.id, new_version, {
         headers: {
           'token': `${this.user.token}`
         }

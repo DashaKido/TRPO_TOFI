@@ -52,7 +52,7 @@ export default {
       let new_todo = {
         items: items
       };
-      await axios.put('http://localhost:7000/api/ToDo/' + id, new_todo, {
+      await axios.put('http://localhost:7000/api/crud/ToDo/' + id, new_todo, {
         headers: {
           'token': this.user.token
         }
