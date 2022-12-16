@@ -1,4 +1,5 @@
 const repository = require("../repository/crud");
+const { getRandomIdea } = require("./dateIdeas");
 const { logger } = require("./logger");
 
 const getAll = async (req, res) => {
@@ -79,6 +80,16 @@ const deleteEntity = async (req, res) => {
     res.status(400).send(400);
   }
 };
+
+const generateLeisure = async (req, res) => {
+  const { db } = req.app.locals;
+  const { token } = req.headers;
+
+  const randomDate = getRandomIdea();
+  await db.collection("Leisure").insertOne({ randomDate, token });
+  res.status(200).send();
+};
+
 const create = async (req, res) => {
   const { collection } = req.params;
   const { body } = req;
@@ -113,4 +124,5 @@ module.exports = {
   updateById,
   deleteEntity,
   create,
+  generateLeisure,
 };
