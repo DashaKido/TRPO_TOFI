@@ -14,7 +14,7 @@
             в месяц
           </span>
         </span>
-        <button class="btn-style btn-pro" @click="modalShow = !modalShow">
+        <button class="btn-style btn-pro" @click="modalChoose = !modalChoose">
           УЛУЧШИТЬ СЕЙЧАС
         </button>
         <div class="features-block">
@@ -34,6 +34,7 @@
           </ul>
         </div>
       </div>
+
       <div class="tariff" style="color: #A09B9C;">
         <span class="tariff-title">
           FREE ТАРИФ
@@ -69,55 +70,128 @@
         </div>
       </div>
 
+      <b-modal v-model="modalChoose" hide-footer id="modal-choosemonth" size="sm" title="ВЫБОР ПЕРИОДА ПОДПИСКИ">
+        <div v-show="!user.isPro">
+          <div class="input-item">
+            <label class="text-style">
+              ВЫБЕРИТЕ ПЕРИОД ПОДПИСКИ
+            </label>
+            <b-form-radio-group v-model="radio">
+              <b-form-radio @change="getTotalCost" value="1" style="margin-bottom: 5px;">1 месяц</b-form-radio>
+              <b-form-radio @change="getTotalCost" value="3" style="margin-bottom: 5px;">3 месяца</b-form-radio>
+              <b-form-radio @change="getTotalCost" value="6" style="margin-bottom: 5px;">6 месяцев</b-form-radio>
+              <b-form-radio @change="getTotalCost" value="12" style="margin-bottom: 5px;">Год</b-form-radio>
+            </b-form-radio-group>
+          </div>
+          <div class="input-item" style="margin-top: 10px">
+            <label class="text-style">
+              ИТОГОВАЯ СУММА
+            </label>
+            <div style="display: flex; font-size: 35px; font-weight: bold">
+              {{ totalCost }} $
+            </div>
+          </div>
+          <div class="btns-all-width" style="display: block">
+            <div class="btns-group" style="width: auto">
+              <button class="btn-style btn-grey" @click="cancel">
+                ОТМЕНА
+              </button>
+              <button class="btn-style" @click="(modalShow = !modalShow) && (modalChoose =!modalChoose)">
+                ОПЛАТИТЬ
+              </button>
+            </div>
+          </div>
+        </div>
+        <div v-show="user.isPro" style="display: flex;flex-direction: column;">
+          У ВАС УЖЕ АКТИВИРОВАНА PRO ВЕРСИЯ
+          <button class="btn-style btn-grey" @click="cancel">
+            СПАСИБО
+          </button>
+        </div>
+      </b-modal>
+
       <b-modal v-model="modalShow" hide-footer id="modal-proversion" size="sm" title="ПЕРЕХОД НА PRO ВЕРСИЮ">
-        <div class="input-item">
-          <label class="text-style">
-            НОМЕР КАРТЫ
-          </label>
-          <b-form-input class="input-style" v-model="number"></b-form-input>
-        </div>
-        <div class="input-item">
-          <label class="text-style">
-            СРОК ДЕЙСТВИЯ
-          </label>
-          <div style="display: flex;">
-            <b-form-input class="input-style" style="width: 20%!important; margin-right:5%"
-                          v-model="month"></b-form-input>
-            <b-form-input class="input-style" style="width: 20%!important" v-model="year"></b-form-input>
+        <div v-show="!user.isPro">
+          <div class="input-item">
+            <label class="text-style">
+              НОМЕР КАРТЫ
+            </label>
+            <b-form-input class="input-style" v-model="number" style="  margin-bottom: 5px;"></b-form-input>
+            <label v-show="errorNumber" style="color: red;  margin-bottom: 5px; margin-top: 8px;" class="subtext-style">
+              НЕВЕРНЫЕ ДАННЫЕ
+            </label>
+          </div>
+          <div class="input-item">
+            <label class="text-style">
+              СРОК ДЕЙСТВИЯ
+            </label>
+            <div style="display: flex;">
+              <b-form-input class="input-style" style="width: 20%!important; margin-right:5%;  margin-bottom: 5px;"
+                            v-model="month"></b-form-input>
+              <b-form-input class="input-style" style="width: 20%!important;   margin-bottom: 5px;"
+                            v-model="year"></b-form-input>
+            </div>
+            <label v-show="errorDate" style="color: red;  margin-bottom: 5px; margin-top: 8px;" class="subtext-style">
+              НЕВЕРНЫЕ ДАННЫЕ
+            </label>
+          </div>
+          <div class="input-item">
+            <label class="text-style">
+              CVV
+            </label>
+            <div style="display: flex;">
+              <b-form-input class="input-style" style="width: 20%!important;  margin-bottom: 5px;"
+                            v-model="cvv"></b-form-input>
+            </div>
+            <label v-show="errorCVV" style="color: red;  margin-bottom: 5px; margin-top: 8px;" class="subtext-style">
+              НЕВЕРНЫЕ ДАННЫЕ
+            </label>
+          </div>
+          <div class="btns-all-width" style="display: block">
+            <div class="btns-group" style="width: auto">
+              <button class="btn-style btn-grey" @click="cancel">
+                ОТМЕНА
+              </button>
+              <button class="btn-style" @click="getProVersion">
+                СОХРАНИТЬ
+              </button>
+            </div>
           </div>
         </div>
-        <div class="input-item">
-          <label class="text-style">
-            CVV
-          </label>
-          <div style="display: flex;">
-            <b-form-input class="input-style" style="width: 20%!important;" v-model="cvv"></b-form-input>
-          </div>
-        </div>
-        <label v-show="error" style="color: red; margin-top: 5px;" class="subtext-style">
-          НЕВЕРНЫЕ ДАННЫЕ
-        </label>
-        <div class="btns-all-width" style="display: block">
-          <div class="btns-group" style="width: auto">
-            <button class="btn-style btn-grey" @click="cancel">
-              ОТМЕНА
-            </button>
-            <button class="btn-style" @click="getProVersion">
-              СОХРАНИТЬ
-            </button>
-          </div>
+        <div v-show="user.isPro" style="display: flex;flex-direction: column;">
+          У ВАС УЖЕ АКТИВИРОВАНА PRO ВЕРСИЯ
+          <button class="btn-style btn-grey" @click="cancel">
+            СПАСИБО
+          </button>
         </div>
       </b-modal>
 
       <b-modal v-model="modalShowfree" hide-footer id="modal-freeversion" size="sm" title="ПЕРЕХОД НА FREE ВЕРСИЮ">
-        <label class="text-style">
-          ТЕПЕРЬ У ВАС БЕСПЛАТНАЯ ВЕРСИЯ
-        </label>
-        <div class="btns-all-width" style="display: block">
-          <div class="btns-group" style="width: auto">
-            <button class="btn-style" @click="getFreeVersion">
-              ОТЛИЧНО
-            </button>
+        <div v-show="user.isPro">
+          <label class="text-style">
+            ВЫ УВЕРЕНЫ, ЧТО ХОТИТЕ ОТМЕНИТЬ ПОДПИСКУ?
+          </label>
+          <div class="btns-all-width" style="display: block">
+            <div class="btns-group" style="width: auto">
+              <button class="btn-style btn-grey" @click="modalShowfree = !modalShowfree">
+                НЕТ
+              </button>
+              <button class="btn-style" @click="getFreeVersion">
+                ДА
+              </button>
+            </div>
+          </div>
+        </div>
+        <div v-show="!user.isPro">
+          <label class="text-style">
+            У ВАС УЖЕ АКТИВИРОВАНА FREE ВЕРСИЯ
+          </label>
+          <div class="btns-all-width" style="display: block">
+            <div class="btns-group" style="width: auto">
+              <button class="btn-style" @click="getFreeVersion">
+                ОТЛИЧНО
+              </button>
+            </div>
           </div>
         </div>
       </b-modal>
@@ -135,11 +209,17 @@ export default {
     return {
       modalShow: false,
       modalShowfree: false,
+      modalChoose: false,
       cvv: '',
       month: '',
       year: '',
       number: '',
-      error: false
+      errorCVV: false,
+      errorNumber: false,
+      errorDate: false,
+      radio: 1,
+      totalCost: "6.99",
+      monthCost: 6.99
     }
   },
   computed: {
@@ -175,21 +255,40 @@ export default {
           .catch(error => console.log(error));
     },
     async getProVersion() {
-      this.error = false;
+      this.errorNumber = false;
+      this.errorCVV = false;
+      this.errorDate = false;
+      if (this.number.length != 16 && (this.year.length != 2 || this.month.length != 2) && this.cvv.length != 3) {
+        this.errorNumber = true;
+        this.errorDate = true;
+        this.errorCVV = true;
+        return
+      }
+      if (this.number.length != 16 && (this.year.length != 2 || this.month.length != 2)) {
+        this.errorNumber = true;
+        this.errorDate = true;
+        return
+      }
+      if (this.number.length != 16 && this.cvv.length != 3) {
+        this.errorNumber = true;
+        this.errorCVV = true
+        return
+      }
+      if ((this.year.length != 2 || this.month.length != 2) && this.cvv.length != 3) {
+        this.errorDate = true;
+        this.errorCVV = true
+        return
+      }
       if (this.number.length != 16) {
-        this.error = true
+        this.errorNumber = true
         return
       }
-      if (this.year.length != 2) {
-        this.error = true
-        return
-      }
-      if (this.month.length != 2) {
-        this.error = true
+      if (this.year.length != 2 || this.month.length != 2) {
+        this.errorDate = true
         return
       }
       if (this.cvv.length != 3) {
-        this.error = true
+        this.errorCVV = true
         return
       }
       let new_version = {
@@ -207,14 +306,50 @@ export default {
         this.year = "";
         this.month = "";
         this.number = '';
+        this.errorNumber = false;
+        this.errorCVV = false;
+        this.errorDate = false;
       })
           .catch(error => console.log(error));
+      let dateStart = new Date();
+      let dateEnd = dateStart.getMonth() + this.radio.parceInt();
+      let new_sub = {
+        monthCount: this.radio,
+        totalCost: this.totalCost,
+        monthCost: this.monthCost,
+        dateStart: dateStart,
+        dateEnd: dateEnd
+      }
+      await axios.put('http://localhost:7000/api/crud/Subscription/' + this.user.id, new_sub, {
+        headers: {
+          'token': `${this.user.token}`
+        }
+      }).then(() => {
+        this.createLog({action: "Создание/обновление подписки", token: this.user.token})
+      })
+    },
+    getTotalCost(value) {
+      this.totalCost = value * this.monthCost;
+      let dateStart = new Date();
+      dateStart.setMonth(dateStart.getMonth() + this.radio)
+      console.log(dateStart)
     }
   }
 }
 </script>
 
+<style>
+.form-check-label span {
+  font-size: 12px;
+}
+</style>
+
 <style scoped>
+.radio-group {
+  width: 100%;
+  display: flex;
+}
+
 .features-title {
   font-weight: bold;
 }

@@ -51,17 +51,13 @@ export default {
       for (let item of this.allUsers) {
         if (item._id == id) {
           deleted_user = item;
-          console.log('deleted', item)
         }
       }
       let index = this.allUsers.indexOf(deleted_user)
-      console.log('in', index)
-      console.log('all', this.allUsers)
       this.allUsers.splice(index, 1);
-      console.log('alla', this.allUsers)
       this.updateUsers({users: this.allUsers});
       await this.createLog({action: 'Удаление пользователя', addedId: id, token: this.user.token})
-      await axios.delete('http://localhost:7000/api/User/' + id, {
+      await axios.delete('http://localhost:7000/api/crud/User/' + id, {
         headers: {
           'token': this.user.token
         }
