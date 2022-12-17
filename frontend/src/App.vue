@@ -13,6 +13,7 @@
         <all-persons v-show="allPersons"/>
 
         <edit-person-comp v-show="editPersonPage"/>
+        <edit-user-comp v-show="editUserPage"/>
         <add-event-comp v-show="addEventPage"/>
         <add-person-comp v-show="addPersonPage"/>
         <add-news-comp v-show="addNewsPage"/>
@@ -44,6 +45,7 @@ import LeisurePage from "@/components/dropdown/leisurePage";
 import {mapGetters} from "vuex";
 import EditPersonComp from "@/components/events/editPersonComp";
 import AdminPage from "@/components/admin/adminComp";
+import EditUserComp from "@/components/events/editUserComp";
 import NewsPage from "@/components/admin/newsComp";
 import AddNewsComp from "@/components/events/addNewsComp";
 import AllToDoComp from "@/components/dropdown/allToDoComp";
@@ -55,6 +57,7 @@ export default {
     AddToDoComp,
     AllToDoComp,
     AddNewsComp,
+    EditUserComp,
     NewsPage,
     AdminPage,
     LeisurePage,
@@ -87,6 +90,7 @@ export default {
 
       addPersonPage: 'getShowAddPersonPage',
       editPersonPage: 'getShowEditPersonPage',
+      editUserPage:'getShowEditUserPage',
       addEventPage: 'getShowAddEventPage',
       addNewsPage: 'getShowAddNewsPage',
       addToDoPage:'getShowAddToDoPage',

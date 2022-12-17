@@ -199,8 +199,7 @@ export default {
         headers: {
           'token': `${this.user.token}`
         }
-      }).then(async (rr) => {
-        console.log('rr', rr)
+      }).then(async () => {
         let edit_person = -1;
         for (let item of this.allPersons) {
           if (item._id == id) {

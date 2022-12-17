@@ -6,6 +6,10 @@
     <div class="container-block">
       <b-table striped hover sticky-header :fields="fields" :items="allUsers">
         <template #cell(_id)="data">
+          <button class="btn-style" @click="updateUser({id:data.value})">
+            РЕДАКТИРОВАТЬ
+          </button>
+
           <button class="btn-style" @click="deleteUser(data.value)">
             УДАЛИТЬ
           </button>
@@ -39,12 +43,13 @@ export default {
     ...mapGetters({
       allUsers: 'getAllUsers',
       user: 'getUser'
-    })
+    }),
   },
   methods: {
     ...mapActions({
       updateUsers: 'updateUsers',
-      createLog: 'createLog'
+      createLog: 'createLog',
+      updateUser:'editUser'
     }),
     async deleteUser(id) {
       let deleted_user = -1;

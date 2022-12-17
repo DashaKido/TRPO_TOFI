@@ -16,7 +16,8 @@ export let UserDataStore = {
                 roles: []
             },
             allUsers: [],
-            file: ""
+            file: "",
+            idEditUser: '',
         }
     },
     getters: {
@@ -28,6 +29,14 @@ export let UserDataStore = {
         },
         getUserFile(state) {
             return state.file
+        },
+        getEditUser(state) {
+            for (let item of state.allUsers) {
+                if (item._id == state.idEditUser) {
+                    return item
+                }
+            }
+            return ""
         }
     },
     mutations: {
@@ -45,6 +54,9 @@ export let UserDataStore = {
         },
         setUserFileLink(state, new_val) {
             state.user.fileLink = new_val
+        },
+         setIdEditUser(state, new_val) {
+            state.idEditUser = new_val;
         }
     },
     actions: {
@@ -102,6 +114,12 @@ export let UserDataStore = {
         },
         updateUsers({commit}, {users}) {
             commit('setAllUsers', users)
+        },
+        // eslint-disable-next-line no-unused-vars
+        editUser({commit, dispatch}, {id}) {
+            dispatch('closeAllPages');
+            commit('setIdEditUser', id)
+            commit('setShowEditUserPage', true)
         }
 
     }
