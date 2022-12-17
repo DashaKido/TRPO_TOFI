@@ -3,7 +3,13 @@ import axios from "axios";
 export let NewsDataStore = {
     state() {
         return {
-            news: []
+            news: [],
+            oneNews: {
+                title: "",
+                content: "",
+                photo: "",
+                sectionCount: 1,
+            }
         }
     },
     getters: {
@@ -11,7 +17,11 @@ export let NewsDataStore = {
             return state.news;
         },
         getOneNews(state) {
-            return state.news[Math.floor(Math.random()*state.news.length)]
+            let index = Math.floor(Math.random() * state.news.length)
+            if (state.news[index] == undefined) {
+                return state.oneNews
+            }
+            return state.news[index]
         }
     },
     mutations: {

@@ -5,71 +5,24 @@
       <span>{{ todayTime }}</span>
     </div>
     <div class="container-block">
-      <div class="news-comp">
-        <div class="news-img news1">
+      <div class="main-comp">
+        <div class="load-photo" style="width: 50%; margin-right: 0;">
+          <div>
+            <img class="photo-style" :src="news.photo">
+          </div>
         </div>
         <div class="news-block">
           <div class="news-title">
-<!--            {{ news.title }}-->
+            {{ news.title }}
           </div>
           <div class="news-main">
-<!--            <div class="nw-item" v-for="i in news.content" :key="i">-->
-<!--              <div class="nw-title">{{ i.title }}</div>-->
-<!--              <div class="nw-text">{{ i.content }}</div>-->
-<!--            </div>-->
+            <div class="nw-item" v-for="i in news.content" :key="i">
+              <div class="nw-title">{{ i.title }}</div>
+              <div class="nw-text">{{ i.content }}</div>
+            </div>
           </div>
         </div>
       </div>
-      <!--      <div class="main-comp" v-show="isNews1">-->
-      <!--        <div class="news-img news1">-->
-      <!--        </div>-->
-      <!--        <div class="news-block">-->
-      <!--          <div class="news-title">-->
-      <!--            КАК ПОНРАВИТЬСЯ ДЕВОЧКЕ: СОВЕТЫ И ПСИХОЛОГИЧЕСКИЕ ТРЮКИ-->
-      <!--          </div>-->
-      <!--          <div class="news-main">-->
-      <!--            <div class="nw-item" v-for="item in news.news1" :key="item">-->
-      <!--              <div class="nw-title">{{ item.title }}</div>-->
-      <!--              <div class="nw-text">{{ item.text }}</div>-->
-      <!--            </div>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-      <!--      <div class="main-comp" v-show="isNews2">-->
-      <!--        <div class="news-img news2">-->
-      <!--        </div>-->
-      <!--        <div class="news-block">-->
-      <!--          <div class="news-title">-->
-      <!--            6 ЧЕСТНЫХ ЦИТАТ О МУЖЧИНАХ ИЗ ЛУЧШИХ КНИГ ПО ПСИХОЛОГИИ-->
-      <!--          </div>-->
-      <!--          <div class="news-main">-->
-      <!--            <div class="nw-item" v-for="item in news.news2" :key="item">-->
-      <!--              <div class="nw-title">{{ item.title }}</div>-->
-      <!--              <div class="nw-text">{{ item.text }}</div>-->
-      <!--            </div>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-      <!--      <div class="main-comp" v-show="isNews3">-->
-      <!--        <div class="news-img news3">-->
-      <!--        </div>-->
-      <!--        <div class="news-block">-->
-      <!--          <div class="news-title">-->
-      <!--            4 ПОЛЕЗНЫХ СОВЕТА ОТ САМОГО УСПЕШНОГО ПРЕДПРИНИМАТЕЛЯ В ИСТОРИИ ЯКОБА ФУГГЕРА-->
-      <!--          </div>-->
-      <!--          <div class="news-main">-->
-      <!--            <div class="nw-item" v-for="item in news.news3" :key="item">-->
-      <!--              <div class="nw-title">{{ item.title }}</div>-->
-      <!--              <div class="nw-text">{{ item.text }}</div>-->
-      <!--            </div>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-      <!--      <div class="btns-carousel">-->
-      <!--        <button class="btn-carousel" :class="`${isNews1?'btn-carousel-active':' '}`" @click="showNews1"></button>-->
-      <!--        <button class="btn-carousel" :class="`${isNews2?'btn-carousel-active':' '}`" @click="showNews2"></button>-->
-      <!--        <button class="btn-carousel" :class="`${isNews3?'btn-carousel-active':' '}`" @click="showNews3"></button>-->
-      <!--      </div>-->
     </div>
   </div>
 </template>
@@ -80,20 +33,17 @@ import {mapGetters} from "vuex";
 export default {
   name: "mainComp",
   data() {
-    return {
-    }
+    return {}
   },
-  methods: {
-  },
+  methods: {},
   computed: {
-    todayTime() {
-      let date = new Date();
-      console.log(this.news)
-      return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
-    },
     ...mapGetters({
       news: 'getOneNews'
-    })
+    }),
+    todayTime() {
+      let date = new Date();
+      return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+    },
   }
 }
 </script>
