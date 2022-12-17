@@ -4,15 +4,17 @@
       <span>ВСЕ ПОЛЬЗОВАТЕЛИ</span>
     </div>
     <div class="container-block">
-      <b-table striped hover sticky-header :fields="fields" :items="allUsers">
+      <b-table hover sticky-header :fields="fields" :items="allUsers">
         <template #cell(_id)="data">
-          <button class="btn-style" @click="updateUser({id:data.value})">
-            РЕДАКТИРОВАТЬ
-          </button>
+          <div style="width: 100%; display: flex; justify-content: space-evenly;">
+            <button class="btn-style" style="width: 130px;" @click="updateUser({id:data.value})">
+              РЕДАКТИРОВАТЬ
+            </button>
 
-          <button class="btn-style" @click="deleteUser(data.value)">
-            УДАЛИТЬ
-          </button>
+            <button class="btn-style" @click="deleteUser(data.value)">
+              УДАЛИТЬ
+            </button>
+          </div>
         </template>
       </b-table>
     </div>
@@ -49,7 +51,7 @@ export default {
     ...mapActions({
       updateUsers: 'updateUsers',
       createLog: 'createLog',
-      updateUser:'editUser'
+      updateUser: 'editUser'
     }),
     async deleteUser(id) {
       let deleted_user = -1;
@@ -72,6 +74,31 @@ export default {
 }
 
 </script>
+
+<style>
+/*#8FB1C1 !important*/
+.table thead th {
+  background-color: #405159;
+  color: white;
+  border: none;
+}
+.table thead th:first-child {
+  border-radius: 10px 0 0 0;
+}
+.table thead th:last-child {
+  border-radius: 0 10px 0 0;
+}
+.table > :not(caption) > * > * {
+  background-color: #fafafa;
+  border: 1px solid #8FB1C1;
+  border-right: none;
+  border-top: none;
+}
+.table tbody td:last-child{
+  border-right:1px solid #8FB1C1;
+}
+</style>
+
 <style scoped>
 
 </style>
