@@ -230,10 +230,13 @@ export default {
   methods: {
     ...mapActions({
       updateUserPRO: 'updateUserPRO',
-      createLog: 'createLog'
+      createLog: 'createLog',
+      loadMainPage: 'loadMainPage'
     }),
     cancel() {
       this.modalShow = false;
+      this.modalShowfree = false;
+      this.modalChoose = false;
       this.cvv = "";
       this.year = "";
       this.month = "";
@@ -251,6 +254,7 @@ export default {
         this.createLog({action: "Переход к FREE версии", token: this.user.token})
         this.updateUserPRO({version: false})
         this.modalShowfree = false;
+        this.loadMainPage();
       })
           .catch(error => console.log(error));
     },
@@ -309,6 +313,7 @@ export default {
         this.errorNumber = false;
         this.errorCVV = false;
         this.errorDate = false;
+        this.loadMainPage();
       })
           .catch(error => console.log(error));
 
@@ -322,8 +327,45 @@ export default {
         headers: {
           'token': `${this.user.token}`
         }
-      }).then(() => {
-        this.createLog({action: "Создание подписки", token: this.user.token})
+      }).then((response) => {
+        this.createLog({action: "Создание подписки", addedId: response.data.insertedId, token: this.user.token})
+      }).catch(error => console.log(error));
+
+      let new_contract = {
+        executor: 'ИП Ларионов Н.А., ОГРНИП: 317645100088118, юридический и фактический адрес: 410054, Россия, г. Саратов, Детский 2-й проезд, дом 43, кв. 27 тел.: +7 (987) 836-88-12, электронная почта: zen@vonoiral.com',
+        user: this.user.lastName + " " + this.user.name,
+        services: "просмотр календаря событий, неограниченное количество добавленных друзей, неограниченное количество событий в 1 месяце",
+        cost: this.totalCost,
+        period: this.radio + " месяцев",
+        dateStart: new Date(),
+        requisites: "Индивидуальный предприниматель\n" +
+            "Ларионов Никита Александрович\n" +
+            "Юридический адрес:\n" +
+            "410054, Россия, г. Саратов, Детский 2-й проезд, дом 43, кв. 27\n" +
+            "ОГРНИП: 317645100088118\n" +
+            "ИНН 645498705200",
+      }
+      await axios.post('http://localhost:7000/api/crud/Contract', new_contract, {
+        headers: {
+          'token': `${this.user.token}`
+        }
+      }).then((response) => {
+        this.createLog({action: "Создание договора", addedId: response.data.insertedId, token: this.user.token})
+      }).catch(error => console.log(error));
+
+      let new_payment = {
+        payer: this.user.lastName + " " + this.user.name,
+        date: new Date(),
+        recipient_account: 'BY26AKBB30121789200000000010',
+        sum: this.totalCost,
+        receiver: "Ларионов Никита Александрович"
+      }
+      await axios.post('http://localhost:7000/api/crud/Payment', new_payment, {
+        headers: {
+          'token': `${this.user.token}`
+        }
+      }).then((response) => {
+        this.createLog({action: "Произведение платежа", addedId: response.data.insertedId, token: this.user.token})
       }).catch(error => console.log(error));
     },
     getTotalCost(value) {
