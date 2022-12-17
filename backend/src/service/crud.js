@@ -89,7 +89,7 @@ const generateLeisure = async (req, res) => {
   const newLeisure = await db
     .collection("Leisure")
     .insertOne({ randomDate, token }, { new: true });
-  res.status(200).send(newLeisure);
+  res.status(200).send({ randomDate, token });
 };
 
 const create = async (req, res) => {
