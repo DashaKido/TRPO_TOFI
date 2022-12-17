@@ -4,7 +4,8 @@ export let PersonsDataStore = {
     state() {
         return {
             persons: [],
-            countPersons: 0
+            countPersons: 0,
+            idEditPerson: ''
         }
     },
     getters: {
@@ -13,6 +14,17 @@ export let PersonsDataStore = {
         },
         getCountPersons(state) {
             return state.countPersons;
+        },
+        getIdEditPerson(state) {
+            return state.idEditPerson;
+        },
+        getEditPerson(state) {
+            for (let item of state.persons) {
+                if (item._id == state.idEditPerson) {
+                    return item
+                }
+            }
+            return ""
         }
     },
     mutations: {
@@ -21,6 +33,9 @@ export let PersonsDataStore = {
         },
         setCountsPersons(state, new_val) {
             state.countPersons = new_val;
+        },
+        setIdEditPerson(state, new_val) {
+            state.idEditPerson = new_val;
         }
     },
     actions: {
@@ -37,6 +52,12 @@ export let PersonsDataStore = {
         updatePersons({commit}, {persons}) {
             commit('setCountsPersons', persons.length)
             commit('setPersons', persons)
+        },
+        // eslint-disable-next-line no-unused-vars
+        editPerson({commit, dispatch}, {id}) {
+            dispatch('closeAllPages');
+            commit('setIdEditPerson', id)
+            commit('setShowEditPersonPage', true)
         }
     }
 }

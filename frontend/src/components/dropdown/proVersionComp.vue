@@ -311,28 +311,23 @@ export default {
         this.errorDate = false;
       })
           .catch(error => console.log(error));
-      let dateStart = new Date();
-      let dateEnd = dateStart.getMonth() + this.radio.parceInt();
+
       let new_sub = {
         monthCount: this.radio,
         totalCost: this.totalCost,
         monthCost: this.monthCost,
-        dateStart: dateStart,
-        dateEnd: dateEnd
+        dateStart: new Date(),
       }
-      await axios.put('http://localhost:7000/api/crud/Subscription/' + this.user.id, new_sub, {
+      await axios.post('http://localhost:7000/api/crud/Subscription', new_sub, {
         headers: {
           'token': `${this.user.token}`
         }
       }).then(() => {
-        this.createLog({action: "Создание/обновление подписки", token: this.user.token})
-      })
+        this.createLog({action: "Создание подписки", token: this.user.token})
+      }).catch(error => console.log(error));
     },
     getTotalCost(value) {
       this.totalCost = value * this.monthCost;
-      let dateStart = new Date();
-      dateStart.setMonth(dateStart.getMonth() + this.radio)
-      console.log(dateStart)
     }
   }
 }

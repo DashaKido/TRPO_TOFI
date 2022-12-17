@@ -17,6 +17,7 @@ export let PagesDataStore = {
             showAllToDoPage: false,
 
             showAddEventPage: false,
+            showEditPersonPage: false,
             showAddPersonPage: false,
             showAddNewsPage: false,
             showAddToDoPage: false,
@@ -61,6 +62,9 @@ export let PagesDataStore = {
         },
         getShowAddNewsPage(state) {
             return state.showAddNewsPage;
+        },
+        getShowEditPersonPage(state) {
+            return state.showEditPersonPage;
         },
         getShowAddToDoPage(state) {
             return state.showAddToDoPage;
@@ -116,6 +120,9 @@ export let PagesDataStore = {
         setShowAddNewsPage(state, new_val) {
             state.showAddNewsPage = new_val;
         },
+        setShowEditPersonPage(state, new_val) {
+            state.showEditPersonPage = new_val;
+        },
         setShowAddToDoPage(state, new_val) {
             state.showAddToDoPage = new_val;
         },
@@ -147,6 +154,7 @@ export let PagesDataStore = {
             commit('setShowAddEventPage', false);
             commit('setShowAddPersonPage', false);
             commit('setShowAddNewsPage', false);
+            commit('setShowEditPersonPage', false);
             commit('setShowAddToDoPage', false);
 
             commit('setShowAdminPage', false);
