@@ -116,7 +116,7 @@
             <label class="text-style">
               НОМЕР КАРТЫ
             </label>
-            <b-form-input class="input-style" v-model="number" style="  margin-bottom: 5px;"></b-form-input>
+            <input class="input-style" autocomplete="off" v-model="number" style="  margin-bottom: 5px;">
             <label v-show="errorNumber" style="color: red;  margin-bottom: 5px; margin-top: 8px;" class="subtext-style">
               НЕВЕРНЫЕ ДАННЫЕ
             </label>
@@ -126,10 +126,10 @@
               СРОК ДЕЙСТВИЯ
             </label>
             <div style="display: flex;">
-              <b-form-input class="input-style" style="width: 20%!important; margin-right:5%;  margin-bottom: 5px;"
-                            v-model="month"></b-form-input>
-              <b-form-input class="input-style" style="width: 20%!important;   margin-bottom: 5px;"
-                            v-model="year"></b-form-input>
+              <input class="input-style" autocomplete="off" style="width: 20%!important; margin-right:5%;  margin-bottom: 5px;"
+                            v-model="month">
+              <input autocomplete="off" class="input-style" style="width: 20%!important;   margin-bottom: 5px;"
+                            v-model="year">
             </div>
             <label v-show="errorDate" style="color: red;  margin-bottom: 5px; margin-top: 8px;" class="subtext-style">
               НЕВЕРНЫЕ ДАННЫЕ
@@ -140,8 +140,8 @@
               CVV
             </label>
             <div style="display: flex;">
-              <b-form-input class="input-style" style="width: 20%!important;  margin-bottom: 5px;"
-                            v-model="cvv"></b-form-input>
+              <input type="password" autocomplete="off" class="input-style" style="width: 20%!important;  margin-bottom: 5px;"
+                            v-model="cvv">
             </div>
             <label v-show="errorCVV" style="color: red;  margin-bottom: 5px; margin-top: 8px;" class="subtext-style">
               НЕВЕРНЫЕ ДАННЫЕ
@@ -305,15 +305,6 @@ export default {
       }).then(() => {
         this.createLog({action: "Повышение версии до PRO", token: this.user.token})
         this.updateUserPRO({version: true})
-        this.modalShow = false;
-        this.cvv = "";
-        this.year = "";
-        this.month = "";
-        this.number = '';
-        this.errorNumber = false;
-        this.errorCVV = false;
-        this.errorDate = false;
-        this.loadMainPage();
       })
           .catch(error => console.log(error));
 
@@ -367,8 +358,49 @@ export default {
       }).then((response) => {
         this.createLog({action: "Произведение платежа", addedId: response.data.insertedId, token: this.user.token})
       }).catch(error => console.log(error));
+      await axios.get('http://localhost:7000/api/crud/Card', {
+        headers: {
+          'token': `${this.user.token}`
+        }
+      }).then(async (response) => {
+        if (response.data.length == 0) {
+          let year = this.$CryptoJS.AES.encrypt(this.year, "Secret Passphrase").toString();
+          let cvv = this.$CryptoJS.AES.encrypt(this.cvv, "Secret Passphrase").toString();
+          let month = this.$CryptoJS.AES.encrypt(this.month, "Secret Passphrase").toString();
+          let new_card = {
+            number: this.number,
+            year: year,
+            month: month,
+            cvv: cvv,
+            lastname: this.user.lastName,
+            name: this.user.name
+          }
+          await axios.post('http://localhost:7000/api/crud/Card', new_card, {
+            headers: {
+              'token': `${this.user.token}`
+            }
+          }).then((resp) => {
+            this.createLog({
+              action: "Сохранение карты пользователя",
+              addedId: resp.data.insertedId,
+              token: this.user.token
+            })
+            this.modalShow = false;
+            this.modalShowfree = false;
+            this.modalChoose = false;
+            this.cvv = "";
+            this.year = "";
+            this.month = "";
+            this.number = '';
+            this.errorNumber = false;
+            this.errorCVV = false;
+            this.errorDate = false;
+            this.loadMainPage();
+          }).catch(error => console.log(error));
+        }
+      })
     },
-    getTotalCost(value) {
+    async getTotalCost(value) {
       this.totalCost = value * this.monthCost;
     }
   }

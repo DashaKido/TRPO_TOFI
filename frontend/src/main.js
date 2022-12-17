@@ -14,6 +14,7 @@ import {EventsDataStore} from "@/store/events";
 import {PersonsDataStore} from '@/store/persons'
 import {ToDoDataStore} from '@/store/todo'
 import {NewsDataStore} from "@/store/news";
+import VueCryptojs from 'vue-cryptojs'
 
 const store = new Vuex.Store({
     modules: {
@@ -31,4 +32,5 @@ app.use(BootstrapVue3)
 app.use(CalendarViewHeader)
 app.use(CalendarView)
 app.use(store)
+app.use(VueCryptojs)
 app.mount('#app')
