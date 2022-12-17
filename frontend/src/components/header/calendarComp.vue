@@ -21,13 +21,43 @@
       <div class="style-comp" :style="`${!user.isPro?'filter: blur(10px);':''}`">
         <calendar-view :show-date="showDate" :starting-day-of-week="1" :enable-date-selection="false"
                        :locale="locale" :month-name-format="monthNameFormat" :current-period-label="currentPeriodLabel"
-                       :show-times="true" :items="items"
+                       :show-times="true" :items="items" @click-item="updateEvent"
                        class="theme-default holiday-us-traditional holiday-us-official">
           <template #header="{headerProps}">
             <calendar-view-header :header-props="headerProps" @input="setShowDate"/>
           </template>
         </calendar-view>
       </div>
+
+      <b-modal id="modal-edit-event" title="РЕДАКТИРОВАНИЕ СОБЫТИЯ" v-model="modalEditEvent" hide-footer>
+        <div class="input-item" style="margin-bottom: 10px;">
+          <label class="text-style">
+            ВЫ ДЕЙСТВИТЕЛЬНО ХОТИТЕ ОТРЕДАКТИРОВАТЬ СОБЫТИЕ?
+          </label>
+        </div>
+        <div class="input-item">
+          <span style="font-weight: bold">НАЗВАНИЕ</span>
+          <label class="text-style">
+            {{ editEvent.tooltip }}
+          </label>
+        </div>
+        <div class="input-item">
+          <span style="font-weight: bold">ДАТА И ВРЕМЯ</span>
+          <label class="text-style">
+            {{ editEvent.startDate }}
+          </label>
+        </div>
+        <div class="btns-all-width" style="display: block">
+          <div class="btns-group" style="width: auto">
+            <button class="btn-style btn-grey" @click="cancel">
+              НЕТ
+            </button>
+            <button class="btn-style" @click="goToEdit">
+              ДА
+            </button>
+          </div>
+        </div>
+      </b-modal>
     </div>
   </div>
 </template>
@@ -47,6 +77,8 @@ export default {
       locale: 'ru-RU',
       monthNameFormat: 'long',
       currentPeriodLabel: 'СЕГОДНЯ',
+      modalEditEvent: false,
+      editEvent: ''
     }
   },
   computed: {
@@ -58,11 +90,23 @@ export default {
   methods: {
     ...mapActions({
       loadAddEventPage: 'loadAddEventPage',
-      loadProVersionPage: 'loadProVersionPage'
+      loadProVersionPage: 'loadProVersionPage',
+      editEventPage: 'editEvent'
     }),
     setShowDate(d) {
       this.showDate = d;
     },
+    updateEvent(e) {
+      this.editEvent = e.originalItem
+      this.modalEditEvent = true;
+    },
+    cancel() {
+      this.modalEditEvent = false;
+    },
+    goToEdit() {
+      this.editEventPage({id: this.editEvent._id})
+      this.modalEditEvent = false;
+    }
   }
 }
 </script>
@@ -139,6 +183,7 @@ export default {
 }
 </style>
 <style scoped>
+
 .style-comp {
   display: flex;
   flex-direction: column;

@@ -6,7 +6,7 @@
       <span class="text-style">
         TOKEN
       </span>
-        <input class="input-style" v-model="token" style="margin-bottom: 0;"
+        <input required class="input-style" v-model="token" style="margin-bottom: 0;"
                v-on:keyup.enter="signIn">
         <label v-show="errorToken" style="color: red; margin-top: 5px;" class="subtext-style">
           НЕВЕРНЫЙ TOKEN

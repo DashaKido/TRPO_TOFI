@@ -24,7 +24,7 @@
             <label class="text-style">
               НАЗВАНИЕ
             </label>
-            <b-form-input class="input-style" v-model="title" style="margin-bottom: 0"></b-form-input>
+            <b-form-input required class="input-style" v-model="title" style="margin-bottom: 0"></b-form-input>
             <label v-show="errorTitle" style="color: red; margin-top: 5px;" class="subtext-style">
               ОБЯЗАТЕЛЬНОЕ ПОЛЕ ДЛЯ ЗАПОЛНЕНИЯ
             </label>
@@ -42,14 +42,14 @@
             <label class="text-style">
               ДАТА СОБЫТИЯ
             </label>
-            <input type="date" class="input-style" v-model="startDate">
+            <input required type="date" class="input-style" v-model="startDate">
           </div>
 
           <div class="input-item">
             <label class="text-style">
               ВРЕМЯ
             </label>
-            <input type="time" class="input-style" v-model="time">
+            <input required type="time" class="input-style" v-model="time">
           </div>
         </div>
       </div>

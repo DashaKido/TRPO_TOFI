@@ -116,7 +116,7 @@
             <label class="text-style">
               НОМЕР КАРТЫ
             </label>
-            <input class="input-style" autocomplete="off" v-model="number" style="  margin-bottom: 5px;">
+            <input required class="input-style" autocomplete="off" v-model="number" style="  margin-bottom: 5px;">
             <label v-show="errorNumber" style="color: red;  margin-bottom: 5px; margin-top: 8px;" class="subtext-style">
               НЕВЕРНЫЕ ДАННЫЕ
             </label>
@@ -126,10 +126,11 @@
               СРОК ДЕЙСТВИЯ
             </label>
             <div style="display: flex;">
-              <input class="input-style" autocomplete="off" style="width: 20%!important; margin-right:5%;  margin-bottom: 5px;"
-                            v-model="month">
-              <input autocomplete="off" class="input-style" style="width: 20%!important;   margin-bottom: 5px;"
-                            v-model="year">
+              <input required class="input-style" autocomplete="off"
+                     style="width: 20%!important; margin-right:5%;  margin-bottom: 5px;"
+                     v-model="month">
+              <input required autocomplete="off" class="input-style" style="width: 20%!important;   margin-bottom: 5px;"
+                     v-model="year">
             </div>
             <label v-show="errorDate" style="color: red;  margin-bottom: 5px; margin-top: 8px;" class="subtext-style">
               НЕВЕРНЫЕ ДАННЫЕ
@@ -140,8 +141,9 @@
               CVV
             </label>
             <div style="display: flex;">
-              <input type="password" autocomplete="off" class="input-style" style="width: 20%!important;  margin-bottom: 5px;"
-                            v-model="cvv">
+              <input type="password" autocomplete="off" class="input-style"
+                     style="width: 20%!important;  margin-bottom: 5px;"
+                     v-model="cvv">
             </div>
             <label v-show="errorCVV" style="color: red;  margin-bottom: 5px; margin-top: 8px;" class="subtext-style">
               НЕВЕРНЫЕ ДАННЫЕ
@@ -385,18 +387,18 @@ export default {
               addedId: resp.data.insertedId,
               token: this.user.token
             })
-            this.modalShow = false;
-            this.modalShowfree = false;
-            this.modalChoose = false;
-            this.cvv = "";
-            this.year = "";
-            this.month = "";
-            this.number = '';
-            this.errorNumber = false;
-            this.errorCVV = false;
-            this.errorDate = false;
-            this.loadMainPage();
           }).catch(error => console.log(error));
+          this.modalShow = false;
+          this.modalShowfree = false;
+          this.modalChoose = false;
+          this.cvv = "";
+          this.year = "";
+          this.month = "";
+          this.number = '';
+          this.errorNumber = false;
+          this.errorCVV = false;
+          this.errorDate = false;
+          this.loadMainPage();
         }
       })
     },

@@ -3,17 +3,29 @@ import axios from "axios";
 export let EventsDataStore = {
     state() {
         return {
-            events: []
+            events: [],
+            idEditEvent: ''
         }
     },
     getters: {
         getEvents(state) {
             return state.events;
+        },
+        getEditEvent(state) {
+            for (let item of state.events) {
+                if (item._id == state.idEditEvent) {
+                    return item
+                }
+            }
+            return ""
         }
     },
     mutations: {
         setEvents(state, new_val) {
             state.events = new_val;
+        },
+        setIdEditEvent(state, new_val) {
+            state.idEditEvent = new_val;
         }
     },
     actions: {
@@ -30,6 +42,11 @@ export let EventsDataStore = {
         },
         updateEvents({commit}, {events}) {
             commit('setEvents', events)
+        },
+        editEvent({commit, dispatch}, {id}) {
+            dispatch('closeAllPages');
+            commit('setIdEditEvent', id)
+            commit('setShowEditEventPage', true)
         }
     }
 }

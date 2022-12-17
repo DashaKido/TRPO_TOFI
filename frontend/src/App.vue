@@ -18,6 +18,7 @@
         <add-person-comp v-show="addPersonPage"/>
         <add-news-comp v-show="addNewsPage"/>
         <add-to-do-comp v-show="addToDoPage"/>
+        <edit-event-comp v-show="editEventPage"/>
 
         <edit-profile-comp v-show="editProfilePage"/>
         <pro-version-comp v-show="proVersionPage"/>
@@ -50,10 +51,14 @@ import NewsPage from "@/components/admin/newsComp";
 import AddNewsComp from "@/components/events/addNewsComp";
 import AllToDoComp from "@/components/dropdown/allToDoComp";
 import AddToDoComp from "@/components/events/addToDoComp";
+import EditEventComp from "@/components/events/editEventComp";
+
 
 export default {
   name: 'App',
   components: {
+
+    EditEventComp,
     AddToDoComp,
     AllToDoComp,
     AddNewsComp,
@@ -94,6 +99,7 @@ export default {
       addEventPage: 'getShowAddEventPage',
       addNewsPage: 'getShowAddNewsPage',
       addToDoPage:'getShowAddToDoPage',
+      editEventPage: 'getShowEditEventPage',
 
       adminPage: 'getShowAdminPage',
       newsPage: 'getShowNewsPage',

@@ -22,21 +22,21 @@
             <label class="text-style">
               ФАМИЛИЯ
             </label>
-            <b-form-input class="input-style" v-model="user.lastName"></b-form-input>
+            <b-form-input required class="input-style" v-model="user.lastName"></b-form-input>
           </div>
 
           <div class="input-item">
             <label class="text-style">
               ИМЯ
             </label>
-            <b-form-input class="input-style" v-model="user.name"></b-form-input>
+            <b-form-input required class="input-style" v-model="user.name"></b-form-input>
           </div>
 
           <div class="input-item">
             <label class="text-style">
               ДАТА РОЖДЕНИЯ
             </label>
-            <input type="date" class="input-style" v-model="user.birth">
+            <input required type="date" class="input-style" v-model="user.birth">
           </div>
 
           <div class="input-item">
