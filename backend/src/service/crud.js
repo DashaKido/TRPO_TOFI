@@ -86,8 +86,10 @@ const generateLeisure = async (req, res) => {
   const { token } = req.headers;
 
   const randomDate = getRandomIdea();
-  await db.collection("Leisure").insertOne({ randomDate, token });
-  res.status(200).send();
+  const newLeisure = await db
+    .collection("Leisure")
+    .insertOne({ randomDate, token }, { new: true });
+  res.status(200).send(newLeisure);
 };
 
 const create = async (req, res) => {
