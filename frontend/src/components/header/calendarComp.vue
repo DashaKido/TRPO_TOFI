@@ -97,8 +97,10 @@ export default {
       this.showDate = d;
     },
     updateEvent(e) {
-      this.editEvent = e.originalItem
-      this.modalEditEvent = true;
+      if (this.user.isPro) {
+        this.editEvent = e.originalItem
+        this.modalEditEvent = true;
+      }
     },
     cancel() {
       this.modalEditEvent = false;

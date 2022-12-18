@@ -115,7 +115,7 @@
 
       <div class="btns-all-width">
         <div class="btns-group">
-          <button class="btn-style btn-grey" @click="loadAllPersonsPage">
+          <button class="btn-style btn-grey" @click="cancel">
             ОТМЕНА
           </button>
           <button class="btn-style" @click="addPerson">
@@ -235,6 +235,15 @@ export default {
       this.allInfo.splice(index, 1);
       this.selectedInfo = '';
     },
+    cancel() {
+      this.birthdate = '1970-01-01';
+      this.selectedCategory = 1;
+      this.lastName = '';
+      this.name = '';
+      this.nickname = '';
+      this.allInfo = [];
+      this.loadAllPersonsPage();
+    },
     async addPerson() {
       this.errorName = false;
       this.errorTelegram = false;
@@ -271,7 +280,7 @@ export default {
             this.updatePersons({persons: this.persons});
             this.createLog({action: 'Добавление друга', addedId: response.data.insertedId, token: this.user.token})
             this.loadAllPersonsPage();
-            this.birthdate = "";
+            this.birthdate = '1970-01-01';
             this.selectedCategory = 1;
             this.lastName = '';
             this.name = '';

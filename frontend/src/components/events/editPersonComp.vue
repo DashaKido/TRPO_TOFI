@@ -54,65 +54,11 @@
             <input type="date" class="input-style" v-model="editPerson.birthdate">
           </div>
         </div>
-
-        <!--        <div>-->
-        <!--          <div>-->
-        <!--            <label class="suptext-style">-->
-        <!--              ДОБАВИТЬ ИНФОРМАЦИЮ-->
-        <!--            </label>-->
-
-        <!--            <div style="margin-top: 5px;" class="input-item">-->
-        <!--              <label class="text-style">-->
-        <!--                НАЗВАНИЕ-->
-        <!--              </label>-->
-
-        <!--              <div class="btns-group-small">-->
-        <!--                <input style="width: 100% !important; margin-bottom: 0px;" v-model="nameInfo" class="input-style">-->
-        <!--                <button class="btn-add" @click="addNewInfo"></button>-->
-        <!--              </div>-->
-
-        <!--              <label v-show="errorNameInfo" style="color: red; margin-top: 5px;" class="subtext-style">-->
-        <!--                ОБЯЗАТЕЛЬНОЕ ПОЛЕ ДЛЯ ЗАПОЛНЕНИЯ-->
-        <!--              </label>-->
-        <!--            </div>-->
-        <!--          </div>-->
-
-        <!--          <div style="margin-top: 10px; " class="input-item">-->
-        <!--            <label class="text-style">-->
-        <!--              ИНФОРМАЦИЯ-->
-        <!--            </label>-->
-
-        <!--            <b-form-textarea v-model="info" style="margin-bottom: 0px; width: 100% !important;"-->
-        <!--                             class="input-style"></b-form-textarea>-->
-        <!--            <label v-show="errorInfo" style="color: red; margin-top: 5px;" class="subtext-style">-->
-        <!--              ОБЯЗАТЕЛЬНОЕ ПОЛЕ ДЛЯ ЗАПОЛНЕНИЯ-->
-        <!--            </label>-->
-        <!--          </div>-->
-
-        <!--          <div style="margin-top: 10px;">-->
-        <!--            <label class="suptext-style">-->
-        <!--              ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ-->
-        <!--            </label>-->
-
-        <!--            <div class="btns-group-small">-->
-        <!--              <b-form-select @change="changeSelect" v-model="selectedName" :options="editPerson.info"-->
-        <!--                             class="select-style">-->
-        <!--              </b-form-select>-->
-        <!--              <button @click="deleteInfo" class="btn-add btn-delete"></button>-->
-        <!--            </div>-->
-        <!--            <div style="height: 150px!important; width: 100% !important;"-->
-        <!--                 class="input-style">-->
-        <!--              {{ selectedInfo }}-->
-        <!--            </div>-->
-        <!--          </div>-->
-        <!--        </div>-->
       </div>
 
       <div class="btns-all-width">
         <div class="btns-group">
-          <button class="btn-style btn-grey" @click="loadAllPersonsPage">
-            ОТМЕНА
-          </button>
+          <div></div>
           <button class="btn-style" @click="updatePerson(editPerson._id)">
             СОХРАНИТЬ
           </button>

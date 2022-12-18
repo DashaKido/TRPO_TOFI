@@ -255,7 +255,9 @@ export default {
       }).then(() => {
         this.createLog({action: "Переход к FREE версии", token: this.user.token})
         this.updateUserPRO({version: false})
+        this.modalShow = false;
         this.modalShowfree = false;
+        this.modalChoose = false;
         this.loadMainPage();
       })
           .catch(error => console.log(error));
@@ -309,7 +311,13 @@ export default {
         this.updateUserPRO({version: true})
       })
           .catch(error => console.log(error));
-
+      this.modalShow = false;
+      this.modalShowfree = false;
+      this.modalChoose = false;
+      this.errorNumber = false;
+      this.errorCVV = false;
+      this.errorDate = false;
+      this.loadMainPage();
       let new_sub = {
         monthCount: this.radio,
         totalCost: this.totalCost,
@@ -388,18 +396,11 @@ export default {
               token: this.user.token
             })
           }).catch(error => console.log(error));
-          this.modalShow = false;
-          this.modalShowfree = false;
-          this.modalChoose = false;
-          this.cvv = "";
-          this.year = "";
-          this.month = "";
-          this.number = '';
-          this.errorNumber = false;
-          this.errorCVV = false;
-          this.errorDate = false;
-          this.loadMainPage();
         }
+        this.cvv = "";
+        this.year = "";
+        this.month = "";
+        this.number = '';
       })
     },
     async getTotalCost(value) {

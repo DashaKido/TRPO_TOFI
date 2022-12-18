@@ -56,9 +56,7 @@
 
       <div class="btns-all-width">
         <div class="btns-group">
-          <button class="btn-style btn-grey">
-            ОТМЕНА
-          </button>
+          <div></div>
           <button class="btn-style" @click="updateUserBtn">
             СОХРАНИТЬ
           </button>
